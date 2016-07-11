@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.ajou.cmu.reservation">
+	<typeAlias alias ="RequestParameter" type="com.ajou.cmu.common.RequestParameter"/>		
+	<typeAlias alias="rev" type="com.ajou.cmu.reservation.Reservation"/>
+	
+	<resultMap class="rev" id="revResult">
+		<result property="revSeq" column="REV_SEQ"/>
+		<result property="revId" column="REV_ID"/>
+		<result property="revTime" column="REV_TIME"/>
+	</resultMap>
+	
+	<select id="selectReservationByEmail" parameterClass="RequestParameter" resultMap="revResult">
+		SELECT
+			USER_SEQ, USER_EMAIL, USER_PASSWORD, USER_NAME, USER_RRN_NO, USER_PMT_NO, USER_STATUS, USER_REG_DATE
+		FROM
+			TBL_000_USER
+		WHERE
+			USER_EMAIL = #userEmail#
+	</select>
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
