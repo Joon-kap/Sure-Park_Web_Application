@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ajou.cmu.common.BaseDao;
 import com.ajou.cmu.common.Dao;
 
-
+ /* test22 */
 @Repository("revDao")
 public class ReservationDaoImpl extends BaseDao implements Dao {
 
