@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ajou.secure.user.UserDaoImpl;
 
+//git test by daehan
 
 @Service("revService")
 public class ReservationServiceImpl implements com.ajou.cmu.common.Service {

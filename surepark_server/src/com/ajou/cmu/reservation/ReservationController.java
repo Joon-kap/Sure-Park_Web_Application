@@ -34,7 +34,7 @@ public class ReservationController {
 	public ModelAndView test(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	
 		ModelAndView mnv = new ModelAndView("/common/json_result");
-		 
+		 /*git test2*/
 		Map<String, Object> map = new HashMap<String, Object>();
 //		Map<String, Object> userMap = new HashMap<String, Object>();
 
