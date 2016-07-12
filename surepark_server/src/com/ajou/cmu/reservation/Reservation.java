@@ -1,6 +1,7 @@
 package com.ajou.cmu.reservation;
 
 public class Reservation {
+	/*git test*/
 	private int revSeq;
 	private String revTime;
 	private String revId;
