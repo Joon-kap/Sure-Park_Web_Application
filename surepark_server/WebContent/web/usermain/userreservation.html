@@ -4,6 +4,41 @@
 		<meta charset="EUC-KR">
 			<title>Insert title here</title>
 	</head>
+	<script type="text/javascript">
+
+
+		var domainText = getDomain();	
+		
+		function getDomain(){
+			return "localhost:8080";
+		}
+		
+		
+		//test
+		function reservationconfirm(){
+      		alert("Reservation Confirmed")
+      		location.href = "/surepark_server/web/usermain/reservationconfirm.html"
+			$.ajax({
+		        type: "POST",
+		        url: "http://" + domainText + "/surepark_server/rev/confirm_reservation.do",
+		        callback:"callbak",
+				dataType: "jsonp",
+		        success: function(data){
+		            $.each(data, function(k, v){
+		              	if(k == "1"){
+		              		alert("Reservation Confirmed")
+		              		location.href = "/surepark_server/web/usermain/reservationconfirm.html"
+					  	}else{
+							//로그인 실패 
+							//session storage 모두 삭제
+							alert("실패");
+						} 
+		            });
+		        }
+		    });
+		    return false;
+		}
+	</script>
 	<body>
 
 		<h1>user reservation page</h1>

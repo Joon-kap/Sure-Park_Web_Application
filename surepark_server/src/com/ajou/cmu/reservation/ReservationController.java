@@ -17,6 +17,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
@@ -67,6 +68,12 @@ public class ReservationController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		
 		return mnv;
+	}
+	
+	@RequestMapping(value = "/rev/confirm_reservation.do", method = RequestMethod.POST)
+	public ModelAndView confirm_reservation(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		return null;
+		
 	}
 
 }
