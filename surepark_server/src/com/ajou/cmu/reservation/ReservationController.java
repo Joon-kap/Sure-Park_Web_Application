@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
+import com.ajou.cmu.common.Service;
 import com.ajou.cmu.common.Utils;
 
 
@@ -89,7 +90,13 @@ public class ReservationController {
 		reservation.setpCreateDt(rp.get("ReservationCreateTime").toString());
 		reservation.setpUpdateDt(rp.get("ReservationUpdateTime").toString());
 		
+		revService.save(reservation);
 		
+		if(reservation !=null)	map.put("success", "Success to Registration");
+		else map.put("fail", "Fail to Registration");
+		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
 			
 			return mv;
 	}
