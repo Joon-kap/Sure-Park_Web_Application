@@ -28,6 +28,15 @@
 		WHERE
 			USER_EMAIL = #userEmail#
 	</select>
+	
+	<select id="selectReservationByPhoneNum" parameterClass="RequestParameter" resultMap="revResult">
+		SELECT
+			P_RESER_ID, P_IDENTIFIER, P_RESER_TELNO, P_RESER_TIME, P_WAIT_YN, P_CANCEL_YN
+		FROM
+			p_reser_mst
+		WHERE
+			P_RESER_TELNO = #pReserTelno#
+	</select>
 
 </sqlMap>
 

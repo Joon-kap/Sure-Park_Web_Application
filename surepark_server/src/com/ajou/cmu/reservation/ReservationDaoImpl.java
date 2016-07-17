@@ -37,6 +37,7 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	@Override
 	public void insert(Object obj) throws SQLException {
 		//Äõ¸® Ibatis·Î ¸ÅÇÎ
+		getSqlMapClientTemplate().queryForObject("com.neopad.infobee_property.user.selectReservationByPhoneNum", obj);
 		
 	}
 

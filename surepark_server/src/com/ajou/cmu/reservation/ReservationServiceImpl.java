@@ -49,6 +49,7 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	@Override
 	public boolean save(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
+		dao.insert(obj);
 		return false;
 	}
 
