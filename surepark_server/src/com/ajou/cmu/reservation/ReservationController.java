@@ -70,10 +70,45 @@ public class ReservationController {
 		return mnv;
 	}
 	
-	@RequestMapping(value = "/rev/confirm_reservation.do")
-	public ModelAndView confirm_reservation(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		return null;
+	@RequestMapping("/rev/reservation.do")
+	public ModelAndView saveReservation(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Reser	
+		
+			revService.save(mv);
+			
+			return mv;
+	}
+	
+	@RequestMapping("/rev/available.do")
+	public ModelAndView retrieveAvailableSpot() throws Exception {
+		ModelAndView mv = new ModelAndView("Send This to Android");
+		
+		revService.getObject(mv);
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping("/rev/currentstatus.do")
+	public ModelAndView retrieveCurrentStatus() throws Exception {
+		ModelAndView mv = new ModelAndView("Send This to Android");
+		
+		revService.getObject(mv);
+		
+		return mv;
+	}
+	
+	@RequestMapping("/rev/identify.do")
+	public ModelAndView compareIdentifier() throws Exception {
+		ModelAndView mv = new ModelAndView("");
+		
+		revService.getObject(mv);
+		
+		return mv;
 	}
 
 }

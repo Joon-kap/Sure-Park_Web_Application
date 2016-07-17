@@ -8,9 +8,16 @@
 	<typeAlias alias="rev" type="com.ajou.cmu.reservation.Reservation"/>
 	
 	<resultMap class="rev" id="revResult">
-		<result property="revSeq" column="REV_SEQ"/>
-		<result property="revId" column="REV_ID"/>
-		<result property="revTime" column="REV_TIME"/>
+		<result property="pReserId" column="P_RESER_ID"/>
+		<result property="pIdentifier" column="P_IDENTIFIER"/>
+		<result property="pReserTelno" column="P_RESER_TELNO"/>
+		<result property="pReserTime" column="P_RESER_TIME"/>
+		<result property="pWaitYn" column="P_WAIT_YN"/>
+		<result property="pCancelYn" column="P_CANCEL_YN"/>
+		<result property="pDesc1" column="P_DESC1"/>
+		<result property="pDesc2" column="P_DESC2"/>
+		<result property="pCreateDt" column="P_CREATE_DT"/>
+		<result property="pUpdateDt" column="P_UPDATE_DT"/>
 	</resultMap>
 	
 	<select id="selectReservationByEmail" parameterClass="RequestParameter" resultMap="revResult">
@@ -20,6 +27,15 @@
 			TBL_000_USER
 		WHERE
 			USER_EMAIL = #userEmail#
+	</select>
+	
+	<select id="selectReservationByPhoneNum" parameterClass="RequestParameter" resultMap="revResult">
+		SELECT
+			P_RESER_ID, P_IDENTIFIER, P_RESER_TELNO, P_RESER_TIME, P_WAIT_YN, P_CANCEL_YN
+		FROM
+			p_reser_mst
+		WHERE
+			P_RESER_TELNO = #pReserTelno#
 	</select>
 
 </sqlMap>
