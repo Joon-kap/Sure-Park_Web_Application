@@ -76,10 +76,11 @@ public class ReservationController {
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
+		/*
 		Reser	
 		
 			revService.save(mv);
-			
+			*/
 			return mv;
 	}
 	
