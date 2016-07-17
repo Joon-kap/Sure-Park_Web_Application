@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="EUC-KR">
+			<title>Insert title here</title>
+	</head>
+	<script type="text/javascript">
+
+
+		var domainText = getDomain();	
+		
+		function getDomain(){
+			return "localhost:8080";
+		}
+		
+		
+		//test
+		function reservationconfirm(){
+      		//alert("Reservation Confirmed")
+      		//location.href = "/surepark_server/web/usermain/reservationconfirm.html"
+			$.ajax({
+		        type: "POST",
+		        url: "http://" + domainText + "/surepark_server/rev/confirm_reservation.do",
+		        callback:"callbak",
+				dataType: "jsonp",
+		        success: function(data){
+		            $.each(data, function(k, v){
+		              	if(k == "1"){
+		              		alert("Reservation Confirmed")
+		              		location.href = "/surepark_server/web/usermain/reservationconfirm.html"
+					  	}else{
+							//로그인 실패 
+							//session storage 모두 삭제
+							alert("실패");
+						} 
+		            });
+		        }
+		    });
+		    return false;
+		}
+	</script>
+	<body>
+
+		<h1>user reservation page</h1>
+		
+		<br>
+		
+		<h5> please input following data </h5>
+		
+		<br>
+		
+		<table border="1">
+			<tr>
+				<th>Table Header</th><th>Table Header</th>
+			</tr>
+			<tr>
+				<td>ReservationID</td><td></td>
+			</tr>
+			<tr>
+				<td>Identifier</td><td></td>
+			</tr>
+			<tr>
+				<td>PhoneNumber</td><td></td>
+			</tr>
+			<tr>
+				<td>ReservationTime</td><td></td>
+			</tr>
+			<tr>
+				<td>WaitingLine</td><td></td>
+			</tr>
+			<tr>
+				<td>CancelState</td><td></td>
+			</tr>
+			<tr>
+				<td>AdditionalSpace</td><td></td>
+			</tr>
+			<tr>
+				<td>AdditionalSpace</td><td></td>
+			</tr>
+			<tr>
+				<td>CreateDate</td><td></td>
+			</tr>
+			<tr>
+				<td>UpdateDate</td><td></td>
+			</tr>
+			</table>
+		
+		<br>
+		
+		<button onclick="reservationconfirm();">Proceed Reservation</button>
+
+</body>
+</html>
