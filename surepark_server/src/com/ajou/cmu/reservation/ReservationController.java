@@ -70,7 +70,7 @@ public class ReservationController {
 		return mnv;
 	}
 	
-	@RequestMapping(value = "/rev/confirm_reservation.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/rev/confirm_reservation.do")
 	public ModelAndView confirm_reservation(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		return null;
 		

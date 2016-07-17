@@ -36,7 +36,7 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public void insert(Object obj) throws SQLException {
-		// TODO Auto-generated method stub
+		//쿼리 Ibatis로 매핑
 		
 	}
 
