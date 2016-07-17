@@ -88,8 +88,14 @@ public class ReservationController {
 		reservation.setpDesc2(rp.get("AdditionalSpace2").toString());
 		reservation.setpCreateDt(rp.get("ReservationCreateTime").toString());
 		reservation.setpUpdateDt(rp.get("ReservationUpdateTime").toString());
+				
+		revService.save(reservation);
 		
+		if(reservation !=null)	map.put("success", "Success to Registration");
+		else map.put("fail", "Fail to Registration");
 		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
 			
 			return mv;
 	}
