@@ -76,11 +76,21 @@ public class ReservationController {
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
-		/*
-		Reser	
+		Reservation reservation = new Reservation();	
 		
-			revService.save(mv);
-			*/
+		reservation.setpReserId(Integer.parseInt(rp.get("reservationID").toString()));
+		reservation.setpIdentifier(rp.get("Identifier").toString());
+		reservation.setpReserTelno(rp.get("TelephoneNumber").toString());
+		reservation.setpReserTime(rp.get("ReservationTime").toString());
+		reservation.setpWaitYn(rp.get("ReservationWaitingYN").toString());
+		reservation.setpCancelYn(rp.get("ReservationCancelYN").toString());
+		reservation.setpDesc1(rp.get("AdditionalSpace1").toString());
+		reservation.setpDesc2(rp.get("AdditionalSpace2").toString());
+		reservation.setpCreateDt(rp.get("ReservationCreateTime").toString());
+		reservation.setpUpdateDt(rp.get("ReservationUpdateTime").toString());
+		
+		
+			
 			return mv;
 	}
 	

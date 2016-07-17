@@ -14,6 +14,33 @@ public class Reservation {
 	private String pUpdateDt;
 	
 	public Reservation(){}
+	
+	public Reservation setReservation(Map<String, Object> data) {
+		
+		if(data == null)
+			return null;
+		
+		this.id = Integer.parseInt(String.valueOf(data.get("P_PK")));
+		this.userID = Integer.parseInt(String.valueOf(data.get("U_PK")));
+		this.category = Integer.parseInt(String.valueOf(data.get("CATEGORY")));
+		this.name = String.valueOf(data.get("NAME"));
+		this.price = String.valueOf(data.get("PRICE"));
+		this.buyDate = String.valueOf(data.get("FIRST_BUY_DATE"));
+		this.effectiveUserNumber = String.valueOf(data.get("EFFECTIVE_USE_NUMBER"));
+		this.fullBox = Boolean.parseBoolean(String.valueOf(data.get("FULL_BOX")));
+		this.certification = Boolean.parseBoolean(String.valueOf(data.get("CERTIFICATION_OX")));
+		this.description = String.valueOf(data.get("DESCRIPTION"));
+		this.imageInfo = Integer.parseInt(String.valueOf(data.get("IMAGE_INFO")));
+		this.locationInfo = String.valueOf(data.get("LOCATION_INFO"));
+		this.quantity = Integer.parseInt(String.valueOf(data.get("QUANTITY")));
+		this.tradeType = Integer.parseInt(String.valueOf(data.get("TRADE_TYPE")));
+		this.currentStatus = Integer.parseInt(String.valueOf(data.get("CURRENT_STATUS")));
+		this.registrationTime = String.valueOf(data.get("REGISTRATION_TIME"));
+		
+		productMap = data;
+		return this;
+		
+	}
 
 	public int getpReserId() {
 		return pReserId;
