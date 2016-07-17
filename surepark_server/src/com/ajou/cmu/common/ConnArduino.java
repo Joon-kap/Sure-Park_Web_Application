@@ -9,7 +9,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ConnArduino {
+public class ConnArduino implements Runnable {
+	public void run() {
+		test();
+	}
+	
+	private static boolean available(int port) {
+	    System.out.println("--------------Testing port " + port);
+	    Socket s = null;
+	    try {
+	        s = new Socket("localhost", port);
+
+	        // If the code makes it this far without an exception it means
+	        // something is using the port and has responded.
+	        System.out.println("--------------Port " + port + " is not available");
+	        return false;
+	    } catch (IOException e) {
+	        System.out.println("--------------Port " + port + " is available");
+	        return true;
+	    } finally {
+	        if( s != null){
+	            try {
+	                s.close();
+	            } catch (IOException e) {
+	                throw new RuntimeException("You should handle this error." , e);
+	            }
+	        }
+	    }
+	}
+	
 	public void test()
  	{
     	ServerSocket serverSocket = null;							// Server socket object
@@ -29,6 +57,9 @@ public class ConnArduino {
 		 	*****************************************************************************/
     		try
     		{
+    			if(!available(portNum)){
+    				break;
+    			}
         		serverSocket = new ServerSocket(portNum);
         		System.out.println ( "\n\nWaiting for connection on port " + portNum + "." );
         	}
