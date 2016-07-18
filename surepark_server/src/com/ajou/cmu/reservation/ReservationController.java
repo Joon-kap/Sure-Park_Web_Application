@@ -43,6 +43,7 @@ public class ReservationController {
 		System.out.println(rp);
 		
 //		int num = Integer.parseInt((String) rp.get("testValue"));
+		String str = (String)rp.get("SENSORUPDATE");
 		
 //		System.out.println("num : "+ num);
 		/*
@@ -64,7 +65,7 @@ public class ReservationController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		*/
 		
-		map.put("2", "BBBB");
+		map.put("RETUPDATE", str);
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));
 		
@@ -116,6 +117,7 @@ public class ReservationController {
 		// 대한 - 2016.07.18 13:01 - getAvailableCout() 함수로 받은 Object를 다시 obj에 넣고 그 값을 String 으로 꺼내서 이 값을 mv에 넣어서 전송한다.
 		
 		String AvailableParkingSpot = obj.toString();
+		System.out.println(AvailableParkingSpot);
 		
 		mv.addObject(AvailableParkingSpot);
 		

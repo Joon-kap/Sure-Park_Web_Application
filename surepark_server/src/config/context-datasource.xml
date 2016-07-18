@@ -12,7 +12,7 @@
 <!--  conflict test -->
  	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" 
  		p:driverClassName="net.sf.log4jdbc.DriverSpy" 
- 		p:url="jdbc:log4jdbc:mysql://127.0.0.1:3306/secure? autoReconnect=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" 
+ 		p:url="jdbc:log4jdbc:mysql://127.0.0.1:3306/sureparkdb? autoReconnect=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" 
  		p:username="root" p:password="teamA">
  			<!-- validationQuery:유효 검사용 쿼리( 1개 이상의 row를 반환하는 쿼리를 넣어주면 된다. ) --> 
 			<property name="validationQuery" value="select 1"/>

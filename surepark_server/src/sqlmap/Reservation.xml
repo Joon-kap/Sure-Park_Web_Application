@@ -25,7 +25,7 @@
 	
 	
 	
-	<select id="selectParkingReservation" parameterClass="RequestParameter" resultMap="revResult">
+	<select id="selectParkingReservation" parameterClass="RequestParameter" resultClass="java.util.HashMap">
 	SELECT AA.TOTAL_QTY,
            BB.PARKED_QTY, 
            AA.TOTAL_QTY - BB.PARKED_QTY AS AVABILE_QTY

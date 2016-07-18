@@ -119,6 +119,8 @@ public class ConnArduino implements Runnable {
 				} catch (Exception e) {
 
 					System.err.println("write failed::");
+					e.printStackTrace();
+//					System.err.println("err : " + e.printStackTrace());
 	        		//System.exit(1);
 
 				}
