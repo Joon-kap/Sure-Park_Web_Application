@@ -31,6 +31,10 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		return this.dao.countnumIdentifierObject(obj);
 	}
+	
+	public Object getCurrentStatusObject(Object obj) throws SQLException {
+		
+	}
 
 	@Override
 	public boolean edit(Object obj) throws SQLException {
