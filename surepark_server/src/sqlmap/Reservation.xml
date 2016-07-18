@@ -64,7 +64,7 @@
    		
    		FROM P_RESER_MST
    		
-   		WHERE P_RESER_ID = '요청에서 들어온 RESER_ID'
+   		WHERE P_RESER_ID = '요청에서 들어온 RESER_ID = requestparameter'
    	</select>
 	
 	<insert id="insertPakingReservation" parameterClass="RequestParameter">

@@ -27,6 +27,11 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectIdentifiers", obj);
 	}
 	
+	//대한 - 2016.07.18 13:26 - 현재 주차상태를 사용자한테 보내는 쿼리를 위한 Service 작성
+	public Object getCurrentStatusObject(Object obj) throws SQLException {
+		return getSqlMapClientTemplate().queryForObject("selectcurrentstatus", obj);
+	}
+	
 	@Override
 	public void delete(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
