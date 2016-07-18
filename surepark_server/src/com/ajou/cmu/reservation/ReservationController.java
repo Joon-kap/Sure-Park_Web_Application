@@ -148,13 +148,8 @@ public class ReservationController {
 		
 		Reservation obj = (Reservation) revService.getCurrentStatusObject(rp);
 		
-		mv.addObject(obj.getpReserId());
 		mv.addObject(obj.getpSpotNumber());
-		mv.addObject(obj.getpPayment());
-		mv.addObject(obj.getpPaymentYn());
-		mv.addObject(obj.getpCancelYn());
 		mv.addObject(obj.getpEnterTime());
-		mv.addObject(obj.getpExitTime());
 		
 		return mv;
 	}
