@@ -21,9 +21,15 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		return this.dao.select(obj);
 	}
 	
-	//대한 - 2016.07.17 21:32 - identifier 가져오는 쿼리로의 매핑을 위한 Service 로직 추가 구현
-	public Object getIdentifierObject(Object obj) throws SQLException {
-		return this.dao.selectIdentifier(obj);
+//	//대한 - 2016.07.17 21:32 - identifier 가져오는 쿼리로의 매핑을 위한 Service 로직 추가 구현
+//	public Object getIdentifierObject(Object obj) throws SQLException {
+//		return this.dao.selectIdentifier(obj);
+//	}
+	
+	//대한 - 2016.07.17 22:50 - identifier 를 DB에 검색해서 조회가 0이면 예약이 안된 것, 1이면 올바르므로 Gate Open, 2이상이면 문제가 있으므로 Dava 호출을 한다.
+	public Object countIdentifierObject(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		return this.dao.countnumIdentifierObject(obj);
 	}
 
 	@Override

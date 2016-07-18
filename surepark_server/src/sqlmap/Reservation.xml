@@ -24,20 +24,27 @@
 	</resultMap>
 	
 	<select id="selectParkingReservation" parameterClass="RequestParameter" resultMap="revResult">
-	SELECT AA.TOTAL_QTY, BB.PARKED_QTY, AA.TOTAL_QTY - BB.PARKED_QTY AS AVABILE_QTY
-  FROM 
-	( SELECT MAX(P_AVAIBLE_QTY) AS TOTAL_QTY FROM P_CONFIG_INFO  ) AA,  
-   ( SELECT COUNT(*) AS PARKED_QTY
-     FROM P_RESER_MST
-	 WHERE ( P_SPOT_NUMBER IS NOT NULL AND P_PAYMENT_YN IS NULL )
-	   OR  ( P_IDENTIFIER IS NOT NULL AND P_SPOT_NUMBER IS NULL ))
-	   AND SUBSTR(P_RESER_TIME,1,8) = '20160717' ) BB 
+	SELECT AA.TOTAL_QTY,
+           BB.PARKED_QTY, 
+           AA.TOTAL_QTY - BB.PARKED_QTY AS AVABILE_QTY
+  	  FROM
+      (
+        ( SELECT MAX(P_AVAIBLE_QTY) AS TOTAL_QTY
+          FROM P_CONFIG_INFO  ) AA,  
+        ( SELECT COUNT(*) AS PARKED_QTY
+             FROM P_RESER_MST
+         WHERE ( P_SPOT_NUMBER IS NOT NULL AND P_PAYMENT_YN IS NULL )
+            OR  ( P_IDENTIFIER IS NOT NULL AND P_SPOT_NUMBER IS NULL ))BB
+       )
 
 	</select>
 	
 	<select id="selectIdentifiers" parameterClass="RequestParameter" resultMap="revResult">
-		SELECT P_IDENTIFIER FROM P_RESER_MST
- 		WHERE P_IDENTIFIER IS NOT NULL  
+		SELECT  CASE COUNT(*) WHEN 0 THEN 'NOT RESERVED'
+									 WHEN 1 THEN 'APPROVED' 
+									 ELSE 'ERROR' END
+		  FROM P_RESER_MST
+ 		WHERE P_IDENTIFIER = 'RE22128783RT07171100'
    		AND P_SPOT_NUMBER IS NULL
    	</select>
 	
@@ -57,11 +64,8 @@
 			P_UPDATE_DT)
 		VALUE(
 			(select *from (select max(P_RESER_ID)+1 from p_reser_mst) next),
-			/*#pIdentifier#,*/
 			'RT11119999ET07171200',
-			/*#pReserTelno#,*/
-			'01011119999',
-			/*#pReserTime#,*/
+			#pReserTelno#,
 			'201607171200',
 			#pSpotNumber#,
 			#pPayment#,
@@ -75,12 +79,9 @@
 	
 	<update id="updatePakingReservation" parameterClass="RequestParameter">
 		 Update p_reser_mst
-   			set p_spot_number  = ifnull(#pSpotNumber#,'3'),
-   				/*p_spot_number  = ifnull(#pSpotNumber#,'3'),*/
+   			set p_spot_number  = '3',   				
    			    P_enter_time   = new()
-         Where substr(p_identifier,3,8) = '22128783'
-  		/* substr(p_identifier,3,8)  = #pIdentifier# */
-  		/* and p_reser_time = #pReserTime */
+         Where P_IDENTIFIER = 'RE22128783RT07171100'
 	</update>
 
 </sqlMap>

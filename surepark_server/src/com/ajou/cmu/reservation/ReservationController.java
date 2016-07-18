@@ -132,21 +132,19 @@ public class ReservationController {
 		return mv;
 	}
 	
+	//"pIdentifier=3434345ljkjl345"
+	
 	@RequestMapping("/rev/identify.do")
 	public ModelAndView compareIdentifier(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		
-		//Map<String, Object> map = new HashMap<String, Object>();
-		
-		//Reservation reservation = (Reservation) this.revService.getIdentifierObject(rp);
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String userIdentifierNumber = (String) rp.get("pIdentifier");
 		
 		
-		
-		int userIdentifierNumber = Integer.parseInt(revService.getIdentifierObject(obj)
 		
 		return mv;
 	}
