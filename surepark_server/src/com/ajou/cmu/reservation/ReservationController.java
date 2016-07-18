@@ -144,7 +144,15 @@ public class ReservationController {
 		
 		String userIdentifierNumber = (String) rp.get("pIdentifier");
 		
+		int retrieveResult = (int) revService.countIdentifierObject(userIdentifierNumber);
 		
+		if(retrieveResult == 0) {
+			//예약이 정상적으로 진행되지 않았음
+		}else if(retrieveResult == 1) {
+			//성공
+		}else {
+			//Dave 에게 알람을 준다.
+		}
 		
 		return mv;
 	}

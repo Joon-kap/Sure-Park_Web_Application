@@ -81,7 +81,8 @@
 		 Update p_reser_mst
    			set p_spot_number  = '3',   				
    			    P_enter_time   = new()
-         Where P_IDENTIFIER = 'RE22128783RT07171100'
+         Where p_identifier = 'RE22128783RT07171100'
+           and p_spot_number is null
 	</update>
 
 </sqlMap>
