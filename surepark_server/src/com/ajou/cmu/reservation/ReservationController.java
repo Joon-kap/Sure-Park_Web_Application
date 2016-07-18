@@ -109,7 +109,9 @@ public class ReservationController {
 		Reservation reservation = new Reservation();
 		
 //		ArrayList<Reservation> reservationList = (ArrayList<Reservation>) this.revService.getList(rp);
-		Object obj = this.revService.getAvailableCout();
+		//Object obj = this.revService.getAvailableCout();
+		
+		Reservation obj = (Reservation) this.revService.getAvailableCout();
 		
 		// 대한 - 2016.07.18 13:01 - getAvailableCout() 함수로 받은 Object를 다시 obj에 넣고 그 값을 String 으로 꺼내서 이 값을 mv에 넣어서 전송한다.
 		
