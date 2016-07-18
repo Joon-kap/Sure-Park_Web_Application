@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	}
 	
 	public Object getCurrentStatusObject(Object obj) throws SQLException {
-		
+		return null;
 	}
 
 	@Override
