@@ -169,6 +169,7 @@ public class ReservationController {
 		
 		//대한 - 2016.07.18 12:30 - 사용자로부터 받은 Identifier를 객체로 DAO에 전달 후 받은 카운트 값이 0이면 예약이 진행되지 않은 것 1이면 예약이 제대로 진행된 것, 2이상이면 문제가 있는 것으로 판단하는 로직
 		// retrieveResult의 값에 따라서 mv에 담는 value를 다르게 한다.
+		
 		if(retrieveResult == 0) {
 			//예약이 정상적으로 진행되지 않았음
 			mv.addObject(retrieveResult);

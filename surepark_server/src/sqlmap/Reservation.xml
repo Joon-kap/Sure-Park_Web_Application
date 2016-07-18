@@ -54,13 +54,8 @@
    	<!-- 대한 - 2016.07.18 13:12 - CurrentStateController에서 현재 주차장에 입차한 사용자의 정보를 보내기위한 쿼리 작성 --> 
    	<select id="selectcurrentstatus" parameterClass="RequestParameter" resultMap="revResult">
    		SELECT 
-   		P_RESER_ID,
    		P_SPOT_NUMBER,
-   		P_PAYMENT,
-   		P_PAYMENT_YN,
-   		P_CANCEL_YN,
    		P_ENTER_TIME,
-   		P_EXIT_TIME,
    		
    		FROM P_RESER_MST
    		
