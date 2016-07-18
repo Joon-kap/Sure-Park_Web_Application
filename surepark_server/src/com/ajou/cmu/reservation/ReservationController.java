@@ -1,6 +1,7 @@
 package com.ajou.cmu.reservation;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,7 +77,7 @@ public class ReservationController {
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
-		Reservation reservation = new Reservation();	
+		Reservation reservation = new Reservation();
 		
 		reservation.setpReserId(Integer.parseInt(rp.get("reservationID").toString()));
 		reservation.setpIdentifier(rp.get("Identifier").toString());
@@ -101,10 +102,22 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("/rev/available.do")
-	public ModelAndView retrieveAvailableSpot() throws Exception {
-		ModelAndView mv = new ModelAndView("Send This to Android");
+	public ModelAndView retrieveAvailableSpot(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Reservation reservation = new Reservation();
 		
-		revService.getObject(mv);
+		ArrayList<Reservation> reservationList = (ArrayList<Reservation>) this.revService.getList(rp);
+		
+		System.out.println(reservationList);
+		
+		if(reservationList.size() == 0) {
+			map.put("fail", "there is no available space for parking");
+		}else {
+			map.put("success", reservationList);
+		}
 		
 		return mv;
 		
@@ -120,8 +133,12 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("/rev/identify.do")
-	public ModelAndView compareIdentifier() throws Exception {
-		ModelAndView mv = new ModelAndView("");
+	public ModelAndView compareIdentifier(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		
+		
 		
 		revService.getObject(mv);
 		
