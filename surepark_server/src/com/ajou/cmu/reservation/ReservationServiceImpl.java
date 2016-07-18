@@ -69,4 +69,8 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public Object getAvailableCout() throws SQLException {
+		return dao.selectAvailable();
+	}
 }

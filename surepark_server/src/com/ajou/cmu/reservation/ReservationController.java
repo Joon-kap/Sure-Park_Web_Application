@@ -42,9 +42,9 @@ public class ReservationController {
 
 		System.out.println(rp);
 		
-		int num = Integer.parseInt((String) rp.get("testValue"));
+//		int num = Integer.parseInt((String) rp.get("testValue"));
 		
-		System.out.println("num : "+ num);
+//		System.out.println("num : "+ num);
 		/*
 		User user = (User) this.userService.getObject(rp);
 		
@@ -64,7 +64,7 @@ public class ReservationController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		*/
 		
-		map.put("1", "AAAA");
+		map.put("2", "BBBB");
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));
 		
@@ -108,16 +108,24 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Reservation reservation = new Reservation();
 		
-		ArrayList<Reservation> reservationList = (ArrayList<Reservation>) this.revService.getList(rp);
+//		ArrayList<Reservation> reservationList = (ArrayList<Reservation>) this.revService.getList(rp);
+		Object obj = this.revService.getAvailableCout();
 		
-		System.out.println(reservationList);
+		
+		//System.out.println(reservationList);
+		/*
+		if(reservationList == null){
+			map.put("fail", "there is no available space for parking");
+			mv.addObject("1", map);
+			return mv;
+		}
 		
 		if(reservationList.size() == 0) {
 			map.put("fail", "there is no available space for parking");
 		}else {
 			map.put("success", reservationList);
 		}
-		
+		*/
 		return mv;
 		
 	}
