@@ -83,10 +83,9 @@ public class ReservationController {
 		reservation.setpIdentifier(rp.get("Identifier").toString());
 		reservation.setpReserTelno(rp.get("TelephoneNumber").toString());
 		reservation.setpReserTime(rp.get("ReservationTime").toString());
-		reservation.setpWaitYn(rp.get("ReservationWaitingYN").toString());
+		
 		reservation.setpCancelYn(rp.get("ReservationCancelYN").toString());
-		reservation.setpDesc1(rp.get("AdditionalSpace1").toString());
-		reservation.setpDesc2(rp.get("AdditionalSpace2").toString());
+		
 		reservation.setpCreateDt(rp.get("ReservationCreateTime").toString());
 		reservation.setpUpdateDt(rp.get("ReservationUpdateTime").toString());
 				

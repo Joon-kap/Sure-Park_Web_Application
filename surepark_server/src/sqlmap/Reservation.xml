@@ -9,19 +9,21 @@
 	<typeAlias alias="rev" type="com.ajou.cmu.reservation.Reservation"/>
 	
 	<resultMap class="rev" id="revResult">
-		<result property="revReserId" column="P_RESER_ID"/>
-		<result property="revIdentifier" column="P_IDENTIFIER"/>
-		<result property="revReserTelno" column="P_RESER_TELNO"/>
-		<result property="revReserTime" column="P_RESER_TIME"/>
-		<result property="revSpotNumber" column="P_SPOT_NUMBER"/>
-		<result property="revPayMent" column="P_PAYMENT"/>
-		<result property="revPayMentYn" column="P_PAYMENT_YN"/>
-		<result property="revCancelYn" column="P_CANCEL_YN"/>
-		<result property="revEnterTime" column="P_ENTER_TIME"/>
-		<result property="revExitTime" column="P_EXIT_TIME"/>
-		<result property="revCreateDt" column="P_CREATE_DT"/>
-		<result property="revUpdateDt" column="P_UPDATE_DT"/>		
+		<result property="pReserId" column="P_RESER_ID"/>
+		<result property="pIdentifier" column="P_IDENTIFIER"/>
+		<result property="pReserTelno" column="P_RESER_TELNO"/>
+		<result property="pReserTime" column="P_RESER_TIME"/>
+		<result property="pSpotNumber" column="P_SPOT_NUMBER"/>
+		<result property="pPayment" column="P_PAYMENT"/>
+		<result property="pPaymentYn" column="P_PAYMENT_YN"/>
+		<result property="pCancelYn" column="P_CANCEL_YN"/>
+		<result property="pEnterTime" column="P_ENTER_TIME"/>
+		<result property="pExitTime" column="P_EXIT_TIME"/>
+		<result property="pCreateDt" column="P_CREATE_DT"/>
+		<result property="pUpdateDt" column="P_UPDATE_DT"/>		
 	</resultMap>
+	
+	
 	
 	<select id="selectParkingReservation" parameterClass="RequestParameter" resultMap="revResult">
 	SELECT AA.TOTAL_QTY,

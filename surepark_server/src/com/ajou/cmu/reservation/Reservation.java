@@ -6,10 +6,12 @@ public class Reservation {
 	private String pIdentifier;
 	private String pReserTelno;
 	private String pReserTime;
-	private String pWaitYn;
+	private String pSpotNumber;
+	private String pPayment;
+	private String pPaymentYn;
 	private String pCancelYn;
-	private String pDesc1;
-	private String pDesc2;
+	private String pEnterTime;
+	private String pExitTime;
 	private String pCreateDt;
 	private String pUpdateDt;
 	
@@ -49,12 +51,28 @@ public class Reservation {
 		this.pReserTime = pReserTime;
 	}
 
-	public String getpWaitYn() {
-		return pWaitYn;
+	public String getpSpotNumber() {
+		return pSpotNumber;
 	}
 
-	public void setpWaitYn(String pWaitYn) {
-		this.pWaitYn = pWaitYn;
+	public void setpSpotNumber(String pSpotNumber) {
+		this.pSpotNumber = pSpotNumber;
+	}
+
+	public String getpPayment() {
+		return pPayment;
+	}
+
+	public void setpPayment(String pPayment) {
+		this.pPayment = pPayment;
+	}
+
+	public String getpPaymentYn() {
+		return pPaymentYn;
+	}
+
+	public void setpPaymentYn(String pPaymentYn) {
+		this.pPaymentYn = pPaymentYn;
 	}
 
 	public String getpCancelYn() {
@@ -65,20 +83,20 @@ public class Reservation {
 		this.pCancelYn = pCancelYn;
 	}
 
-	public String getpDesc1() {
-		return pDesc1;
+	public String getpEnterTime() {
+		return pEnterTime;
 	}
 
-	public void setpDesc1(String pDesc1) {
-		this.pDesc1 = pDesc1;
+	public void setpEnterTime(String pEnterTime) {
+		this.pEnterTime = pEnterTime;
 	}
 
-	public String getpDesc2() {
-		return pDesc2;
+	public String getpExitTime() {
+		return pExitTime;
 	}
 
-	public void setpDesc2(String pDesc2) {
-		this.pDesc2 = pDesc2;
+	public void setpExitTime(String pExitTime) {
+		this.pExitTime = pExitTime;
 	}
 
 	public String getpCreateDt() {
@@ -96,5 +114,7 @@ public class Reservation {
 	public void setpUpdateDt(String pUpdateDt) {
 		this.pUpdateDt = pUpdateDt;
 	}
+
+	
 	
 }
