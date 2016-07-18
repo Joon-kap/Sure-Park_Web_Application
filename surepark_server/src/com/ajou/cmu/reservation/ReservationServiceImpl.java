@@ -20,6 +20,11 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public Object getObject(Object obj) throws SQLException {
 		return this.dao.select(obj);
 	}
+	
+	//대한 - 2016.07.17 21:32 - identifier 가져오는 쿼리로의 매핑을 위한 Service 로직 추가 구현
+	public Object getIdentifierObject(Object obj) throws SQLException {
+		return this.dao.selectIdentifier(obj);
+	}
 
 	@Override
 	public boolean edit(Object obj) throws SQLException {

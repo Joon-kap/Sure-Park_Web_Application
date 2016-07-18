@@ -138,9 +138,15 @@ public class ReservationController {
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		
+		//Map<String, Object> map = new HashMap<String, Object>();
+		
+		//Reservation reservation = (Reservation) this.revService.getIdentifierObject(rp);
+		
+		String userIdentifierNumber = (String) rp.get("pIdentifier");
 		
 		
-		revService.getObject(mv);
+		
+		int userIdentifierNumber = Integer.parseInt(revService.getIdentifierObject(obj)
 		
 		return mv;
 	}
