@@ -32,8 +32,9 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		return this.dao.countnumIdentifierObject(obj);
 	}
 	
+	//대한 - 2016.07.18 13:26 - 현재 주차상태를 사용자한테 보내는 쿼리를 위한 Service 작성
 	public Object getCurrentStatusObject(Object obj) throws SQLException {
-		return null;
+		return this.dao.getCurrentStatusObject(obj);
 	}
 
 	@Override
