@@ -114,7 +114,7 @@ public class ReservationController {
 		Reservation reservation = new Reservation();
 		
 
-		HashMap<String, Object> obj =  (HashMap)this.revService.getAvailableStatus();
+		HashMap<String, Object> obj =  (HashMap) this.revService.getAvailableStatus();
 		obj = null;
 		if(obj == null){
 			map.put("fail", "obj is null");
@@ -142,6 +142,8 @@ public class ReservationController {
 		
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Reservation reservation = new Reservation();
 		
 		Reservation obj = (Reservation) revService.getCurrentStatusObject(rp);
 		
@@ -160,6 +162,9 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String id = (String) rp.get("pIdentifier");
 	
+		HashMap<String, Object> obj =  (HashMap) this.revService.getReservationTimeObject(rp);
+		String userReservationTime = (String) obj.get("P_RESER_TIME");
+		
 		LocalDateTime now = LocalDateTime.now();
 		
 		int year = now.getYear();
@@ -194,6 +199,12 @@ public class ReservationController {
 			strminute = Integer.toString(minute);
 		
 		String CurrentTime = year + strmonth + strday + strhour + strminute;
+		
+		if(userReservationTime == CurrentTime) {
+			mv.addObject("success", "Success to check the identifier and open the gate");
+		}else {
+			mv.addObject("fail", "Fail to find the reservation");
+		}
 		
 		
 		
