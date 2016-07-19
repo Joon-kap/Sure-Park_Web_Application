@@ -20,6 +20,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import net.sf.json.JSONObject;
 
+import org.eclipse.jdt.internal.compiler.lookup.Scope.Substitutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -145,10 +146,18 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Reservation reservation = new Reservation();
 		
-		Reservation obj = (Reservation) revService.getCurrentStatusObject(rp);
+		Reservation rev1 = (Reservation) revService.getCurrentStatusObject(rp);
 		
-		mv.addObject(obj.getpSpotNumber());
-		mv.addObject(obj.getpEnterTime());
+		
+//		if(rev1 = null) {
+//			
+//		}
+		
+		
+		map.put("P_SPOT_NUMBER", rev1.getpSpotNumber());
+		map.put("P_ENTER_TIME", rev1.getpEnterTime());
+		
+		mv.addObject("map", map);
 		
 		return mv;
 	}
@@ -198,12 +207,23 @@ public class ReservationController {
 		}else
 			strminute = Integer.toString(minute);
 		
-		String CurrentTime = year + strmonth + strday + strhour + strminute;
+		int userReservationTimeYear = Integer.parseInt(userReservationTime.substring(0, 4));
+		int userReservationTimeMonth = Integer.parseInt(userReservationTime.substring(4, 6));
+		int userReservationTimeDay = Integer.parseInt(userReservationTime.substring(6, 8));
+		int userReservationTimeHour	= Integer.parseInt(userReservationTime.substring(8, 10));
+		int userReservationTimeMinute = Integer.parseInt(userReservationTime.substring(10, 12));
 		
-		if(userReservationTime == CurrentTime) {
+		int userReservationTime2 = (userReservationTimeYear * 12 * 30 * 24 * 60) + (userReservationTimeMonth * 30 * 24 * 60) + (userReservationTimeDay * 24 * 60) + (userReservationTimeHour * 60) + userReservationTimeMinute;
+		
+		String CurrentTime = stryear + strmonth + strday + strhour + strminute;
+		int CurrentTime2 = (year * 12 * 30 * 24 * 60) + (month * 30 * 24 * 60) + (day * 24 * 60) + (hour * 60) + (minute);
+		
+		if((userReservationTime2 + 30) <= (CurrentTime2)) {
 			mv.addObject("success", "Success to check the identifier and open the gate");
+			System.out.println("Sucess Log");
 		}else {
 			mv.addObject("fail", "Fail to find the reservation");
+			System.out.println("Fail Log");
 		}
 		
 		

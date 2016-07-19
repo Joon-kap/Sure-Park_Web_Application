@@ -59,7 +59,7 @@
    		
    		FROM P_RESER_MST
    		
-   		WHERE P_RESER_TELNO = #pReserTelno#
+   		WHERE P_IDENTIFIER = #pIdentifier#
    	</select>
    	
    	<!-- 대한 - 2016.07.18 23:38 - Identifier를 가져오기 전에 CurrentTime과 ReservationTime 비교를 위해서 ReservationTime 가져오는 쿼리  -->
