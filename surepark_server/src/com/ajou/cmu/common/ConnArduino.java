@@ -9,7 +9,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+import com.ajou.cmu.sensor.SensorController;
+
 public class ConnArduino implements Runnable {
+	String OpenEntryMessage = "SERVERREQ_OPEN_ENTRY";
+	String OpenExitMessage = "SERVERREQ_OPEN_EXIT";
+
 	public void run() {
 		test();
 	}
@@ -89,14 +94,14 @@ public class ConnArduino implements Runnable {
 
     		System.out.println ("Connection successful");
     		System.out.println ("Waiting for input.....");
-    		String scanmsg;
+//    		String scanmsg;
     		BufferedWriter out = null;
     		BufferedReader in = null;
-    		Scanner scan = null;
+//    		Scanner scan = null;
 			try {
 				out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 				in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream()));
-				scan = new Scanner(System.in);
+//				scan = new Scanner(System.in);
 
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -107,12 +112,22 @@ System.out.println("-------while(true) ENTER------------");
     		while(true) {
 
 	 	    	try
-	 	    	{
-	    			scanmsg = scan.nextLine();
+	 	    	{	
+	 	    		//Check valid period of Identification
+	 	    		//Check valid period of gate open message
+	    			//scanmsg = scan.nextLine();
+					if(SensorController.entrygateIrStatus==0) {
+						SensorController.entrygateIrStatus=1;
+						
+		 				System.out.println( "Sending OpenEntryMessage message to client...." );
+		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );
+						out.flush();
+						
+					} else {
+				    	System.out.println("MONITORING = " + SensorController.entrygateIrStatus);
+						wait(100);
+					}
 
-	 				System.out.println( "Sending message to client...." );
-	   				out.write( scanmsg, 0, scanmsg.length() );
-					out.flush();
 				} catch (Exception e) {
 					System.err.println("write failed::");
 					e.printStackTrace();
@@ -142,7 +157,7 @@ System.out.println("-------while(true) ENTER------------");
 				System.out.println("-------CLOSE TRY------------");
 				out.close();
 				in.close();
-				scan.close();
+				//scan.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.err.println(e.toString());
