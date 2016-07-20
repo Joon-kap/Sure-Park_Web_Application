@@ -21,10 +21,38 @@ public class SensorController {
 	@Resource(name = "sensorService")
 	private SensorServiceImpl sensorService;
 	
-	public static int gateIrStatus = 0;
+	public static int entrygateIrStatus = 1;
 	
-		
+//	@RequestMapping("/rev/arduinoupdate.do")
 	@RequestMapping("/sensor/changeStatus.do")
+	   public ModelAndView test(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	      RequestParameter rp = Utils.extractRequestParameters(req);   
+	      ModelAndView mnv = new ModelAndView("/common/json_result");
+	       /*git test2*/
+	      Map<String, Object> map = new HashMap<String, Object>();
+//	      Map<String, Object> userMap = new HashMap<String, Object>();
+
+	      System.out.println(rp);
+	      
+//	      int num = Integer.parseInt((String) rp.get("testValue"));
+	      String str = (String)rp.get("SENSORUPDATE");
+	      
+	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
+	      if(str.charAt(0)=='0') {
+	    	  entrygateIrStatus = 0;
+	    	  System.out.println("entrygateIrStatus = " + entrygateIrStatus);
+
+	      }
+
+	      //SensorController.gateIrStatus;
+	      map.put("RETUPDATE", str);
+	      mnv.addObject("map", map);
+	      mnv.addObject("callback", req.getParameter("callback"));
+	      
+	      return mnv;
+	   }
+		
+	@RequestMapping("/sensor/changeStatusTest.do")
 	public ModelAndView changeStatus(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	
 		ModelAndView mnv = new ModelAndView("/common/json_result");
@@ -56,7 +84,7 @@ public class SensorController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		*/
 		System.out.println("change status");
-		gateIrStatus = 1;
+		//OpenEntryMessage = 0;
 		
 		map.put("1", "AAAA");
 		mnv.addObject("map", map);
