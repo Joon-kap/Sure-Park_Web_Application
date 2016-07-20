@@ -9,7 +9,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+import com.ajou.cmu.reservation.ReservationController;
 import com.ajou.cmu.sensor.SensorController;
+import com.ajou.cmu.sensor.SensorStatus;
 
 public class ConnArduino implements Runnable {
 	String OpenEntryMessage = "SERVERREQ_OPEN_ENTRY";
@@ -110,22 +112,29 @@ public class ConnArduino implements Runnable {
 System.out.println("-------while(true) ENTER------------");
 
     		while(true) {
+    			try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 	 	    	try
 	 	    	{	
 	 	    		//Check valid period of Identification
 	 	    		//Check valid period of gate open message
 	    			//scanmsg = scan.nextLine();
-					if(SensorController.entrygateIrStatus==0) {
-						SensorController.entrygateIrStatus=1;
+					if(SensorStatus.getEntryGate()==0 && ReservationController.identification == 1) {
+						SensorStatus.setEntryGate(1);
+						ReservationController.identification=0;
 						
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
 		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );
 						out.flush();
 						
 					} else {
-				    	System.out.println("MONITORING = " + SensorController.entrygateIrStatus);
-						wait(100);
+				    	System.out.println("MONITORING = " + SensorStatus.getEntryGate());
+						
 					}
 
 				} catch (Exception e) {

@@ -21,7 +21,8 @@ public class SensorController {
 	@Resource(name = "sensorService")
 	private SensorServiceImpl sensorService;
 	
-	public static int entrygateIrStatus = 1;
+	//public static int entrygateIrStatus = 1;
+	//public static int spot1IrStatus[] = new int[5];
 	
 //	@RequestMapping("/rev/arduinoupdate.do")
 	@RequestMapping("/sensor/changeStatus.do")
@@ -37,12 +38,26 @@ public class SensorController {
 //	      int num = Integer.parseInt((String) rp.get("testValue"));
 	      String str = (String)rp.get("SENSORUPDATE");
 	      
+	      SensorStatus.setSensors(str);
+	      
+	      System.out.println("entrygateIr = " + SensorStatus.getEntryGate());
+	      System.out.println("exitIr = " + SensorStatus.getEntryGate());
+	      System.out.println("spot1Ir = " + SensorStatus.getEntryGate());
+	      System.out.println("spot2Ir = " + SensorStatus.getEntryGate());
+	      System.out.println("spot3Ir = " + SensorStatus.getEntryGate());
+	      System.out.println("spot4Ir = " + SensorStatus.getEntryGate());
+	      
 	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
-	      if(str.charAt(0)=='0') {
-	    	  entrygateIrStatus = 0;
-	    	  System.out.println("entrygateIrStatus = " + entrygateIrStatus);
-
+	      /*
+	      if(SensorStatus.getEntryGate()==0) {
+	    	  System.out.println("entrygateIrStatus = " + SensorStatus.getEntryGate());
 	      }
+	      
+	      if(str.charAt(1)=='0') {
+	    //	  spot1IrStatus = 0;
+	    	  System.out.println("entrygateIrStatus = " + entrygateIrStatus);
+	      }
+	      */
 
 	      //SensorController.gateIrStatus;
 	      map.put("RETUPDATE", str);

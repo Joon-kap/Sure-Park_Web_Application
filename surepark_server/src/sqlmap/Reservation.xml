@@ -41,13 +41,13 @@
 
 	</select>
 	
-	<select id="selectIdentifiers" parameterClass="RequestParameter" resultMap="revResult">
-		SELECT  CASE COUNT(*) WHEN 0 THEN 'NOT RESERVED'
-									 WHEN 1 THEN 'APPROVED' 
+	<select id="selectIdentifiers" parameterClass="RequestParameter" resultClass="java.util.HashMap">
+   		SELECT (SELECT  CASE COUNT(*) WHEN 0 THEN 'FAIL'
+									 WHEN 1 THEN 'SUCCESS' 
 									 ELSE 'ERROR' END
 		  FROM P_RESER_MST
- 		WHERE P_IDENTIFIER = 'RE22128783RT07171100'
-   		AND P_SPOT_NUMBER IS NULL
+ 		WHERE P_IDENTIFIER = #pIdentifier#
+   		AND P_SPOT_NUMBER IS NULL) as STATUS
    	</select>
    	
    	
@@ -86,11 +86,11 @@
 			now())
 	</insert>
 	
-	<update id="updatePakingReservation" parameterClass="RequestParameter">
-		 Update p_reser_mst
-   			set p_spot_number  = '3',   				
-   			    P_enter_time   = new()
-         Where p_identifier = 'RE22128783RT07171100'
+	<update id="updatePakingSpot" parameterClass="RequestParameter">
+		 UPDATE p_reser_mst
+   			SET p_spot_number  = #pSpotNumber#,   				
+   			    P_enter_time   = now()
+         WHERE p_identifier = #pIdentifier#
            and p_spot_number is null
 	</update>
 

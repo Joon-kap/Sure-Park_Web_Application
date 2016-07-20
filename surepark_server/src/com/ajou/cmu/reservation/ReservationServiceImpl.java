@@ -83,4 +83,8 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public Object getAvailableStatus() throws SQLException {
 		return dao.selectAvailable();
 	}
+	
+	public void updateSpot(Object obj) throws SQLException{
+		dao.updateParkingSpot(obj);
+	}
 }

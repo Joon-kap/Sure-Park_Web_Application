@@ -27,10 +27,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
+import com.ajou.cmu.sensor.SensorController;
+import com.ajou.cmu.sensor.SensorStatus;
 
 
 @Controller
 public class ReservationController {
+	
+	public static int identification = 0;
 	
 	@Resource(name = "revService")
 	private ReservationServiceImpl revService;
@@ -132,6 +136,23 @@ public class ReservationController {
 		System.out.println(rp);
 		
 		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		/*
+		if(SensorController.spot1IrStatus == 0){
+			
+		}
+		*/
+		int spot = SensorStatus.getChangedSpotSensor();
+		if(spot == 0){
+			map.put("result", "fail");
+			mv.addObject("map", map);
+			mv.addObject("callback", req.getParameter("callback"));
+			return mv;
+		}else{
+			rp.put("pSpotNumber", spot);
+			revService.updateSpot(rp);
+		}
+		
 		retMap = (HashMap) revService.getCurrentStatusObject(rp);
 		
 		System.out.println(retMap.get("P_SPOT_NUMBER"));
@@ -157,6 +178,7 @@ public class ReservationController {
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
 		String id = (String) rp.get("pIdentifier");
 	
 		LocalDateTime now = LocalDateTime.now();
@@ -195,6 +217,24 @@ public class ReservationController {
 		String CurrentTime = year + strmonth + strday + strhour + strminute;
 		
 		
+		retMap = (HashMap)revService.countIdentifierObject(rp);
+		
+		if(retMap != null){
+			
+			if(SensorStatus.getEntryGate() == 0 && retMap.get("STATUS").toString().equals("SUCCESS")){
+				identification = 1;
+				mv.addObject("map", retMap);
+			}else{
+				retMap.put("STATUS", "FAIL");
+				mv.addObject("map", retMap);
+			}
+		}else{
+			map.put("ret", "fail");
+			mv.addObject("map", map);
+		}
+
+		mv.addObject("callback", req.getParameter("callback"));
+
 		
 //		String tmp = id.substring(10, id.length());
 		

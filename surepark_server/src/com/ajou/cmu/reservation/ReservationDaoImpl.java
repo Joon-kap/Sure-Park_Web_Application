@@ -65,10 +65,15 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	@Override
 	public void update(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
-		getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.updatePakingReservation", obj);
+		getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.updatePakingSpot", obj);
 	}
 
 	public Object selectAvailable() throws SQLException{
 		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectParkingReservation");
+	}
+	
+	public void updateParkingSpot(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.updatePakingSpot", obj);
 	}
 }
