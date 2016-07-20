@@ -30,7 +30,7 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	
 	//대한 - 2016.07.18 13:26 - 현재 주차상태를 사용자한테 보내는 쿼리를 위한 Service 작성
 	public Object getCurrentStatusObject(Object obj) throws SQLException {
-		return getSqlMapClientTemplate().queryForObject("selectcurrentstatus", obj);
+		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectcurrentstatus", obj);
 	}
 	
 	//대한 - 2016.07.18 23:52 - 사용자로부터 Gate Open Message를 받았을 때 현재시간과 ReservationTime을 비교하기 위해서  ReservationTime를 가져오기 위한 Dao 로직

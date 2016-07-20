@@ -145,11 +145,24 @@ public class ReservationController {
 		
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(rp);
 		
-		Reservation obj = (Reservation) revService.getCurrentStatusObject(rp);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		retMap = (HashMap) revService.getCurrentStatusObject(rp);
 		
-		mv.addObject(obj.getpSpotNumber());
-		mv.addObject(obj.getpEnterTime());
+		System.out.println(retMap.get("P_SPOT_NUMBER"));
+		if(retMap.get("P_SPOT_NUMBER") == null){
+			System.out.println("==========================");
+			map.put("result", "fail");
+			mv.addObject("map", map);
+		}else{
+			mv.addObject("map", retMap);
+		}
+		
+		//mv.addObject(obj.getpSpotNumber());
+		//mv.addObject(obj.getpEnterTime());
+		mv.addObject("callback", req.getParameter("callback"));
 		
 		return mv;
 	}
