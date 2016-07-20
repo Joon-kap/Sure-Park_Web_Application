@@ -36,6 +36,11 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public Object getCurrentStatusObject(Object obj) throws SQLException {
 		return this.dao.getCurrentStatusObject(obj);
 	}
+	
+	//ด๋วั - 2016.07.18 23:54 - 
+	public Object getReservationTimeObject(Object obj) throws SQLException {
+		return this.dao.getReservationTimeObject(obj);
+	}
 
 	@Override
 	public boolean edit(Object obj) throws SQLException {
