@@ -43,13 +43,8 @@ public class ConnArduino implements Runnable {
     	ServerSocket serverSocket = null;							// Server socket object
 		Socket clientSocket = null;									// Client socket object
     	int	portNum = 550;											// Port number for server socket
-    	String[]serverMsg = {	"Hello there little Arduino...\n", 	// Server messages. You can add
-    							"Hello Arduino from the PC...\n"	//  more messages here if you want to.
-    						};										//
-    	int msgNum = 0;												// Message to display from serverMsg[]
-   		String inputLine;											// Data from client
 
-		while(true)
+    	while(true)
 		{
     		/*****************************************************************************
     	 	* First we instantiate the server socket. The ServerSocket class also does
@@ -66,7 +61,8 @@ public class ConnArduino implements Runnable {
     		catch (IOException e)
         	{
         		System.err.println( "\n\nCould not instantiate socket on port: " + portNum + " " + e);
-        		System.exit(1);
+        		break;
+        		//System.exit(1);
         	}
 
 			/*****************************************************************************
@@ -82,7 +78,8 @@ public class ConnArduino implements Runnable {
     		catch (Exception e)
         	{
         		System.err.println("Accept failed.");
-        		System.exit(1);
+        		break;
+        		//System.exit(1);
         	}
 
 			/*****************************************************************************
@@ -95,48 +92,32 @@ public class ConnArduino implements Runnable {
     		String scanmsg;
     		BufferedWriter out = null;
     		BufferedReader in = null;
+    		Scanner scan = null;
 			try {
 				out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 				in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream()));
+				scan = new Scanner(System.in);
+
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Scanner scan = new Scanner(System.in);
+System.out.println("-------while(true) ENTER------------");
 
     		while(true) {
 
-    			scanmsg = scan.nextLine();
 	 	    	try
 	 	    	{
+	    			scanmsg = scan.nextLine();
 
 	 				System.out.println( "Sending message to client...." );
 	   				out.write( scanmsg, 0, scanmsg.length() );
 					out.flush();
-
-	    			
-					
 				} catch (Exception e) {
-
 					System.err.println("write failed::");
 					e.printStackTrace();
-//					System.err.println("err : " + e.printStackTrace());
-	        		//System.exit(1);
-
+					break;
 				}
-				
-    			if(scanmsg.equals("bye")) {
-    				break;
-    			}
-    			
-/*
- 	    		if ((inputLine = in.readLine()) != null)
-    			{
-      				System.out.println ("Last Client Message: " + inputLine);
-
-    			}*/
-
-    			
     		}
 			/*****************************************************************************
 			 * Print out the fact that we are sending a message to the client, then we
@@ -146,24 +127,35 @@ public class ConnArduino implements Runnable {
 			/*****************************************************************************
     		 * Close up the I/O ports then close up the sockets
 		 	 *****************************************************************************/
-
-	    	try {
-				out.close();
-				in.close();
+			System.out.println ( "\n.........................\n" );
+			try {
+				System.out.println("-------Socket CLOSE TRY------------");
 				clientSocket.close();
-		    	serverSocket.close();
+				serverSocket.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				System.err.println(e.toString());
 				e.printStackTrace();
+				//break;
 			}
-	    	
-			scan.close();
-
-   		 	
-
-			System.out.println ( "\n.........................\n" );
+    		try {
+				System.out.println("-------CLOSE TRY------------");
+				out.close();
+				in.close();
+				scan.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.err.println(e.toString());
+				e.printStackTrace();
+				break;
+			}	
+			
 
     	} // while loop
+		
+
+
+    	
    	} // main
 
 }
