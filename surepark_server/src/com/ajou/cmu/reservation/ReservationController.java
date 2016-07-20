@@ -115,7 +115,10 @@ public class ReservationController {
 		
 
 		HashMap<String, Object> obj =  (HashMap)this.revService.getAvailableStatus();
-		obj = null;
+		
+		System.out.println(obj.get("TOTAL_QTY"));
+		System.out.println(obj.get("AVABILE_QTY"));
+		
 		if(obj == null){
 			map.put("fail", "obj is null");
 		}else{
