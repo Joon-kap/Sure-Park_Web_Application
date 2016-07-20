@@ -1,7 +1,11 @@
 package com.ajou.cmu.reservation;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,31 +61,31 @@ public class ReservationController {
 	
 	@RequestMapping("/rev/reservation.do")
 	public ModelAndView saveReservation(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
 		Reservation reservation = new Reservation();
 		
-		reservation.setpReserId(Integer.parseInt(rp.get("reservationID").toString()));
-		reservation.setpIdentifier(rp.get("Identifier").toString());
-		reservation.setpReserTelno(rp.get("TelephoneNumber").toString());
-		reservation.setpReserTime(rp.get("ReservationTime").toString());
+		String phone = rp.get("pReserTelno").toString();
+		String time = rp.get("pReserTime").toString();
+		String id = createIdentifier(phone, time);
+			
+		rp.put("pIdentifier", id);
+						
+		revService.save(rp);
 		
-		reservation.setpCancelYn(rp.get("ReservationCancelYN").toString());
+		map.put("pIdentifier", id);
 		
-		reservation.setpCreateDt(rp.get("ReservationCreateTime").toString());
-		reservation.setpUpdateDt(rp.get("ReservationUpdateTime").toString());
-				
-		revService.save(reservation);
-		
-		if(reservation !=null)	map.put("success", "Success to Registration");
-		else map.put("fail", "Fail to Registration");
-		
+		/*
+		if(reservation !=null)	
+			map.put("success", "Success to Registration");
+		else 
+			map.put("fail", "Fail to Registration");
+		*/
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
-			
-			return mv;
+
+		return mv;
 	}
 	
 	@RequestMapping("/rev/available.do")
@@ -92,33 +96,29 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Reservation reservation = new Reservation();
 		
-//		ArrayList<Reservation> reservationList = (ArrayList<Reservation>) this.revService.getList(rp);
-		//Object obj = this.revService.getAvailableCout();
+
+		HashMap<String, Object> obj =  (HashMap)this.revService.getAvailableStatus();
 		
-		Reservation obj = (Reservation) this.revService.getAvailableCout();
+		System.out.println(obj.get("TOTAL_QTY"));
+		System.out.println(obj.get("AVABILE_QTY"));
+		
+		if(obj == null){
+			map.put("fail", "obj is null");
+		}else{
+			System.out.println(obj.get("TOTAL_QTY"));
+			System.out.println(obj.get("AVABILE_QTY"));
+			
+			map.put("TOTAL_QTY", obj.get("TOTAL_QTY"));
+			map.put("AVABILE_QTY", obj.get("AVABILE_QTY"));
+			
+		}
 		
 		// 대한 - 2016.07.18 13:01 - getAvailableCout() 함수로 받은 Object를 다시 obj에 넣고 그 값을 String 으로 꺼내서 이 값을 mv에 넣어서 전송한다.
+			
 		
-		String AvailableParkingSpot = obj.toString();
-		System.out.println(AvailableParkingSpot);
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
 		
-		mv.addObject(AvailableParkingSpot);
-		
-		
-		//System.out.println(reservationList);
-		/*
-		if(reservationList == null){
-			map.put("fail", "there is no available space for parking");
-			mv.addObject("1", map);
-			return mv;
-		}
-		
-		if(reservationList.size() == 0) {
-			map.put("fail", "there is no available space for parking");
-		}else {
-			map.put("success", reservationList);
-		}
-		*/
 		return mv;
 		
 	}
@@ -141,29 +141,109 @@ public class ReservationController {
 	
 	@RequestMapping("/rev/identify.do")
 	public ModelAndView compareIdentifier(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
-		String userIdentifierNumber = (String) rp.get("pIdentifier");
+		String id = (String) rp.get("pIdentifier");
+	
+		LocalDateTime now = LocalDateTime.now();
 		
-		int retrieveResult = (int) revService.countIdentifierObject(userIdentifierNumber);
+		int year = now.getYear();
+		String stryear = Integer.toString(year);
+		
+		String strmonth = null;
+		int month = now.getMonthValue();
+		if(month < 10) {
+			strmonth = "0" + Integer.toString(month);
+		}else
+			strmonth = Integer.toString(month);
+		
+		String strday = null;
+		int day = now.getDayOfMonth();
+		if(day < 10) {
+			strday = "0" + Integer.toString(day);
+		}else
+			strday = Integer.toString(day);
+		
+		String strhour = null;
+		int hour = now.getHour();
+		if(hour < 10) {
+			strhour = "0" + Integer.toString(hour);
+		}else
+			strhour = Integer.toString(hour);
+		
+		String strminute = null;
+		int minute = now.getMinute();
+		if(minute < 10) {
+			strminute = "0" + Integer.toString(minute);
+		}else
+			strminute = Integer.toString(minute);
+		
+		String CurrentTime = year + strmonth + strday + strhour + strminute;
+		
+		
+		
+//		String tmp = id.substring(10, id.length());
+		
+//		long now = System.currentTimeMillis();
+//		Date date = new Date(now);
+//		
+//	/*	System.out.println(date.getHours() +","+date.getDate() +","+ date.getMinutes() +","+date.getDate() +","+date.getMonth()+1 +","+date.getTime());
+//		System.out.println((int)date.getYear() +1900);
+//		*/
+//		
+//		String str = "201607182030";
+//		
+//		String ymd = tmp.substring(0, 8);
+//		int hour = Integer.parseInt(tmp.substring(8, 10));
+//		int min = Integer.parseInt(tmp.substring(10, 12));
+//		
+//		Date date = new Date(now);
+//		
+//		System.out.println(date);
+//		
+//		Time time = new Time(System.currentTimeMillis());
+//        Time time2 = new Time(System.currentTimeMillis());
+//		
+        /*07182000*/
+		//		RT3234567ET07182000
+		 
+//        SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMddHHmmssSSS"); 
+//        String strDT = dayTime.format(new Date(time)); 
+//        System.out.println(strDT); 
+//		
+//		
+//		
+//		int retrieveResult = (int) revService.countIdentifierObject(userIdentifierNumber);
 		
 		//대한 - 2016.07.18 12:30 - 사용자로부터 받은 Identifier를 객체로 DAO에 전달 후 받은 카운트 값이 0이면 예약이 진행되지 않은 것 1이면 예약이 제대로 진행된 것, 2이상이면 문제가 있는 것으로 판단하는 로직
 		// retrieveResult의 값에 따라서 mv에 담는 value를 다르게 한다.
 		
-		if(retrieveResult == 0) {
-			//예약이 정상적으로 진행되지 않았음
-			mv.addObject(retrieveResult);
-		}else if(retrieveResult == 1) {
-			//성공
-			mv.addObject(retrieveResult);
-		}else {
-			//Dave 에게 알람을 준다.
-			mv.addObject(retrieveResult);
-		}
+//		if(retrieveResult == 0) {
+//			//예약이 정상적으로 진행되지 않았음
+//			mv.addObject(retrieveResult);
+//		}else if(retrieveResult == 1) {
+//			//성공
+//			mv.addObject(retrieveResult);
+//		}else {
+//			//Dave 에게 알람을 준다.
+//			mv.addObject(retrieveResult);
+//		}
 		
 		return mv;
+	}
+	
+	public String createIdentifier(String phone, String time){
+		String id = null;
+		
+		StringBuilder sb = new StringBuilder("RT");
+		sb.append(phone.substring(3, phone.length()));
+		sb.append("ET");
+		sb.append(time);
+		
+		
+		id = sb.toString();
+		return id; 
 	}
 
 }

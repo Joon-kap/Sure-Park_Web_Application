@@ -25,7 +25,7 @@
 	
 	
 	
-	<select id="selectParkingReservation" parameterClass="RequestParameter" resultClass="java.util.HashMap">
+	<select id="selectParkingReservation" resultClass="java.util.HashMap">
 	SELECT AA.TOTAL_QTY,
            BB.PARKED_QTY, 
            AA.TOTAL_QTY - BB.PARKED_QTY AS AVABILE_QTY
@@ -59,34 +59,30 @@
    		
    		FROM P_RESER_MST
    		
-   		WHERE P_RESER_ID = '요청에서 들어온 RESER_ID = requestparameter'
+   		WHERE P_IDENTIFIER = #pIdentifier#
    	</select>
+   	
+   	<!-- 대한 - 2016.07.18 23:38 - Identifier를 가져오기 전에 CurrentTime과 ReservationTime 비교를 위해서 ReservationTime 가져오는 쿼리  -->
+   	<select id="selectreservationtime" parameterClass="RequestParameter" resultMap="revResult">
+   		SELECT
+   		P_RESER_TIME
+   		
+   		FROM P_RESER_MST
+   		
+   		WHERE P_IDENTIFIER = #pIdentifier#
+	</select>
 	
 	<insert id="insertPakingReservation" parameterClass="RequestParameter">
 		 INSERT INTO p_reser_mst(
-			P_RESER_ID,
 			P_IDENTIFIER,
 			P_RESER_TELNO,
 			P_RESER_TIME,
-			P_SPOT_NUMBER,
-			P_PAYMENT,
-			P_PAYMENT_YN,
-			P_CANCEL_YN,
-			P_ENTER_TIME,
-			P_EXIT_TIME,
 			P_CREATE_DT,
 			P_UPDATE_DT)
 		VALUE(
-			(select *from (select max(P_RESER_ID)+1 from p_reser_mst) next),
-			'RT11119999ET07171200',
+			#pIdentifier#,
 			#pReserTelno#,
-			'201607171200',
-			#pSpotNumber#,
-			#pPayment#,
-			#pPaymentYn#,
-			#pCancelYn#,
-			now(),
-			now(),			
+			#pReserTime#,
 			now(),
 			now())
 	</insert>
