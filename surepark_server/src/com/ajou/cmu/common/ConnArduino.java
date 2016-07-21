@@ -1,3 +1,4 @@
+
 package com.ajou.cmu.common;
 
 import java.io.BufferedReader;
@@ -124,9 +125,14 @@ System.out.println("-------while(true) ENTER------------");
 	 	    		//Check valid period of Identification
 	 	    		//Check valid period of gate open message
 	    			//scanmsg = scan.nextLine();
+	 	    		
+	 	    		System.out.println(SensorStatus.getEntryGate());
+	 	    		System.out.println(ReservationController.identification);
 					if(SensorStatus.getEntryGate()==0 && ReservationController.identification == 1) {
 						SensorStatus.setEntryGate(1);
 						ReservationController.identification=0;
+						
+						
 						
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
 		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );

@@ -74,6 +74,6 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	
 	public void updateParkingSpot(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
-		getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.updatePakingSpot", obj);
+		getSqlMapClientTemplate().update("com.ajou.cmu.reservation.updatePakingSpot", obj);
 	}
 }

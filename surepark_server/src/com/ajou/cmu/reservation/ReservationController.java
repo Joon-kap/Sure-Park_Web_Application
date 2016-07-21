@@ -2,6 +2,8 @@ package com.ajou.cmu.reservation;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import com.ajou.cmu.sensor.SensorStatus;
 public class ReservationController {
 	
 	public static int identification = 0;
+	public static int gp = 30;
 	
 	@Resource(name = "revService")
 	private ReservationServiceImpl revService;
@@ -143,12 +146,41 @@ public class ReservationController {
 		}
 		*/
 		int spot = SensorStatus.getChangedSpotSensor();
+		System.out.println("===============" + spot);
 		if(spot == 0){
 			map.put("result", "fail");
 			mv.addObject("map", map);
 			mv.addObject("callback", req.getParameter("callback"));
 			return mv;
 		}else{
+			long now = System.currentTimeMillis();
+			Date date = new Date(now);
+			System.out.println((int)date.getYear() +1900+ "," + ((int)date.getMonth()+1) +","+date.getDate() +","+ date.getHours()+","+ date.getMinutes());
+			String ctime = ""+((int)date.getYear() +1900);
+			
+			int month = (int)date.getMonth()+1;
+			if(month <10)
+				ctime += "0";
+			ctime += month;
+			
+			int day = date.getDate();
+			if(day <10)
+				ctime += "0";
+			ctime += day;
+			
+			int hour = (int)date.getHours();
+			if(hour <10)
+				ctime += "0";
+			ctime += hour;
+			
+			int min = (int)date.getMinutes();
+			if(min <10)
+				ctime += "0";
+			ctime += min;
+			
+			System.out.println(ctime);
+			
+			rp.put("cTime", ctime);
 			rp.put("pSpotNumber", spot);
 			revService.updateSpot(rp);
 		}
@@ -181,6 +213,7 @@ public class ReservationController {
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		String id = (String) rp.get("pIdentifier");
 	
+		/*
 		LocalDateTime now = LocalDateTime.now();
 		
 		int year = now.getYear();
@@ -215,15 +248,20 @@ public class ReservationController {
 			strminute = Integer.toString(minute);
 		
 		String CurrentTime = year + strmonth + strday + strhour + strminute;
+		*/
+	
 		
+		//timeTest(id);
 		
 		retMap = (HashMap)revService.countIdentifierObject(rp);
 		
 		if(retMap != null){
-			
+			System.out.println("===========SensorStatus.getEntryGate() : " + SensorStatus.getEntryGate());
+			System.out.println("===========retMap.get('STATUS').toString() : " + retMap.get("STATUS").toString());
 			if(SensorStatus.getEntryGate() == 0 && retMap.get("STATUS").toString().equals("SUCCESS")){
 				identification = 1;
 				mv.addObject("map", retMap);
+				System.out.println("===========SUCCESS======================");
 			}else{
 				retMap.put("STATUS", "FAIL");
 				mv.addObject("map", retMap);
@@ -299,4 +337,46 @@ public class ReservationController {
 		return id; 
 	}
 
+	
+	
+	public boolean timeTest(String id){
+		
+		
+		
+		//RT4567890ET201607201200
+	    //yyyy-MM-dd HH:mm:ss
+	    //11~
+		
+		String idstr = id;
+		String convstr = null;
+		
+		if(idstr.length()>22) {
+			convstr = String.format("%c%c%c%c-%c%c-%c%c %c%c:%c%c:00", 
+	                        idstr.charAt(11),idstr.charAt(12),idstr.charAt(13),idstr.charAt(14),   //YYYY
+	                                             idstr.charAt(15),idstr.charAt(16),      //MM
+	                                             idstr.charAt(17),idstr.charAt(18),      //DD
+	                                             idstr.charAt(19),idstr.charAt(20),      //HH
+	                                             idstr.charAt(11),idstr.charAt(22));      //MM
+	        System.out.println(convstr);
+	    }
+		
+		DateFormat iddf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+	    Date iddate = null;
+	    
+	    try {
+	    	iddate = iddf.parse(convstr);
+	    	
+	    } catch (ParseException e1) {
+	         // TODO Auto-generated catch block
+	         e1.printStackTrace();
+	    }
+	    
+	    long dateInLong = iddate.getTime();
+	    long today = System.currentTimeMillis();
+	    int diffmin = (int) ((today - dateInLong)/1000/60);
+	    if(diffmin > gp)
+	    	return false;
+	    else
+	    	return true;
+	}
 }

@@ -97,30 +97,37 @@ public class SensorStatus {
 	public static void setSensors(String sensors){
 		if(sensors.charAt(0) != prevSensorValue.charAt(0)){
 			entryGateChanged = true;
-		}
+		}else
+			entryGateChanged = false;
 		
 		if(sensors.charAt(1) != prevSensorValue.charAt(1)){
 			exitGateChanged = true;
-		}
+		}else
+			exitGateChanged = false;
 		
 		if(sensors.charAt(2) != prevSensorValue.charAt(2)){
 			spot1Changed = true;
-		}
+		}else
+			spot1Changed = false;
 		
 		if(sensors.charAt(3) != prevSensorValue.charAt(3)){
 			spot2Changed = true;
-		}
+		}else
+			spot2Changed = false;
 		
 		if(sensors.charAt(4) != prevSensorValue.charAt(4)){
 			spot3Changed = true;
-		}
+		}else
+			spot3Changed = false;
+			
 		
 		if(sensors.charAt(5) != prevSensorValue.charAt(5)){
 			spot4Changed = true;
-		}
+		}else
+			spot4Changed = false;
 		
 		
-		
+		/*
 		entryGate =  Character.getNumericValue(sensors.charAt(0));
 		exitGate = Character.getNumericValue(sensors.charAt(1));
 
@@ -128,6 +135,23 @@ public class SensorStatus {
 		spot2 = Character.getNumericValue(sensors.charAt(3));
 		spot3 = Character.getNumericValue(sensors.charAt(4));
 		spot4 = Character.getNumericValue(sensors.charAt(5));
+		*/
+		/*
+		entryGate = sensors.charAt(0) - 48;
+		exitGate = sensors.charAt(1)  - 48;
+
+		spot1 = sensors.charAt(2) - 48;
+		spot2 = sensors.charAt(3) - 48;
+		spot3 = sensors.charAt(4) - 48;
+		spot4 = sensors.charAt(5) - 48;
+		*/
+		
+		SensorStatus.setEntryGate(sensors.charAt(0) - 48);
+		SensorStatus.setExitGate(sensors.charAt(1) - 48);
+		SensorStatus.setSpot1(sensors.charAt(2) - 48);
+		SensorStatus.setSpot2(sensors.charAt(3) - 48);
+		SensorStatus.setSpot3(sensors.charAt(4) - 48);
+		SensorStatus.setSpot4(sensors.charAt(5) - 48);
 		
 		SensorStatus.prevSensorValue = sensors;
 	}

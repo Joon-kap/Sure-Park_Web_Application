@@ -89,7 +89,7 @@
 	<update id="updatePakingSpot" parameterClass="RequestParameter">
 		 UPDATE p_reser_mst
    			SET p_spot_number  = #pSpotNumber#,   				
-   			    P_enter_time   = now()
+   			    P_enter_time   = #cTime#
          WHERE p_identifier = #pIdentifier#
            and p_spot_number is null
 	</update>
