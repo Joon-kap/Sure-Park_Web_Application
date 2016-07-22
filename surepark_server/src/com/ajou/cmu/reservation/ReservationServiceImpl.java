@@ -87,4 +87,9 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public void updateSpot(Object obj) throws SQLException{
 		dao.updateParkingSpot(obj);
 	}
+
+	public void setPayNexitTime(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.updatePayment(obj);
+	}
 }

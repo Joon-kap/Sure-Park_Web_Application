@@ -40,12 +40,14 @@ public class SensorController {
 	      
 	      SensorStatus.setSensors(str);
 	      
-	      System.out.println("1entrygateIr = " + SensorStatus.getEntryGate());
-	      System.out.println("1exitIr = " + SensorStatus.getExitGate());
-	      System.out.println("1spot1Ir = " + SensorStatus.getSpot1());
-	      System.out.println("1spot2Ir = " + SensorStatus.getSpot2());
-	      System.out.println("1spot3Ir = " + SensorStatus.getSpot3());
-	      System.out.println("1spot4Ir = " + SensorStatus.getSpot4());
+	      
+	      
+	      System.out.println("entrygateIr = " + SensorStatus.getEntryGate(1));
+	      System.out.println("exitIr = " + SensorStatus.getExitGate(1));
+	      System.out.println("spot1Ir = " + SensorStatus.getSpot(1));
+	      System.out.println("spot2Ir = " + SensorStatus.getSpot(2));
+	      System.out.println("spot3Ir = " + SensorStatus.getSpot(3));
+	      System.out.println("spot4Ir = " + SensorStatus.getSpot(4));
 	      
 	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
 	      /*

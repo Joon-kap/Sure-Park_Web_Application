@@ -126,21 +126,24 @@ System.out.println("-------while(true) ENTER------------");
 	 	    		//Check valid period of gate open message
 	    			//scanmsg = scan.nextLine();
 	 	    		
-	 	    		System.out.println(SensorStatus.getEntryGate());
-	 	    		System.out.println(ReservationController.identification);
-					if(SensorStatus.getEntryGate()==0 && ReservationController.identification == 1) {
-						SensorStatus.setEntryGate(1);
+	 	    		//System.out.println(SensorStatus.getEntryGate());
+	 	    		//System.out.println(ReservationController.identification);
+					if(SensorStatus.getEntryGate(0)==0 && ReservationController.identification == 1) {
+						SensorStatus.setEntryGate(1,0);
 						ReservationController.identification=0;
-						
-						
 						
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
 		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );
 						out.flush();
 						
-					} else {
-				    	System.out.println("MONITORING = " + SensorStatus.getEntryGate());
+					} else if(SensorStatus.getExitGate(0)==0 && ReservationController.identification == 1) {
+				    	//System.out.println("MONITORING = " + SensorStatus.getEntryGate());
+						SensorStatus.setExitGate(1,0);
+						ReservationController.identification=0;
 						
+		 				System.out.println( "Sending OpenExitMessage message to client...." );
+		   				out.write( OpenExitMessage, 0, OpenExitMessage.length() );
+						out.flush();
 					}
 
 				} catch (Exception e) {

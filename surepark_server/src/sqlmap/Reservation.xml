@@ -23,12 +23,15 @@
 		<result property="pUpdateDt" column="P_UPDATE_DT"/>		
 	</resultMap>
 	
+	<select id="selectByIdentifier" parameterClass="RequestParameter" resultMap="revResult">
+		SELECT * FROM P_RESER_MST as P WHERE P.P_IDENTIFIER = #pIdentifier#
+	</select>
 	
 	
 	<select id="selectParkingReservation" resultClass="java.util.HashMap">
 	SELECT AA.TOTAL_QTY,
            BB.PARKED_QTY, 
-           AA.TOTAL_QTY - BB.PARKED_QTY AS AVABILE_QTY
+           AA.TOTAL_QTY - BB.PARKED_QTY - CC.RESERVED_QTY AS AVABILE_QTY
   	  FROM
       (
         ( SELECT MAX(P_AVAIBLE_QTY) AS TOTAL_QTY
@@ -36,7 +39,14 @@
         ( SELECT COUNT(*) AS PARKED_QTY
              FROM P_RESER_MST
          WHERE ( P_SPOT_NUMBER IS NOT NULL AND P_PAYMENT_YN IS NULL )
-            OR  ( P_IDENTIFIER IS NOT NULL AND P_SPOT_NUMBER IS NULL ))BB
+            OR  ( P_IDENTIFIER IS NOT NULL AND P_SPOT_NUMBER IS NOT NULL ))BB,
+            
+        ( SELECT COUNT(*) AS RESERVED_QTY
+				FROM P_RESER_MST
+				WHERE P_SPOT_NUMBER IS NULL
+			) CC   
+   
+            
        )
 
 	</select>
@@ -49,6 +59,8 @@
  		WHERE P_IDENTIFIER = #pIdentifier#
    		AND P_SPOT_NUMBER IS NULL) as STATUS
    	</select>
+   	
+   	
    	
    	
    	<!-- 대한 - 2016.07.18 13:12 - CurrentStateController에서 현재 주차장에 입차한 사용자의 정보를 보내기위한 쿼리 작성 --> 
@@ -92,6 +104,13 @@
    			    P_enter_time   = #cTime#
          WHERE p_identifier = #pIdentifier#
            and p_spot_number is null
+	</update>
+	
+	<update id="updatePayment" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_PAYMENT  = #pPayment#,
+   				P_EXIT_TIME = #pExitTime#
+         WHERE P_IDENTIFIER = #pIdentifier#
 	</update>
 
 </sqlMap>

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
+import com.ajou.cmu.payment.Payment;
 import com.ajou.cmu.sensor.SensorController;
 import com.ajou.cmu.sensor.SensorStatus;
 
@@ -153,6 +154,8 @@ public class ReservationController {
 			mv.addObject("callback", req.getParameter("callback"));
 			return mv;
 		}else{
+			String ctime = getCurrentTime();
+			/*
 			long now = System.currentTimeMillis();
 			Date date = new Date(now);
 			System.out.println((int)date.getYear() +1900+ "," + ((int)date.getMonth()+1) +","+date.getDate() +","+ date.getHours()+","+ date.getMinutes());
@@ -179,6 +182,7 @@ public class ReservationController {
 			ctime += min;
 			
 			System.out.println(ctime);
+			*/
 			
 			rp.put("cTime", ctime);
 			rp.put("pSpotNumber", spot);
@@ -255,10 +259,12 @@ public class ReservationController {
 		
 		retMap = (HashMap)revService.countIdentifierObject(rp);
 		
+	//	SensorStatus.setEntryGate(0);
+		
 		if(retMap != null){
-			System.out.println("===========SensorStatus.getEntryGate() : " + SensorStatus.getEntryGate());
+			System.out.println("===========SensorStatus.getEntryGate() : " + SensorStatus.getEntryGate(1));
 			System.out.println("===========retMap.get('STATUS').toString() : " + retMap.get("STATUS").toString());
-			if(SensorStatus.getEntryGate() == 0 && retMap.get("STATUS").toString().equals("SUCCESS")){
+			if(SensorStatus.getEntryGate(1) == 0 && retMap.get("STATUS").toString().equals("SUCCESS")){
 				identification = 1;
 				mv.addObject("map", retMap);
 				System.out.println("===========SUCCESS======================");
@@ -267,7 +273,7 @@ public class ReservationController {
 				mv.addObject("map", retMap);
 			}
 		}else{
-			map.put("ret", "fail");
+			map.put("STATUS", "FAIL");
 			mv.addObject("map", map);
 		}
 
@@ -324,6 +330,97 @@ public class ReservationController {
 		return mv;
 	}
 	
+	@RequestMapping("/rev/exitProceed.do")
+	public ModelAndView exitProceed(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		//String id = (String) rp.get("pIdentifier");
+		
+		//timeTest(id);
+		
+		
+		Reservation rev = (Reservation)revService.getObject(rp);
+		System.out.println("===============" + rev.getpSpotNumber());
+		int spotNum = Integer.parseInt(rev.getpSpotNumber());
+	
+		
+		//SensorStatus.setSpots(1, 3);
+		
+		int spotStatus = SensorStatus.getSpot(spotNum);
+
+		int pay = 0;
+		
+		if(spotStatus == 1){
+			String cTime = getCurrentTime();
+			Payment.setPayment(rev.getpEnterTime(), cTime);
+			pay = Payment.getPayment();
+			rp.put("pPayment", pay);
+			rp.put("pExitTime", cTime);
+			revService.setPayNexitTime(rp);
+			map.put("STATUS", "SUCCESS");
+		}else{
+			map.put("STATUS", "FAIL");
+		}
+		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping("/rev/exitIdentify.do")
+	public ModelAndView exitIdentifier(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		//String id = (String) rp.get("pIdentifier");
+		
+		//timeTest(id);
+		
+		if(SensorStatus.getExitGate(1) == 0){
+			retMap.put("STATUS", "FAIL");
+			
+			mv.addObject("map", retMap);
+			mv.addObject("callback", req.getParameter("callback"));
+			
+			return mv;
+		}
+		
+		
+		Reservation rev = (Reservation) revService.getObject(rp);
+		if(rev == null){
+			retMap.put("STATUS", "FAIL");
+			
+			mv.addObject("map", retMap);
+			mv.addObject("callback", req.getParameter("callback"));
+			
+			return mv;
+		}
+		
+		boolean isPaid = Payment.doPayment(rev.getpPayment(),rp.get("pCredit"));
+		
+		if(isPaid){
+			System.out.println("===========SensorStatus.getEntryGate() : " + SensorStatus.getExitGate(1));
+			identification = 1;
+			
+			retMap.put("STATUS", "SUCCESS");
+			mv.addObject("map", retMap);
+		}else{
+			retMap.put("STATUS", "FAIL");
+			mv.addObject("map", retMap);
+		}
+		
+		mv.addObject("callback", req.getParameter("callback"));
+		return mv;
+	}
+	
+	
+	
+	
 	public String createIdentifier(String phone, String time){
 		String id = null;
 		
@@ -339,7 +436,7 @@ public class ReservationController {
 
 	
 	
-	public boolean timeTest(String id){
+	public boolean checkReservationTime(String id){
 		
 		
 		
@@ -378,5 +475,36 @@ public class ReservationController {
 	    	return false;
 	    else
 	    	return true;
+	}
+	
+	/*return : 201607212127*/
+	public String getCurrentTime(){
+		long now = System.currentTimeMillis();
+		Date date = new Date(now);
+		System.out.println((int)date.getYear() +1900+ "," + ((int)date.getMonth()+1) +","+date.getDate() +","+ date.getHours()+","+ date.getMinutes());
+		String ctime = ""+((int)date.getYear() +1900);
+		
+		int month = (int)date.getMonth()+1;
+		if(month <10)
+			ctime += "0";
+		ctime += month;
+		
+		int day = date.getDate();
+		if(day <10)
+			ctime += "0";
+		ctime += day;
+		
+		int hour = (int)date.getHours();
+		if(hour <10)
+			ctime += "0";
+		ctime += hour;
+		
+		int min = (int)date.getMinutes();
+		if(min <10)
+			ctime += "0";
+		ctime += min;
+		
+		System.out.println(ctime);
+		return ctime;
 	}
 }

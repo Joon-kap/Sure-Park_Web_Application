@@ -14,8 +14,7 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public Object select(Object obj) throws SQLException {
-		return null;
-//		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectParkingReservation");
+		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectByIdentifier", obj);
 	}
 	
 //	//대한 - 2016.07.17 21:35 - ServiceImpl의 getIdentifierObject에 매핑되는 Dao 구현
@@ -75,5 +74,9 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	public void updateParkingSpot(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
 		getSqlMapClientTemplate().update("com.ajou.cmu.reservation.updatePakingSpot", obj);
+	}
+
+	public void updatePayment(Object obj) throws SQLException {
+		getSqlMapClientTemplate().update("com.ajou.cmu.reservation.updatePayment", obj);
 	}
 }
