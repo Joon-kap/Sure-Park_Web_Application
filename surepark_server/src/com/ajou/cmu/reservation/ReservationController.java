@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -39,6 +40,9 @@ public class ReservationController {
 	
 	public static int identification = 0;
 	public static int gp = 30;
+	public static int spot = 0;
+	private String spots[] = {"1","2","3","4"};
+	public static int releaseStatus = 0;
 	
 	@Resource(name = "revService")
 	private ReservationServiceImpl revService;
@@ -77,8 +81,19 @@ public class ReservationController {
 		String phone = rp.get("pReserTelno").toString();
 		String time = rp.get("pReserTime").toString();
 		String id = createIdentifier(phone, time);
+		
+		int inSpot = 0;
+		
+		List<HashMap> spotList = (List<HashMap>) revService.getAvailableSpot();
+		if(spotList.isEmpty())
+			inSpot = 1;
+		else
+			inSpot = selectSpot(spotList);
+		
+		System.out.println("SPOT : " + inSpot);
 			
 		rp.put("pIdentifier", id);
+		rp.put("pSpotNumber", inSpot);
 						
 		revService.save(rp);
 		
@@ -96,6 +111,8 @@ public class ReservationController {
 		return mv;
 	}
 	
+
+
 	@RequestMapping("/rev/available.do")
 	public ModelAndView retrieveAvailableSpot(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
@@ -198,6 +215,7 @@ public class ReservationController {
 			mv.addObject("map", map);
 		}else{
 			mv.addObject("map", retMap);
+			releaseStatus = 1;
 		}
 		
 		//mv.addObject(obj.getpSpotNumber());
@@ -216,44 +234,6 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		String id = (String) rp.get("pIdentifier");
-	
-		/*
-		LocalDateTime now = LocalDateTime.now();
-		
-		int year = now.getYear();
-		String stryear = Integer.toString(year);
-		
-		String strmonth = null;
-		int month = now.getMonthValue();
-		if(month < 10) {
-			strmonth = "0" + Integer.toString(month);
-		}else
-			strmonth = Integer.toString(month);
-		
-		String strday = null;
-		int day = now.getDayOfMonth();
-		if(day < 10) {
-			strday = "0" + Integer.toString(day);
-		}else
-			strday = Integer.toString(day);
-		
-		String strhour = null;
-		int hour = now.getHour();
-		if(hour < 10) {
-			strhour = "0" + Integer.toString(hour);
-		}else
-			strhour = Integer.toString(hour);
-		
-		String strminute = null;
-		int minute = now.getMinute();
-		if(minute < 10) {
-			strminute = "0" + Integer.toString(minute);
-		}else
-			strminute = Integer.toString(minute);
-		
-		String CurrentTime = year + strmonth + strday + strhour + strminute;
-		*/
-	
 		
 		//timeTest(id);
 		
@@ -266,6 +246,7 @@ public class ReservationController {
 			System.out.println("===========retMap.get('STATUS').toString() : " + retMap.get("STATUS").toString());
 			if(SensorStatus.getEntryGate(1) == 0 && retMap.get("STATUS").toString().equals("SUCCESS")){
 				identification = 1;
+				spot = Integer.parseInt(retMap.get("SPOT").toString());
 				mv.addObject("map", retMap);
 				System.out.println("===========SUCCESS======================");
 			}else{
@@ -278,55 +259,6 @@ public class ReservationController {
 		}
 
 		mv.addObject("callback", req.getParameter("callback"));
-
-		
-//		String tmp = id.substring(10, id.length());
-		
-//		long now = System.currentTimeMillis();
-//		Date date = new Date(now);
-//		
-//	/*	System.out.println(date.getHours() +","+date.getDate() +","+ date.getMinutes() +","+date.getDate() +","+date.getMonth()+1 +","+date.getTime());
-//		System.out.println((int)date.getYear() +1900);
-//		*/
-//		
-//		String str = "201607182030";
-//		
-//		String ymd = tmp.substring(0, 8);
-//		int hour = Integer.parseInt(tmp.substring(8, 10));
-//		int min = Integer.parseInt(tmp.substring(10, 12));
-//		
-//		Date date = new Date(now);
-//		
-//		System.out.println(date);
-//		
-//		Time time = new Time(System.currentTimeMillis());
-//        Time time2 = new Time(System.currentTimeMillis());
-//		
-        /*07182000*/
-		//		RT3234567ET07182000
-		 
-//        SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMddHHmmssSSS"); 
-//        String strDT = dayTime.format(new Date(time)); 
-//        System.out.println(strDT); 
-//		
-//		
-//		
-//		int retrieveResult = (int) revService.countIdentifierObject(userIdentifierNumber);
-		
-		//대한 - 2016.07.18 12:30 - 사용자로부터 받은 Identifier를 객체로 DAO에 전달 후 받은 카운트 값이 0이면 예약이 진행되지 않은 것 1이면 예약이 제대로 진행된 것, 2이상이면 문제가 있는 것으로 판단하는 로직
-		// retrieveResult의 값에 따라서 mv에 담는 value를 다르게 한다.
-		
-//		if(retrieveResult == 0) {
-//			//예약이 정상적으로 진행되지 않았음
-//			mv.addObject(retrieveResult);
-//		}else if(retrieveResult == 1) {
-//			//성공
-//			mv.addObject(retrieveResult);
-//		}else {
-//			//Dave 에게 알람을 준다.
-//			mv.addObject(retrieveResult);
-//		}
-		
 		return mv;
 	}
 	
@@ -507,5 +439,44 @@ public class ReservationController {
 		
 		System.out.println(ctime);
 		return ctime;
+	}
+	
+	private int selectSpot(List<HashMap> spotList) {
+		String tmpSpotList[] = spots;
+		
+		int retSpot = 0;
+		for(int i=0; i<tmpSpotList.length; i++){
+			for(int j=0; j<spotList.size(); j++){
+				if(tmpSpotList[i].equals(spotList.get(j).get("P_SPOT_NUMBER"))){
+					tmpSpotList[i] = "OCC";
+				}
+			}
+
+		}
+		
+		
+		
+		System.out.println("=========" + spotList.get(0).get("P_SPOT_NUMBER"));
+//		System.out.println("=========" + spotList.get(0).toString());
+		
+		for(int i=0; i<tmpSpotList.length; i++){
+			System.out.println("=========" + tmpSpotList[i]);
+
+		}
+		
+		int k=0;
+		for(k=0; k<tmpSpotList.length; k++){
+			System.out.println(tmpSpotList[k]);
+			if(!tmpSpotList[k].equals("OCC"))
+				break;
+		}
+		
+		retSpot = k+1;
+		
+		/*
+		if(k == tmpSpotList.length)
+			return 0;
+*/
+		return retSpot;
 	}
 }

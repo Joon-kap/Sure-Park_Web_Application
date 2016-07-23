@@ -17,7 +17,8 @@ import com.ajou.cmu.sensor.SensorStatus;
 public class ConnArduino implements Runnable {
 	String OpenEntryMessage = "SERVERREQ_OPEN_ENTRY";
 	String OpenExitMessage = "SERVERREQ_OPEN_EXIT";
-
+	String changeStatus = "SERVERREQ_CHANGESTATUS";
+	String releaseStatus = "SERVERREQ_RELEASESTATUS";
 	public void run() {
 		test();
 	}
@@ -144,8 +145,26 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( OpenExitMessage, 0, OpenExitMessage.length() );
 						out.flush();
+					} else if(ReservationController.spot != 0){
+						System.out.println( "Sending OpenExitMessage message to client...." );
+		   				out.write( changeStatus + "00" + ReservationController.spot, 0, changeStatus.length() + 3 );
+		   				ReservationController.spot = 0;
+						out.flush();
+					} else if(ReservationController.releaseStatus == 1){
+						System.out.println( "Sending OpenExitMessage message to client...." );
+		   				out.write( releaseStatus, 0, releaseStatus.length() );
+		   				ReservationController.releaseStatus = 0;
+						out.flush();
 					}
-
+						
+					out.write( "echo", 0, 4 );
+	   				ReservationController.releaseStatus = 0;
+					out.flush();
+					
+					
+					System.out.println(serverSocket.isBound());
+					
+					
 				} catch (Exception e) {
 					System.err.println("write failed::");
 					e.printStackTrace();
@@ -188,6 +207,7 @@ System.out.println("-------while(true) ENTER------------");
 		
 
 
+    	System.out.println("exit server");
     	
    	} // main
 

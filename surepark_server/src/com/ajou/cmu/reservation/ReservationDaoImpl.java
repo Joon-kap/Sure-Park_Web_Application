@@ -79,4 +79,8 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 	public void updatePayment(Object obj) throws SQLException {
 		getSqlMapClientTemplate().update("com.ajou.cmu.reservation.updatePayment", obj);
 	}
+
+	public Object selectAvailableSpot() {
+		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.reservation.selectAvailableSpot");
+	}
 }

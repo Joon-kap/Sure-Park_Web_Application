@@ -92,4 +92,9 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		dao.updatePayment(obj);
 	}
+
+	public Object getAvailableSpot() {
+		
+		return dao.selectAvailableSpot();
+	}
 }

@@ -57,7 +57,8 @@
 									 ELSE 'ERROR' END
 		  FROM P_RESER_MST
  		WHERE P_IDENTIFIER = #pIdentifier#
-   		AND P_SPOT_NUMBER IS NULL) as STATUS
+   		AND P_SPOT_NUMBER IS NOT NULL) as STATUS,
+   		(SELECT P_SPOT_NUMBER FROM P_RESER_MST WHERE P_IDENTIFIER = #pIdentifier#) AS SPOT
    	</select>
    	
    	
@@ -88,12 +89,14 @@
 			P_IDENTIFIER,
 			P_RESER_TELNO,
 			P_RESER_TIME,
+			P_SPOT_NUMBER,
 			P_CREATE_DT,
 			P_UPDATE_DT)
 		VALUE(
 			#pIdentifier#,
 			#pReserTelno#,
 			#pReserTime#,
+			#pSpotNumber#,
 			now(),
 			now())
 	</insert>
@@ -112,5 +115,14 @@
    				P_EXIT_TIME = #pExitTime#
          WHERE P_IDENTIFIER = #pIdentifier#
 	</update>
+	
+	<select id="selectAvailableSpot" resultClass="RequestParameter">
+		SELECT P_SPOT_NUMBER 
+		FROM P_RESER_MST RM 
+		WHERE 
+			RM.P_SPOT_NUMBER IS NOT NULL AND 
+			RM.P_PAYMENT_YN = 'N' AND 
+			RM.P_CANCEL_YN = 'N'; 
+	</select>
 
 </sqlMap>
