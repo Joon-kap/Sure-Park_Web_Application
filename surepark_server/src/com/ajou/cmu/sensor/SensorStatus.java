@@ -11,7 +11,11 @@ public class SensorStatus {
 	private static boolean[] spotChanged;
 	
 	private static String prevSensorValue = null;
-	private static boolean init = false;
+	private static boolean initState = false;
+	
+	public static boolean getInitState(){
+		return initState;
+	}
 	
 	public static void init(int spotNum, int entryGateNum, int exitGateNum){
 		spots = new int[spotNum];
@@ -21,7 +25,7 @@ public class SensorStatus {
 		spotChanged = new boolean[spotNum];
 		entryGateChanged = new boolean[entryGateNum];
 		exitGateChanged = new boolean[exitGateNum];
-		init = true;
+		initState = true;
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -33,11 +37,13 @@ public class SensorStatus {
 	
 			
 	public static void setSensors(String sensors){
-		System.out.println("##########=" + sensors);
+		System.out.println("sensor=" + sensors);
 		System.out.println("####entryGates.length#####=" + entryGates.length);
 		System.out.println("####exitGates#####=" + exitGates.length);
 		System.out.println("####sensors.length()#####=" + sensors.length());
-		System.out.println("##########=" + sensors);
+		
+		System.out.println("prev=" + prevSensorValue);
+		System.out.println("curr=" + sensors);
 		for(int i=0; i<sensors.length(); i++){
 			//System.out.println("##########=" + i);
 			if(sensors.charAt(i) != prevSensorValue.charAt(i)){
@@ -56,6 +62,7 @@ public class SensorStatus {
 					exitGateChanged[i-entryGates.length] = true;
 				}else{
 					spotChanged[i - entryGates.length - exitGates.length] = true;
+					System.out.println("spot changed = " + (i - entryGates.length - exitGates.length));
 				}
 				
 			}
@@ -91,6 +98,7 @@ public class SensorStatus {
 			
 			if(i >= entryGates.length && i < entryGates.length + exitGates.length){
 				SensorStatus.setExitGate(sensors.charAt(i)-48,xIndex);
+				System.out.println("###############################setexitgate");
 				xIndex++;
 			}
 			
@@ -100,7 +108,11 @@ public class SensorStatus {
 			}
 		}
 		
+		for(int i=0; i<spotChanged.length; i++)
+			System.out.println("===="+spotChanged[i]);
+		
 		SensorStatus.prevSensorValue = sensors;
+		System.out.println("===="+prevSensorValue);
 	}
 	
 	

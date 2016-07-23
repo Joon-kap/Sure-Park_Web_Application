@@ -17,7 +17,9 @@ public class StartTest implements ApplicationListener{
 	//스프링 시스템 기동시 수행
 	public void onApplicationEvent(ApplicationEvent applicationevent) {
 		System.out.println("### Test.onApplicationEvent() > var1 : "+ var1 +"###");
-		SensorStatus.init(4,1,1);
+		if(!SensorStatus.getInitState())
+			SensorStatus.init(4,1,1);
+		
 		if(!isStarted){
 			Thread socket = new Thread(new ConnArduino());
 			socket.start();

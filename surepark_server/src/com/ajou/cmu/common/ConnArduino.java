@@ -128,7 +128,7 @@ System.out.println("-------while(true) ENTER------------");
 	 	    		
 	 	    		//System.out.println(SensorStatus.getEntryGate());
 	 	    		//System.out.println(ReservationController.identification);
-					if(SensorStatus.getEntryGate(0)==0 && ReservationController.identification == 1) {
+					if(SensorStatus.getEntryGate(1)==0 && ReservationController.identification == 1) {
 						SensorStatus.setEntryGate(1,0);
 						ReservationController.identification=0;
 						
@@ -136,7 +136,7 @@ System.out.println("-------while(true) ENTER------------");
 		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );
 						out.flush();
 						
-					} else if(SensorStatus.getExitGate(0)==0 && ReservationController.identification == 1) {
+					} else if(SensorStatus.getExitGate(1)==0 && ReservationController.identification == 1) {
 				    	//System.out.println("MONITORING = " + SensorStatus.getEntryGate());
 						SensorStatus.setExitGate(1,0);
 						ReservationController.identification=0;

@@ -381,12 +381,12 @@ public class ReservationController {
 		
 		//timeTest(id);
 		
-		if(SensorStatus.getExitGate(1) == 0){
+		if(SensorStatus.getExitGate(1) == 1){
 			retMap.put("STATUS", "FAIL");
 			
 			mv.addObject("map", retMap);
 			mv.addObject("callback", req.getParameter("callback"));
-			
+			System.out.println("SensorStatus.getExitGate(1) == 0");
 			return mv;
 		}
 		
@@ -397,7 +397,7 @@ public class ReservationController {
 			
 			mv.addObject("map", retMap);
 			mv.addObject("callback", req.getParameter("callback"));
-			
+			System.out.println("rev == null");
 			return mv;
 		}
 		
@@ -412,6 +412,7 @@ public class ReservationController {
 		}else{
 			retMap.put("STATUS", "FAIL");
 			mv.addObject("map", retMap);
+			System.out.println("isPaid");
 		}
 		
 		mv.addObject("callback", req.getParameter("callback"));
