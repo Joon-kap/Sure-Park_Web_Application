@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import com.ajou.cmu.common.RequestParameter;
 import com.ajou.secure.user.UserDaoImpl;
 
 //git test by daehan
@@ -96,5 +97,9 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public Object getAvailableSpot() {
 		
 		return dao.selectAvailableSpot();
+	}
+
+	public void updatePayYn(RequestParameter rp) {
+		dao.updatePaymentYn(rp);
 	}
 }

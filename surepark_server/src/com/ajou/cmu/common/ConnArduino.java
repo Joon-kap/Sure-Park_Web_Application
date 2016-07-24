@@ -145,6 +145,7 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
 		   				out.write( msg, 0, msg.length() );
 						out.flush();
+						continue;
 						
 					} else if(SensorStatus.getExitGate(1)==0 && ReservationController.identification == 1) {
 				    	//System.out.println("MONITORING = " + SensorStatus.getEntryGate());
@@ -154,6 +155,7 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( OpenExitMessage, 0, OpenExitMessage.length() );
 						out.flush();
+						continue;
 					} /*
 						else if(ReservationController.spot != 0){
 						System.out.println( "Sending OpenExitMessage message to client...." );
@@ -167,6 +169,7 @@ System.out.println("-------while(true) ENTER------------");
 		   				out.write( releaseStatus, 0, releaseStatus.length() );
 		   				ReservationController.releaseStatus = 0;
 						out.flush();
+						continue;
 					}
 					
 //					System.out.println("server : " + serverSocket.get`.getInetAddress().isReachable(1000));
@@ -175,7 +178,7 @@ System.out.println("-------while(true) ENTER------------");
 					
 					check++;
 					if(check > 5){
-						System.out.println("send echo!!");
+					//	System.out.println("send echo!!");
 						out.write( "echo", 0, 4 );
 		   				ReservationController.releaseStatus = 0;
 						out.flush();

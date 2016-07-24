@@ -106,7 +106,7 @@
    			SET p_spot_number  = #pSpotNumber#,   				
    			    P_enter_time   = #cTime#
          WHERE p_identifier = #pIdentifier#
-           and p_spot_number is null
+           
 	</update>
 	
 	<update id="updatePayment" parameterClass="RequestParameter">
@@ -124,5 +124,12 @@
 			RM.P_PAYMENT_YN = 'N' AND 
 			RM.P_CANCEL_YN = 'N'; 
 	</select>
+
+
+	<update id="updatePaymentYn" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_PAYMENT_YN  = #pPaymentYn#
+         WHERE P_IDENTIFIER = #pIdentifier#
+	</update>
 
 </sqlMap>
