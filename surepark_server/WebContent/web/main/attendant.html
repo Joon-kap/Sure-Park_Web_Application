@@ -252,6 +252,52 @@ table.MsoTableGrid
   <o:idmap v:ext="edit" data="1"/>
  </o:shapelayout></xml><![endif]-->
 </head>
+<script>
+var now = new Date();
+function updateTimeDD() {
+    var clock = document.getElementById("clock_DD");            // 출력할 장소 선택
+    var nowTime = ""+now.getDate();
+    clock.innerHTML = nowTime;
+}
+
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+                  "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function updateTimeMM() {
+    var clock = document.getElementById("clock_MM");            // 출력할 장소 선택
+    var nowTime = monthNames[now.getMonth()];
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+    //.fontcolor("green")
+}
+
+var dayofweek=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+function updateTimeWEEK() {
+    var clock = document.getElementById("clock_WEEK");            // 출력할 장소 선택
+    var nowTime = dayofweek[now.getDay()];
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+}
+
+function updateTimeHHMM() {
+    var clock = document.getElementById("clock_HHMM");            // 출력할 장소 선택
+    now = new Date();                                                  // 현재시간
+//  var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+    var nowTime = now.getHours(2) + ":" + now.getMinutes(2);
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+    updateTimeDD();
+    updateTimeMM();
+    updateTimeWEEK();
+    setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
+         
+}
+/*aa
+function updateLED()
+*/
+
+window.onload = function() {                         // 페이지가 로딩되면 실행
+	updateTimeHHMM();
+
+}
+</script>
 
 <body bgcolor="#EDEBE9" lang=KO style='tab-interval:40.0pt'>
 
@@ -340,23 +386,26 @@ table.MsoTableGrid
     solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
     background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:36.0pt;
+    style='mso-bidi-font-weight:normal'><span id="clock_HHMM" lang=EN-US style='font-size:36.0pt;
     mso-bidi-font-size:14.0pt;font-family:"Arial",sans-serif;color:#44546A;
-    mso-themecolor:text2'>21:27<o:p></o:p></span></b></p>
+    mso-themecolor:text2'>1:27<o:p></o:p></span></b></p>
     </td>
     <td width=84 style='width:50.35pt;border:solid windowtext 1.0pt;border-left:
     none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
     mso-border-right-alt:solid windowtext .5pt;background:#44546A;mso-background-themecolor:
     text2;padding:0cm 5.4pt 0cm 5.4pt'>
-    <p class=MsoNormal align=center style='text-align:center;line-height:75%'><span
+    <p class=MsoNormal align=center style='text-align:center;line-height:75%'><span id="clock_WEEK"
     lang=EN-US style='font-size:10.0pt;line-height:75%;font-family:"Arial",sans-serif;
-    color:#EDEBE9;mso-themecolor:text1'>Thursday<o:p></o:p></span></p>
+    color:#EDEBE9;mso-themecolor:text1'>Monday
+    <o:p></o:p></span></p>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    font-family:"Arial",sans-serif;color:#EDEBE9;mso-themecolor:text1'>21<o:p></o:p></span></b></p>
-    <p class=MsoNormal align=center style='text-align:center;line-height:75%'><span
+    style='mso-bidi-font-weight:normal'><span id="clock_DD" lang=EN-US style='font-size:18.0pt;
+    font-family:"Arial",sans-serif;color:#EDEBE9;mso-themecolor:text1'>21
+    <o:p></o:p></span></b></p>
+    <p class=MsoNormal align=center style='text-align:center;line-height:75%'><span id="clock_MM"
     lang=EN-US style='font-size:10.0pt;line-height:75%;font-family:"Arial",sans-serif;
-    color:#EDEBE9;mso-themecolor:text1'>July</span><span lang=EN-US
+    color:#EDEBE9;mso-themecolor:text1'>July
+    </span><span lang=EN-US
     style='font-size:10.0pt;line-height:75%;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>

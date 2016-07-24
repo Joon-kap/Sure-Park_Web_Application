@@ -16,6 +16,7 @@ function testButton(){
             	if(k=="TEST"){
             		alert("Success!!!");
             		console.log(v);
+            		console.log(v['P_RESER_ID']);
             	}
             	
             	if(k=="fail"){
