@@ -45,8 +45,7 @@ public class AttendantDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public List getList(Object obj) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.attendant.selectAllList");
 	}
 
 	@Override

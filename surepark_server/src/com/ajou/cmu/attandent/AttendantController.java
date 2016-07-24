@@ -39,7 +39,7 @@ import com.ajou.cmu.sensor.SensorStatus;
 public class AttendantController {
 	
 	@Resource(name = "attService")
-	private AttendantServiceImpl revService;
+	private AttendantServiceImpl atService;
 	
 		
 	@RequestMapping("/att/test.do")
@@ -50,7 +50,8 @@ public class AttendantController {
 
 		System.out.println(rp);
 		
-		map.put("TEST", "DATA");
+		List<HashMap> list = atService.getList(rp);
+		map.put("TEST", list.get(0));
 
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));

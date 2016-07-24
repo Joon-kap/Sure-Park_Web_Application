@@ -51,8 +51,8 @@ public class AttendantServiceImpl implements com.ajou.cmu.common.Service {
 
 	@Override
 	public List getList(Object obj) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return 	dao.getList(obj);
 	}
 
 	@Override

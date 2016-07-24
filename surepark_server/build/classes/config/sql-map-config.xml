@@ -9,6 +9,7 @@
 
 
 	<sqlMap resource="sqlmap/Reservation.xml" />
+	<sqlMap resource="sqlmap/Attendant.xml" />
 	<!-- 
 	<sqlMap resource="sqlmap/ZipCode.xml" />
 	<sqlMap resource="sqlmap/Subway.xml" />
