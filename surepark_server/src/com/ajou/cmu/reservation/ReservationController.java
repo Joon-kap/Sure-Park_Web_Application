@@ -444,7 +444,12 @@ public class ReservationController {
 	}
 	
 	private int selectSpot(List<HashMap> spotList) {
-		String tmpSpotList[] = spots;
+		String tmpSpotList[] = new String[spots.length];
+		
+		for(int i=0; i<spots.length; i++){
+			tmpSpotList[i] = spots[i];
+		}
+
 		
 		int retSpot = 0;
 		for(int i=0; i<tmpSpotList.length; i++){
