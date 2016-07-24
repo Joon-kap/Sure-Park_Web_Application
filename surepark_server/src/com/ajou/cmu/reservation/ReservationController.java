@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
+import com.ajou.cmu.common.WebSocketModule;
 import com.ajou.cmu.payment.Payment;
 import com.ajou.cmu.sensor.SensorController;
 import com.ajou.cmu.sensor.SensorStatus;
@@ -145,6 +146,9 @@ public class ReservationController {
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 		
+		if(WebSocketModule.thisSession != null)
+			WebSocketModule.thisSession.getBasicRemote().sendText("aaa", true);
+		
 		return mv;
 		
 	}
@@ -165,6 +169,11 @@ public class ReservationController {
 		}
 		*/
 		int spot = SensorStatus.getChangedSpotSensor();
+		Reservation rev = (Reservation) revService.getObject(rp);
+		int revSpot = Integer.parseInt(rev.getpSpotNumber());
+		
+		
+		
 		System.out.println("===============" + spot);
 		if(spot == 0){
 			map.put("result", "fail");
@@ -216,6 +225,13 @@ public class ReservationController {
 			mv.addObject("map", map);
 		}else{
 			mv.addObject("map", retMap);
+			if(spot != revSpot){
+				/*reallocation*/
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+			}
 			releaseStatus = 1;
 		}
 		
@@ -293,6 +309,8 @@ public class ReservationController {
 			rp.put("pExitTime", cTime);
 			revService.setPayNexitTime(rp);
 			map.put("STATUS", "SUCCESS");
+			map.put("pPayment",pay );
+			map.put("pExitTime", cTime);
 		}else{
 			map.put("STATUS", "FAIL");
 		}
