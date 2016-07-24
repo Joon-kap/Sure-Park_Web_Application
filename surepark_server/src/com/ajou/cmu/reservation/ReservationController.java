@@ -98,6 +98,7 @@ public class ReservationController {
 		revService.save(rp);
 		
 		map.put("pIdentifier", id);
+		map.put("pSpotNumber", inSpot);
 		
 		/*
 		if(reservation !=null)	
