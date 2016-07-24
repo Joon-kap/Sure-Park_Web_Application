@@ -66,6 +66,11 @@ public class ConnArduino implements Runnable {
     				break;
     			}
         		serverSocket = new ServerSocket(portNum);
+        		/*
+        		portNum++;
+        		if(portNum == 560)
+        			portNum = 550;
+        			*/
         		System.out.println ( "\n\nWaiting for connection on port " + portNum + "." );
         	}
     		catch (IOException e)
@@ -134,9 +139,13 @@ System.out.println("-------while(true) ENTER------------");
 						SensorStatus.setEntryGate(1,0);
 						ReservationController.identification=0;
 						
+						String msg = OpenEntryMessage;
+						msg = "00"+ ReservationController.spot + msg; 
+						
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
-		   				out.write( OpenEntryMessage, 0, OpenEntryMessage.length() );
+		   				out.write( msg, 0, msg.length() );
 						out.flush();
+						continue;
 						
 					} else if(SensorStatus.getExitGate(1)==0 && ReservationController.identification == 1) {
 				    	//System.out.println("MONITORING = " + SensorStatus.getEntryGate());
@@ -146,27 +155,37 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( OpenExitMessage, 0, OpenExitMessage.length() );
 						out.flush();
-					} else if(ReservationController.spot != 0){
+						continue;
+					} /*
+						else if(ReservationController.spot != 0){
 						System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( changeStatus + "00" + ReservationController.spot, 0, changeStatus.length() + 3 );
 		   				ReservationController.spot = 0;
 						out.flush();
-					} else if(ReservationController.releaseStatus == 1){
+						
+					} */
+	 	    		else if(ReservationController.releaseStatus == 1){
 						System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( releaseStatus, 0, releaseStatus.length() );
 		   				ReservationController.releaseStatus = 0;
 						out.flush();
+						continue;
 					}
 					
+//					System.out.println("server : " + serverSocket.get`.getInetAddress().isReachable(1000));
+//					System.out.println("client : " + clientSocket.getInputStream().read());
+
+					
 					check++;
-					if(check == 10){
+					if(check > 5){
+					//	System.out.println("send echo!!");
 						out.write( "echo", 0, 4 );
 		   				ReservationController.releaseStatus = 0;
 						out.flush();
 						check = 0;
 					}
 	
-					System.out.println(serverSocket.isBound());
+					
 					
 					
 				} catch (Exception e) {
@@ -207,7 +226,7 @@ System.out.println("-------while(true) ENTER------------");
 			}	
 			
 
-    	} // while loop
+} // while loop
 		
 
 

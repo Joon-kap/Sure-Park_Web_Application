@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ajou.cmu.common.BaseDao;
 import com.ajou.cmu.common.Dao;
+import com.ajou.cmu.common.RequestParameter;
 
  /* test22 */
 @Repository("revDao")
@@ -82,5 +83,10 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 
 	public Object selectAvailableSpot() {
 		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.reservation.selectAvailableSpot");
+	}
+
+	public void updatePaymentYn(RequestParameter rp) {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().update("com.ajou.cmu.reservation.updatePaymentYn", rp);
 	}
 }
