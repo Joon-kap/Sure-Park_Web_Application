@@ -52,7 +52,8 @@ public class ConnArduino implements Runnable {
     	ServerSocket serverSocket = null;							// Server socket object
 		Socket clientSocket = null;									// Client socket object
     	int	portNum = 550;											// Port number for server socket
-
+    	int check = 0;
+    	
     	while(true)
 		{
     		/*****************************************************************************
@@ -156,12 +157,15 @@ System.out.println("-------while(true) ENTER------------");
 		   				ReservationController.releaseStatus = 0;
 						out.flush();
 					}
-						
-					out.write( "echo", 0, 4 );
-	   				ReservationController.releaseStatus = 0;
-					out.flush();
 					
-					
+					check++;
+					if(check == 10){
+						out.write( "echo", 0, 4 );
+		   				ReservationController.releaseStatus = 0;
+						out.flush();
+						check = 0;
+					}
+	
 					System.out.println(serverSocket.isBound());
 					
 					
