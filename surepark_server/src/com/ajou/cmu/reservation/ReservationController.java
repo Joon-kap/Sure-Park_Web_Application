@@ -146,8 +146,7 @@ public class ReservationController {
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 		
-		if(WebSocketModule.thisSession != null)
-			WebSocketModule.thisSession.getBasicRemote().sendText("aaa", true);
+		
 		
 		return mv;
 		
