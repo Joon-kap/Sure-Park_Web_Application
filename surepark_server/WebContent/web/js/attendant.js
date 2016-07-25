@@ -1,5 +1,6 @@
 var domainText = "localhost:8080";
 
+
 function testButton(){
 	var seq = "aaaa";
 	var testData = "bbbb";
@@ -37,7 +38,7 @@ function GetSensorValue(){
 	
 	$.ajax({
         type: "GET",
-        url: "http://"+domainText+"/surepark_server/sensor/changeStatus.do",
+        url: "http://"+domainText+"/surepark_server/sensor/getStatus.do",
         callback: "callbak",
 		dataType: "jsonp",
 		data:params,
@@ -59,8 +60,10 @@ function GetSensorValue(){
            		 if(v=='1') {
            			 led.style.color="red";
            			 led.innerHTML = "OPEN"
+           			 var exitGate = document.getElementById("exit");
+           			 exitGate.innerHTML = "CLOSED";
            		 } else {
-           			 led.innerHTML = "BLOCKED"
+           			 led.innerHTML = "BLOCKED";
            			 led.style.color="#00B050";
            		 }
            		console.log("LED1: " + v);
@@ -165,6 +168,9 @@ function updateLED() {
 window.onload = function() {                         // 페이지가 로딩되면 실행
 	updateTimeHHMM();
 	updateLED();
+	init();
+	send_message();
+	
 }
 
 function webSocketRequest() {
@@ -172,6 +178,65 @@ function webSocketRequest() {
 }
 
 
+var wsUri = "ws://"+domainText+"/surepark_server/echo";
 
+//var wsUri = "ws://128.237.200.150:8080/surepark_server/echo";
+
+function init() {
+    output = document.getElementById("output");
+    
+}
+function send_message() {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) {
+        onOpen(evt)
+    };
+    websocket.onmessage = function(evt) {
+        onMessage(evt)
+    };
+    websocket.onerror = function(evt) {
+        onError(evt)
+    };
+}
+function onOpen(evt) {
+    writeToScreen("Connected to Endpoint!");
+    doSend("test");
+}
+function onMessage(evt) {
+	
+//    writeToScreen("Message Received: " + evt.data);
+	if(evt.data == '100'){
+		GetSensorValue();
+	}else if(evt.data == '001'){
+		var entry = document.getElementById("entry");  
+		entry.innerHTML = "OPEND";
+	}else if(evt.data == '002'){
+		var entry = document.getElementById("entry");  
+		entry.innerHTML = "CLOSED";
+	}else if(evt.data == '003'){
+		var exit = document.getElementById("exit");  
+		exit.innerHTML = "OPEND";
+	}else if(evt.data == '004'){
+		var exit = document.getElementById("exit");  
+		exit.innerHTML = "CLOSED";
+	}
+	
+}
+function onError(evt) {
+    writeToScreen('ERROR: ' + evt.data);
+}
+function doSend(message) {
+    writeToScreen("Message Sent: " + message);
+    websocket.send(message);
+    //websocket.close();
+}
+function writeToScreen(message) {
+    var pre = document.createElement("p");
+    pre.style.wordWrap = "break-word";
+    pre.innerHTML = message;
+     
+    //output.appendChild(pre);
+}
+//window.addEventListener("load", init, false);
 
 

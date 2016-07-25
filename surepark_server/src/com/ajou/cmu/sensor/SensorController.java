@@ -1,5 +1,6 @@
 package com.ajou.cmu.sensor;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ajou.cmu.common.Log;
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
+import com.ajou.cmu.common.WebSocketModule;
 import com.ajou.cmu.reservation.ReservationServiceImpl;
 
 @Controller
@@ -37,7 +40,6 @@ public class SensorController {
 		  
 //	      int num = Integer.parseInt((String) rp.get("testValue"));
 		  String str = (String)rp.get("SENSORUPDATE");
-		  if(str !=null) {
 			  System.out.println("str = " + str);
 
 		      SensorStatus.setSensors(str);
@@ -51,24 +53,49 @@ public class SensorController {
 			  
 			  map.put("RETUPDATE", str);
 			  
-			  
-		  }
-	  
-		  String str2 = (String)rp.get("SENSORREQUEST");
-		  if(str2!=null) {
-			  System.out.println("SENSORREQUEST>>");
+			  sendMesseageToAttendant();
+		
+	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
+	      
+	      /*
+	      if(SensorStatus.getEntryGate()==0) {
+	    	  System.out.println("entrygateIrStatus = " + SensorStatus.getEntryGate());
+	      }
+	      
+	      if(str.charAt(1)=='0') {
+	    //	  spot1IrStatus = 0;
+	    	  System.out.println("entrygateIrStatus = " + entrygateIrStatus);
+	      }
+	      */
+
+	      //SensorController.gateIrStatus;
+	      
+	      mnv.addObject("map", map);
+	      mnv.addObject("callback", req.getParameter("callback"));
+	      
+	      return mnv;
+	   }
+	
+	
+	@RequestMapping("/sensor/getStatus.do")
+	   public ModelAndView getStatus(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	      RequestParameter rp = Utils.extractRequestParameters(req);   
+	      ModelAndView mnv = new ModelAndView("/common/json_result");
+	      Map<String, Object> map = new HashMap<String, Object>();
+
+		  System.out.println(rp);
+		  
+		  System.out.println("SENSORREQUEST>>");
 		     
-			  map.put("ENTRY",  SensorStatus.getEntryGate(1));
-			  map.put("EXIT",  SensorStatus.getExitGate(1));
-			  map.put("LED3",  SensorStatus.getSpot(3));
-			  map.put("LED4",  SensorStatus.getSpot(4));
-			  map.put("LED1",  SensorStatus.getSpot(1));
-			  map.put("LED2",  SensorStatus.getSpot(2));
+		  map.put("ENTRY",  SensorStatus.getEntryGate(1));
+		  map.put("EXIT",  SensorStatus.getExitGate(1));
+		  map.put("LED3",  SensorStatus.getSpot(3));
+		  map.put("LED4",  SensorStatus.getSpot(4));
+		  map.put("LED1",  SensorStatus.getSpot(1));
+		  map.put("LED2",  SensorStatus.getSpot(2));
 
+		  
 
-
-
-		  } 
 
 	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
 	      
@@ -90,9 +117,17 @@ public class SensorController {
 	      
 	      return mnv;
 	   }
+	
+	
 		
-	private void sendMesseageToAttendant(String str) {
-		
+	private void sendMesseageToAttendant() {
+			try {
+				if(WebSocketModule.thisSession != null)
+					WebSocketModule.thisSession.getBasicRemote().sendText(Log.SENSOR_CHANGED, true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 	}
 
