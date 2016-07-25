@@ -253,11 +253,124 @@ table.MsoTableGrid
  </o:shapelayout></xml><![endif]-->
 </head>
 
+<script>
+var fee15min = 0.25;		//15min per 25cent
+
+
+function updateTest() {
+    var stat = document.getElementById("slot"+slotnum+"_stat");
+    var from = document.getElementById("slot"+slotnum+"_from");
+    var during = document.getElementById("slot"+slotnum+"_during");
+    var fee = document.getElementById("slot"+slotnum+"_fee");
+
+    stat.innerHTML = "# 1 : 2222";
+    stat.style.fontWeight = "bold";
+    from.innerHTML = "From : 10:10";
+    from.style.fontWeight = "normal";
+    during.innerHTML = "During : 10:10";
+    during.style.fontWeight = "bold";
+
+    fee.innerHTML = "$122";
+
+}
+
+
+function UpdateSlots(){
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/rev/currentParkedStatus.do",
+        callback: "callbak",
+		dataType: "jsonp",
+        success: function(data){
+        	var slotnum=1;
+
+        	$.each(data, function(k,v){
+               	if(k=="LIST"){
+               		for(i=0; i<v.length; i++) {
+                  		console.log("LIST: " + v[0]['P_RESER_ID']);
+                  		if((v[i]['P_CANCEL']!="N")&&(v[i]['P_PAYMENT']!="N")) {
+                  			slotnum = v[i]['P_SPOT_NUMBER'];
+                            var stat = document.getElementById("slot"+slotnum+"_stat");
+                            var from = document.getElementById("slot"+slotnum+"_from");
+                            var during = document.getElementById("slot"+slotnum+"_during");
+                            var fee = document.getElementById("slot"+slotnum+"_fee");
+                            
+                            console.log("LIST len: " + "slot"+slotnum+"_stat");
+                            
+                            //stat.innerHTML = "# "+slotnum+" : "+ v[i]['P_RESER_TELNO'];
+                            stat.innerHTML = "# "+slotnum+" : ";
+
+                            for(j=v[i]['P_RESER_TELNO'].length-4; j<v[i]['P_RESER_TELNO'].length; j++) {
+                            	stat.innerHTML+=v[i]['P_RESER_TELNO'][j];
+                            }
+                            stat.style.fontWeight = "bold";
+
+//                            from.innerHTML = "From : "+ v[i]['P_RESER_TIME'];
+                            from.innerHTML = "From : ";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][4]+ v[i]['P_RESER_TIME'][5]+"/";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][6]+ v[i]['P_RESER_TIME'][7]+" ";
+                           
+                            from.innerHTML+= v[i]['P_RESER_TIME'][8]+ v[i]['P_RESER_TIME'][9]+":"+
+                            					v[i]['P_RESER_TIME'][10]+ v[i]['P_RESER_TIME'][11];
+
+                            from.style.fontWeight = "normal";
+
+                            //var clock = ;            // 출력할 장소 선택
+//                            during.innerHTML = "During : "+ v[i]['P_RESER_TIME'];
+                            during.innerHTML = "During : ";
+                            during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";
+                            //during.innerHTML += document.getElementById("clock_HHMM").innerHTML;
+                            during.style.fontWeight = "bold";
+                            
+                            fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
+
+                  		}
+               		}
+              		console.log("LIST len: " + v.length);
+					
+              		/*
+              		null({"LIST":[{"P_RESER_ID":114,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"3","P_ENTER_TIME":null,"P_UPDATE_DT":"2016-07-23 09:00:00","P_RESER_TIME":"201607231100","P_IDENTIFIER":"RT23223230ET201607231100","P_RESER_TELNO":"23223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"},
+              		              {"P_RESER_ID":115,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"2","P_ENTER_TIME":null,"P_UPDATE_DT":null,"P_RESER_TIME":"201607231300","P_IDENTIFIER":"RT33223230ET201607231300","P_RESER_TELNO":"33223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"}]})*/
+              		
+                  	}
+        	});
+        	        	
+        }
+    });
+}
+
+
+
+
+function getDuring(fromTime) {
+	var fromstr = fromTime[0]+fromTime[1]+fromTime[2]+fromTime[3]+"/"+	//YYYY
+					fromTime[4]+fromTime[5]+"/"+	//MM
+					fromTime[6]+fromTime[7]+" "+	//DD
+					fromTime[8]+fromTime[9]+":"+	//HH
+					fromTime[10]+fromTime[11];		//MM
+
+	var diff = Math.abs(new Date(fromstr) - new Date());
+		console.log("LIST len: " + fromTime + " : " + diff/60000+ " << " );
+	return (diff/60000).toFixed(0);
+}
+
+
+function getFee(fromTime) {
+
+	return (getDuring(fromTime)/15)*fee15min;
+}
+
+window.onload = function() {                         // 페이지가 로딩되면 실행
+	//updateTest();
+	UpdateSlots();
+}
+
+</script>
+
 
 <body bgcolor="#EDEBE9" lang=KO style='tab-interval:40.0pt'>
 
 <div class=WordSection1>
-<input type="button" value="AAAAA" onclick="testButton()">
 <table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-yfti-tbllook:1184;mso-padding-alt:
  0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none'>
@@ -383,9 +496,9 @@ table.MsoTableGrid
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
     border-bottom:none;background:white;mso-background-themecolor:background1;
     padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot1_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    1 : 753-333-3333<o:p></o:p></span></b></p>
+    1<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
@@ -394,7 +507,7 @@ table.MsoTableGrid
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot1_from lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
     </td>
    </tr>
@@ -403,7 +516,7 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot1_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
@@ -412,9 +525,8 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>$
-    10<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot1_fee lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
@@ -440,9 +552,9 @@ table.MsoTableGrid
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
     border-bottom:none;background:white;mso-background-themecolor:background1;
     padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot2_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    2 : 232-222-2222<o:p></o:p></span></b></p>
+    2<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
@@ -450,9 +562,8 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>From
-    : 12:00<b style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot2_from lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><b style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
@@ -461,8 +572,8 @@ table.MsoTableGrid
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>During : 9:27<o:p></o:p></span></b></p>
+    style='mso-bidi-font-weight:normal'><span id=slot2_during lang=EN-US style='font-size:18.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:3;height:42.75pt'>
@@ -470,9 +581,8 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>$
-    50<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot2_fee lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
@@ -498,9 +608,9 @@ table.MsoTableGrid
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
     border-bottom:none;background:white;mso-background-themecolor:background1;
     padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot3_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    3 : RESERVED<o:p></o:p></span></b></p>
+    3<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
@@ -508,9 +618,8 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>From
-    : 12:00<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_from lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
@@ -518,7 +627,7 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
@@ -527,7 +636,7 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_fee lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
@@ -555,9 +664,9 @@ table.MsoTableGrid
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
     border-bottom:none;background:white;mso-background-themecolor:background1;
     padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot4_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    4 : FREE<o:p></o:p></span></b></p>
+    4<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
@@ -566,7 +675,7 @@ table.MsoTableGrid
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot4_from lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
     </td>
    </tr>
@@ -575,7 +684,7 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot4_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
@@ -584,7 +693,7 @@ table.MsoTableGrid
     border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
     mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot4_fee lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
