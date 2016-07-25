@@ -111,4 +111,8 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		dao.updateCancelYn(rp);
 	}
+	
+	public Object getListCurrentStatus() {
+		return dao.selectGetListCurrentStatus();
+	}
 }

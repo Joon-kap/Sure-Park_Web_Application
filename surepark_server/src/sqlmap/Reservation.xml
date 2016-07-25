@@ -135,4 +135,13 @@
 			AND RM.P_CANCEL_YN = 'N'
 			AND RM.P_ENTER_TIME IS NULL
 	</select>
+	
+	<select id="selectGetCurrentStatus" resultClass="RequestParameter">
+		SELECT * FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER IS NOT NULL
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
+	
 </sqlMap>

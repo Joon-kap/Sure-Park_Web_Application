@@ -118,58 +118,60 @@ function GetSensorValue(){
 
 
 
-
-
-
-
-
-
-function meetRequest(buyCarSeq, sellCarSeq,  dealMain, userSeq){
-	var params = "buyCarSeq="+buyCarSeq+"&sellCarSeq="+sellCarSeq+"&dealMain="+dealMain+"&userSeq="+userSeq;
-	
-	$.ajax({
-        type: "POST",
-        url: "http://"+doamainText+"/infobee_car_server/trasnaction/meetRequest.do",
-        callback: "callbak",
-		dataType: "jsonp",
-		data:params,
-        success: function(data){
-        	$.each(data, function(k,v){
-            	if(k=="success"){
-            		$.ajax({
-            			type: "get",
-           	            url: "../../email/b_meet_email.html",
-           	            callback: "callbak",
-            	    	dataType: "html",
-            	        success: function(html){
-            	        	            	        	            	        	
-            	        }
-            			
-            		});
-
-            		$.openDOMWindow({         
-                		windowSourceID:'#traConfirm',
-                		height:200, 
-                		width:500,
-                		overlay:1,
-                		borderSize:'0',
-                		windowSource:'inline',
-                		overlayColor:'#fff',
-                		overlayOpacity:'55'
-                	});
-            	}
-            	
-            	if(k=="fail"){
-            		alert("실패");
-            	}
-        		
-        	});
-        		
-        	
-
-        	
-        	
-        	
-        }
-    });
+var now = new Date();
+function updateTimeDD() {
+    var clock = document.getElementById("clock_DD");            // 출력할 장소 선택
+    var nowTime = ""+now.getDate();
+    clock.innerHTML = nowTime;
 }
+
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+                  "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function updateTimeMM() {
+    var clock = document.getElementById("clock_MM");            // 출력할 장소 선택
+    var nowTime = monthNames[now.getMonth()];
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+//    clock.style.color = "green";
+}
+
+var dayofweek=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+function updateTimeWEEK() {
+    var clock = document.getElementById("clock_WEEK");            // 출력할 장소 선택
+    var nowTime = dayofweek[now.getDay()];
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+}
+
+function updateTimeHHMM() {
+    var clock = document.getElementById("clock_HHMM");            // 출력할 장소 선택
+    now = new Date();                                                  // 현재시간
+//  var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+    var nowTime = now.getHours(2) + ":" + now.getMinutes(2);
+    clock.innerHTML = nowTime;           // 현재시간을 출력
+    updateTimeDD();
+    updateTimeMM();
+    updateTimeWEEK();
+    setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
+    
+}
+/*aa
+function updateLED()
+*/
+
+function updateLED() {
+	GetSensorValue();
+
+}
+window.onload = function() {                         // 페이지가 로딩되면 실행
+	updateTimeHHMM();
+	updateLED();
+}
+
+function webSocketRequest() {
+	
+}
+
+
+
+
+
