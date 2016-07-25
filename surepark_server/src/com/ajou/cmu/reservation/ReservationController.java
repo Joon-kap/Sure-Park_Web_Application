@@ -410,7 +410,6 @@ public class ReservationController {
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		
 		List<RequestParameter> list = (List<RequestParameter>)revService.getListCurrentStatus();
-		
 		map.put("LIST", list);
 		/*
 		for(int i=0; i<list.size(); i++){
