@@ -10,4 +10,7 @@ public class Log {
 	public final static String SPOT_REALLOCATION = "010";
 
 
-	public final static String SENSOR_CHANGED = "100";}
+	public final static String SENSOR_CHANGED = "100";
+	public final static String SPOT_REFRESH = "200";
+	
+}

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ajou.cmu.common.Log;
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
 import com.ajou.cmu.common.WebSocketModule;
@@ -107,6 +108,10 @@ public class ReservationController {
 		else 
 			map.put("fail", "Fail to Registration");
 		*/
+		
+		if(WebSocketModule.thisSession != null)
+			WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+		
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 
@@ -213,6 +218,8 @@ public class ReservationController {
 			rp.put("cTime", ctime);
 			rp.put("pSpotNumber", spot);
 			revService.updateSpot(rp);
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
 		}
 		
 		retMap = (HashMap) revService.getCurrentStatusObject(rp);
@@ -310,6 +317,8 @@ public class ReservationController {
 			map.put("STATUS", "SUCCESS");
 			map.put("pPayment",pay );
 			map.put("pExitTime", cTime);
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
 		}else{
 			map.put("STATUS", "FAIL");
 		}
@@ -361,6 +370,10 @@ public class ReservationController {
 			
 			retMap.put("STATUS", "SUCCESS");
 			mv.addObject("map", retMap);
+			
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+			
 		}else{
 			retMap.put("STATUS", "FAIL");
 			mv.addObject("map", retMap);

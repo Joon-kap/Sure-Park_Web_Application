@@ -1,4 +1,4 @@
-var domainText = "localhost:8080";
+var domainText = "192.168.1.6:8080";
 
 
 function testButton(){
@@ -170,6 +170,7 @@ window.onload = function() {                         // 페이지가 로딩되�
 	updateLED();
 	init();
 	send_message();
+	UpdateSlots();
 	
 }
 
@@ -207,6 +208,8 @@ function onMessage(evt) {
 //    writeToScreen("Message Received: " + evt.data);
 	if(evt.data == '100'){
 		GetSensorValue();
+		
+		
 	}else if(evt.data == '001'){
 		var entry = document.getElementById("entry");  
 		entry.innerHTML = "OPEND";
@@ -219,7 +222,11 @@ function onMessage(evt) {
 	}else if(evt.data == '004'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "CLOSED";
+	}else if(evt.data == '200'){
+		UpdateSlots();
 	}
+	
+	
 	
 }
 function onError(evt) {
