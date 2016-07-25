@@ -33,23 +33,45 @@ public class SensorController {
 	      Map<String, Object> map = new HashMap<String, Object>();
 //	      Map<String, Object> userMap = new HashMap<String, Object>();
 
-	      System.out.println(rp);
-	      
+		  System.out.println(rp);
+		  
 //	      int num = Integer.parseInt((String) rp.get("testValue"));
-	      String str = (String)rp.get("SENSORUPDATE");
-	      
-	      SensorStatus.setSensors(str);
-	      
-	      
-	      
-	      System.out.println("entrygateIr = " + SensorStatus.getEntryGate(1));
-	      System.out.println("exitIr = " + SensorStatus.getExitGate(1));
-	      System.out.println("spot1Ir = " + SensorStatus.getSpot(1));
-	      System.out.println("spot2Ir = " + SensorStatus.getSpot(2));
-	      System.out.println("spot3Ir = " + SensorStatus.getSpot(3));
-	      System.out.println("spot4Ir = " + SensorStatus.getSpot(4));
-	      
+		  String str = (String)rp.get("SENSORUPDATE");
+		  if(str !=null) {
+			  System.out.println("str = " + str);
+
+		      SensorStatus.setSensors(str);
+		      
+		      System.out.println("entrygateIr = " + SensorStatus.getEntryGate(1));
+			  System.out.println("exitIr = " + SensorStatus.getExitGate(1));
+			  System.out.println("spot1Ir = " + SensorStatus.getSpot(1));
+			  System.out.println("spot2Ir = " + SensorStatus.getSpot(2));
+			  System.out.println("spot3Ir = " + SensorStatus.getSpot(3));
+			  System.out.println("spot4Ir = " + SensorStatus.getSpot(4));
+			  
+			  map.put("RETUPDATE", str);
+			  
+			  
+		  }
+	  
+		  String str2 = (String)rp.get("SENSORREQUEST");
+		  if(str2!=null) {
+			  System.out.println("SENSORREQUEST>>");
+		     
+			  map.put("ENTRY",  SensorStatus.getEntryGate(1));
+			  map.put("EXIT",  SensorStatus.getExitGate(1));
+			  map.put("LED3",  SensorStatus.getSpot(3));
+			  map.put("LED4",  SensorStatus.getSpot(4));
+			  map.put("LED1",  SensorStatus.getSpot(1));
+			  map.put("LED2",  SensorStatus.getSpot(2));
+
+
+
+
+		  } 
+
 	      //여기서 센서에서 저장하고 있을 값을 str에서 뽑아냄
+	      
 	      /*
 	      if(SensorStatus.getEntryGate()==0) {
 	    	  System.out.println("entrygateIrStatus = " + SensorStatus.getEntryGate());
@@ -62,7 +84,7 @@ public class SensorController {
 	      */
 
 	      //SensorController.gateIrStatus;
-	      map.put("RETUPDATE", str);
+	      
 	      mnv.addObject("map", map);
 	      mnv.addObject("callback", req.getParameter("callback"));
 	      

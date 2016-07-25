@@ -32,6 +32,89 @@ function testButton(){
 
 
 
+function GetSensorValue(){
+	var params = "SENSORREQUEST="+"SENSORREQUEST";
+	
+	$.ajax({
+        type: "GET",
+        url: "http://"+domainText+"/surepark_server/sensor/changeStatus.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+               	if(k=="ENTRY"){
+              		 var led = document.getElementById("slot_entry");  
+              		 if(v=='1') {
+              			 led.style.color="red";
+	           			 led.innerHTML = "OPEN"
+              		 } else {
+               			 led.innerHTML = "BLOCKED"
+              			 led.style.color="#00B050";
+              		 }
+              		console.log("LED1: " + v);
+                  	}
+        		if(k=="EXIT"){
+           		 var led = document.getElementById("slot_exit");  
+           		 if(v=='1') {
+           			 led.style.color="red";
+           			 led.innerHTML = "OPEN"
+           		 } else {
+           			 led.innerHTML = "BLOCKED"
+           			 led.style.color="#00B050";
+           		 }
+           		console.log("LED1: " + v);
+               	}
+               	
+            	if(k=="LED1"){
+            		 var led = document.getElementById("slot1_led");  
+            		 if(v=='1') {
+            			 led.style.color="#00B050";
+               			 led.innerHTML = "EMPTY";
+            		 } else {
+            			 led.style.color="black";
+               			 led.innerHTML = "OCCUPIED";
+            		 }
+            		console.log("LED1: " + v);
+            	}
+            	if(k=="LED2"){
+           		 	var led = document.getElementById("slot2_led");  
+	           		 if(v=='1') {
+	        			 led.style.color="#00B050";
+	           			 led.innerHTML = "EMPTY";
+	        		 } else {
+	        			 led.style.color="black";
+	           			 led.innerHTML = "OCCUPIED";
+	        		 }
+            		console.log("LED2: " + v);
+            	}
+            	if(k=="LED3"){
+           		 	var led = document.getElementById("slot3_led");  
+	           		 if(v=='1') {
+	        			 led.style.color="#00B050";
+	           			 led.innerHTML = "EMPTY";
+	        		 } else {
+	        			 led.style.color="black";
+	           			 led.innerHTML = "OCCUPIED";
+	        		 }
+            		console.log("LED3: " + v);
+            	}
+            	if(k=="LED4"){
+           		 	var led = document.getElementById("slot4_led");  
+	           		 if(v=='1') {
+	        			 led.style.color="#00B050";
+	           			 led.innerHTML = "EMPTY";
+	        		 } else {
+	        			 led.style.color="black";
+	           			 led.innerHTML = "OCCUPIED";
+	        		 }
+            		console.log("LED4: " + v);
+            	}
+        	});
+        	        	
+        }
+    });
+}
 
 
 
