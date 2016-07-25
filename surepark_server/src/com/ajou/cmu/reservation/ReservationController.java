@@ -372,6 +372,36 @@ public class ReservationController {
 		return mv;
 	}
 	
+	@RequestMapping("/rev/updateGP.do")
+	public ModelAndView updateGracePeriod(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		List<RequestParameter> list = (List<RequestParameter>)revService.getListGp();
+		
+		int cTime = Integer.parseInt(getCurrentTime().substring(4, 12));
+		
+		
+		for(int i=0; i<list.size(); i++){
+			int rTime = Integer.parseInt((list.get(i).get("P_RESER_TIME").toString()).substring(4, 12));
+			System.out.println("cTime : " + cTime);
+			System.out.println("rTime : " + rTime);
+			if((rTime + gp) < cTime){
+				rp.put("pCancelYn", "Y");
+				rp.put("pIdentifier", list.get(i).get("P_IDENTIFIER"));
+				revService.updateCancelYn(rp);
+			}
+		}
+		
+		map.put("STATUS", "SUCCESS");
+		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
+		return mv;
+	}
+	
 	
 	
 	

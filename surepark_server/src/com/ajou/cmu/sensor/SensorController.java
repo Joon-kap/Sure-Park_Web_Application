@@ -39,7 +39,7 @@ public class SensorController {
 	      String str = (String)rp.get("SENSORUPDATE");
 	      
 	      SensorStatus.setSensors(str);
-	      
+	      sendMesseageToAttendant(str);
 	      
 	      
 	      System.out.println("entrygateIr = " + SensorStatus.getEntryGate(1));
@@ -69,6 +69,11 @@ public class SensorController {
 	      return mnv;
 	   }
 		
+	private void sendMesseageToAttendant(String str) {
+		
+		
+	}
+
 	@RequestMapping("/sensor/changeStatusTest.do")
 	public ModelAndView changeStatus(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	
