@@ -7,7 +7,8 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/echo")
-public class WebSocketDemo {
+public class WebSocketModule {
+		public static Session thisSession = null;
 	 
 	    @OnMessage
 	    public void echoTextMessage(Session session, String msg, boolean last) {
@@ -30,7 +31,9 @@ public class WebSocketDemo {
 				e.printStackTrace();
 			}
 	        
-	        new ConnArduino().test();
+	        thisSession = session;
+	        
+	        //new ConnArduino().test();
 	        
 	    }
 	 

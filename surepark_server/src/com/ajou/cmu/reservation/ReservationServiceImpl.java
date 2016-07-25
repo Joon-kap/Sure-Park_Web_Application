@@ -102,4 +102,13 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public void updatePayYn(RequestParameter rp) {
 		dao.updatePaymentYn(rp);
 	}
+
+	public Object getListGp() {
+		return dao.selectGetListGP();
+	}
+
+	public void updateCancelYn(RequestParameter rp) {
+		// TODO Auto-generated method stub
+		dao.updateCancelYn(rp);
+	}
 }

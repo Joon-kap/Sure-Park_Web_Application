@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
+import com.ajou.cmu.common.WebSocketModule;
 import com.ajou.cmu.payment.Payment;
 import com.ajou.cmu.sensor.SensorController;
 import com.ajou.cmu.sensor.SensorStatus;
@@ -98,6 +99,7 @@ public class ReservationController {
 		revService.save(rp);
 		
 		map.put("pIdentifier", id);
+		map.put("pSpotNumber", inSpot);
 		
 		/*
 		if(reservation !=null)	
@@ -144,6 +146,9 @@ public class ReservationController {
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 		
+		if(WebSocketModule.thisSession != null)
+			WebSocketModule.thisSession.getBasicRemote().sendText("aaa", true);
+		
 		return mv;
 		
 	}
@@ -164,6 +169,11 @@ public class ReservationController {
 		}
 		*/
 		int spot = SensorStatus.getChangedSpotSensor();
+		Reservation rev = (Reservation) revService.getObject(rp);
+		int revSpot = Integer.parseInt(rev.getpSpotNumber());
+		
+		
+		
 		System.out.println("===============" + spot);
 		if(spot == 0){
 			map.put("result", "fail");
@@ -215,6 +225,13 @@ public class ReservationController {
 			mv.addObject("map", map);
 		}else{
 			mv.addObject("map", retMap);
+			if(spot != revSpot){
+				/*reallocation*/
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+			}
 			releaseStatus = 1;
 		}
 		
@@ -292,6 +309,8 @@ public class ReservationController {
 			rp.put("pExitTime", cTime);
 			revService.setPayNexitTime(rp);
 			map.put("STATUS", "SUCCESS");
+			map.put("pPayment",pay );
+			map.put("pExitTime", cTime);
 		}else{
 			map.put("STATUS", "FAIL");
 		}
@@ -349,6 +368,36 @@ public class ReservationController {
 			System.out.println("isPaid");
 		}
 		
+		mv.addObject("callback", req.getParameter("callback"));
+		return mv;
+	}
+	
+	@RequestMapping("/rev/updateGP.do")
+	public ModelAndView updateGracePeriod(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		List<RequestParameter> list = (List<RequestParameter>)revService.getListGp();
+		
+		int cTime = Integer.parseInt(getCurrentTime().substring(4, 12));
+		
+		
+		for(int i=0; i<list.size(); i++){
+			int rTime = Integer.parseInt((list.get(i).get("P_RESER_TIME").toString()).substring(4, 12));
+			System.out.println("cTime : " + cTime);
+			System.out.println("rTime : " + rTime);
+			if((rTime + gp) < cTime){
+				rp.put("pCancelYn", "Y");
+				rp.put("pIdentifier", list.get(i).get("P_IDENTIFIER"));
+				revService.updateCancelYn(rp);
+			}
+		}
+		
+		map.put("STATUS", "SUCCESS");
+		
+		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 		return mv;
 	}
@@ -444,7 +493,12 @@ public class ReservationController {
 	}
 	
 	private int selectSpot(List<HashMap> spotList) {
-		String tmpSpotList[] = spots;
+		String tmpSpotList[] = new String[spots.length];
+		
+		for(int i=0; i<spots.length; i++){
+			tmpSpotList[i] = spots[i];
+		}
+
 		
 		int retSpot = 0;
 		for(int i=0; i<tmpSpotList.length; i++){

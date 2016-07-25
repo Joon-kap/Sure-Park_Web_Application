@@ -91,6 +91,11 @@ public class SensorController {
 	      return mnv;
 	   }
 		
+	private void sendMesseageToAttendant(String str) {
+		
+		
+	}
+
 	@RequestMapping("/sensor/changeStatusTest.do")
 	public ModelAndView changeStatus(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	

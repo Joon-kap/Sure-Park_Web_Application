@@ -23,6 +23,7 @@ public class StartTest implements ApplicationListener{
 		if(!isStarted){
 			Thread socket = new Thread(new ConnArduino());
 			socket.start();
+			
 			isStarted = true;
 		}
 		
