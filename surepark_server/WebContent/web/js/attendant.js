@@ -149,7 +149,12 @@ function updateTimeHHMM() {
     var clock = document.getElementById("clock_HHMM");            // 출력할 장소 선택
     now = new Date();                                                  // 현재시간
 //  var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
-    var nowTime = now.getHours(2) + ":" + now.getMinutes(2);
+    var hour = parseInt(now.getHour());
+    if(hour > 10){
+    	hour = "0"+hour;
+    }
+    console.log("===============hour : " + hour);
+    var nowTime = hour + ":" + now.getMinutes().toPrecision(2);
     clock.innerHTML = nowTime;           // 현재시간을 출력
     updateTimeDD();
     updateTimeMM();
@@ -209,13 +214,13 @@ function onMessage(evt) {
 		GetSensorValue();
 	}else if(evt.data == '001'){
 		var entry = document.getElementById("entry");  
-		entry.innerHTML = "OPEND";
+		entry.innerHTML = "OPENED";
 	}else if(evt.data == '002'){
 		var entry = document.getElementById("entry");  
 		entry.innerHTML = "CLOSED";
 	}else if(evt.data == '003'){
 		var exit = document.getElementById("exit");  
-		exit.innerHTML = "OPEND";
+		exit.innerHTML = "OPENED";
 	}else if(evt.data == '004'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "CLOSED";

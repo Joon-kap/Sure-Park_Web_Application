@@ -317,13 +317,16 @@ function UpdateSlots(){
 
                             //var clock = ;            // 출력할 장소 선택
 //                            during.innerHTML = "During : "+ v[i]['P_RESER_TIME'];
-                            during.innerHTML = "During : ";
-                            during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";
-                            //during.innerHTML += document.getElementById("clock_HHMM").innerHTML;
+                            if(v[i]['P_ENTER_TIME'].length<2) {
+                            	during.innerHTML = "Reserved";
+                                //during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";                           	
+                            } else {
+                            	during.innerHTML = "During : ";
+                                during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";
+                                //during.innerHTML += document.getElementById("clock_HHMM").innerHTML;
+                                fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
+                            }
                             during.style.fontWeight = "bold";
-                            
-                            fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
-
                   		}
                		}
               		console.log("LIST len: " + v.length);
