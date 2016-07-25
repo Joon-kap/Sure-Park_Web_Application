@@ -149,12 +149,16 @@ function updateTimeHHMM() {
     var clock = document.getElementById("clock_HHMM");            // 출력할 장소 선택
     now = new Date();                                                  // 현재시간
 //  var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
-    var hour = parseInt(now.getHour());
-    if(hour > 10){
+    var hour = parseInt(now.getHours());
+    var min = parseInt(now.getMinutes());
+    if(hour < 10){
     	hour = "0"+hour;
     }
-    console.log("===============hour : " + hour);
-    var nowTime = hour + ":" + now.getMinutes().toPrecision(2);
+    if(min < 10){
+    	min = "0"+min;
+    }
+
+    var nowTime = hour + ":" + min;
     clock.innerHTML = nowTime;           // 현재시간을 출력
     updateTimeDD();
     updateTimeMM();
@@ -224,14 +228,17 @@ function onMessage(evt) {
 	}else if(evt.data == '003'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "OPENED";
+//		sleep(2000);
+//		UpdateSlots();
+//		setTimeout(UpdateSlots(), 10000);
+		//UpdateSlots();
 	}else if(evt.data == '004'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "CLOSED";
 	}else if(evt.data == '200'){
+		
 		UpdateSlots();
 	}
-	
-	
 	
 }
 function onError(evt) {
@@ -248,6 +255,11 @@ function writeToScreen(message) {
     pre.innerHTML = message;
      
     //output.appendChild(pre);
+}
+
+function sleep(delay){
+	var start = new Date().getTime();
+	while(new Date().getTime() < start + delay);
 }
 //window.addEventListener("load", init, false);
 

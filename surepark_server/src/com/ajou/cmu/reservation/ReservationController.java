@@ -184,6 +184,13 @@ public class ReservationController {
 			mv.addObject("map", map);
 			mv.addObject("callback", req.getParameter("callback"));
 			return mv;
+		}else if(SensorStatus.getExitGate(1) == 0){
+			map.put("result", "fail");
+			map.put("EXIT_GATE", "Detected");
+			mv.addObject("map", map);
+			
+			mv.addObject("callback", req.getParameter("callback"));
+			return mv;
 		}else{
 			String ctime = getCurrentTime();
 			/*
@@ -371,8 +378,15 @@ public class ReservationController {
 			retMap.put("STATUS", "SUCCESS");
 			mv.addObject("map", retMap);
 			
-			if(WebSocketModule.thisSession != null)
+			if(WebSocketModule.thisSession != null){
 				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+			}
 			
 		}else{
 			retMap.put("STATUS", "FAIL");

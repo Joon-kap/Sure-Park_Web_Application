@@ -296,6 +296,7 @@ function UpdateSlots(){
                             var fee = document.getElementById("slot"+slotnum+"_fee");
                             
                             console.log("LIST len: " + "slot"+slotnum+"_stat");
+                            console.log(v);
                             
                             //stat.innerHTML = "# "+slotnum+" : "+ v[i]['P_RESER_TELNO'];
                             stat.innerHTML = "# "+slotnum+" : ";
@@ -317,7 +318,7 @@ function UpdateSlots(){
 
                             //var clock = ;            // 출력할 장소 선택
 //                            during.innerHTML = "During : "+ v[i]['P_RESER_TIME'];
-                            if(v[i]['P_ENTER_TIME'].length<2) {
+                            if(v[i]['P_ENTER_TIME'] == null) {
                             	during.innerHTML = "Reserved";
                                 //during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";                           	
                             } else {
