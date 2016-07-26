@@ -122,7 +122,7 @@ public class ReservationController {
 
 	@RequestMapping("/rev/available.do")
 	public ModelAndView retrieveAvailableSpot(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
+/*test */
 		RequestParameter rp = Utils.extractRequestParameters(req);
 		ModelAndView mv = new ModelAndView("/common/json_result");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -181,14 +181,10 @@ public class ReservationController {
 		System.out.println("===============" + spot);
 		if(spot == 0){
 			map.put("result", "fail");
+			if(SensorStatus.getExitGate(1) == 0){
+				map.put("EXIT_GATE", "Detected");
+			}
 			mv.addObject("map", map);
-			mv.addObject("callback", req.getParameter("callback"));
-			return mv;
-		}else if(SensorStatus.getExitGate(1) == 0){
-			map.put("result", "fail");
-			map.put("EXIT_GATE", "Detected");
-			mv.addObject("map", map);
-			
 			mv.addObject("callback", req.getParameter("callback"));
 			return mv;
 		}else{
