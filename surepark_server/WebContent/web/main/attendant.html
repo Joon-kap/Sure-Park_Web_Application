@@ -276,6 +276,22 @@ function updateTest() {
 
 
 function UpdateSlots(){
+	
+	for(var i=1; i<5; i++){
+		var stat = document.getElementById("slot"+i+"_stat");
+	    var from = document.getElementById("slot"+i+"_from");
+	    var during = document.getElementById("slot"+i+"_during");
+	    var fee = document.getElementById("slot"+i+"_fee");
+	    
+	    stat.innerHTML = "# "+i+" : ";
+	    from.innerHTML = "";
+	    during.innerHTML = "";
+	    fee.innerHTML = "";
+	    
+	}
+	
+	
+	
 	$.ajax({
         type: "POST",
         url: "http://"+domainText+"/surepark_server/rev/currentParkedStatus.do",
@@ -288,7 +304,7 @@ function UpdateSlots(){
                	if(k=="LIST"){
                		for(i=0; i<v.length; i++) {
                   		console.log("LIST: " + v[0]['P_RESER_ID']);
-                  		if((v[i]['P_CANCEL']!="N")&&(v[i]['P_PAYMENT']!="N")) {
+                  	//	if((v[i]['P_CANCEL']!="N")&&(v[i]['P_PAYMENT']!="N")) {
                   			slotnum = v[i]['P_SPOT_NUMBER'];
                             var stat = document.getElementById("slot"+slotnum+"_stat");
                             var from = document.getElementById("slot"+slotnum+"_from");
@@ -328,7 +344,7 @@ function UpdateSlots(){
                                 fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
                             }
                             during.style.fontWeight = "bold";
-                  		}
+                  	//	}
                		}
               		console.log("LIST len: " + v.length);
 					
@@ -782,22 +798,22 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
   height:88.75pt'></td>
   <td width=484 rowspan=3 valign=top style='width:290.6pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:88.75pt'>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LOG<o:p></o:p></span></b></p>
-  <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
-  normal'><span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;
-  font-family:"Arial",sans-serif'><SELECT NAME="Event LOG" SIZE="6"
-  style="font-size:18.0pt;mso-bidi-font-size:12.0pt;&#13;&#10;  font-family:&quot;Arial&quot;,sans-serif">
-<OPTION VALUE="LOG1"> Driver doesn't enter in space. 21:00 07/20/2015
-<OPTION VALUE="LOG2"> Gate broken. 12:00 07/21/2015
-<OPTION VALUE="LOG3"> Beer out of stock. 02:00 07/22/2015
-<OPTION SELECTED VALUE="LOG4"> Whiskey purchase declined. 23:00 07/23/2015
-<OPTION VALUE="LOG5"> This Friday is no work day. 21:00 07/20/2015
-<OPTION VALUE="LOG6"> Driver doesn't enter in space. 12:00 07/21/2015
-<OPTION VALUE="LOG7"> Driver doesn't enter in space. 02:00 07/22/2015
-<OPTION VALUE="LOG8"> Driver doesn't enter in space. 23:00 07/23/2015
-</SELECT><o:p></o:p></span></b></p>
+  	<p class=MsoNormal>
+  		<b style='mso-bidi-font-weight:normal'>
+  			<span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LOG<o:p></o:p></span>
+  		</b>
+  	</p>
+  	<p class=MsoNormal>
+  		<span lang=EN-US style='font-size:10.0pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+  	</p>
+  	<p class=MsoNormal align=right style='text-align:right'>
+  		<b style='mso-bidi-font-weight:normal'>
+  			<span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>
+  				<SELECT id="logSelect" NAME="Event LOG" SIZE="6" style="font-size:18.0pt;mso-bidi-font-size:12.0pt;&#13;&#10; font-family:&quot;Arial&quot;,sans-serif">
+									</SELECT><o:p></o:p>
+			</span>
+		</b>
+	</p>
   </td>
   <td width=177 rowspan=3 style='width:106.3pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:88.75pt'></td>

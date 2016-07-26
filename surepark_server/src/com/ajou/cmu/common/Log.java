@@ -6,11 +6,17 @@ public class Log {
 	public final static String EXIT_DOOR_OPENED = "003";
 	public final static String EXIT_DOOR_CLOSED = "004";
 	
+	public final static String PARKED = "005";
+	public final static String EXITED = "006";
+	public final static String REALLOCATION = "007";
+	
 	
 	public final static String SPOT_REALLOCATION = "010";
 
 
 	public final static String SENSOR_CHANGED = "100";
 	public final static String SPOT_REFRESH = "200";
+	
+
 	
 }

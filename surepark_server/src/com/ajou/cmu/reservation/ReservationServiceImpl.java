@@ -115,4 +115,13 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 	public Object getListCurrentStatus() {
 		return dao.selectGetListCurrentStatus();
 	}
+
+	public void reallocation(int spot, int revSpot) throws SQLException {
+		RequestParameter rp = (RequestParameter) dao.selectIdentifierBySpot(spot);
+		if(rp != null){
+			rp.put("pSpotNumber", revSpot);
+			rp.put("pIdentifier", rp.get("P_IDENTIFIER"));
+			dao.updateParkingSpot(rp);
+		}
+	}
 }

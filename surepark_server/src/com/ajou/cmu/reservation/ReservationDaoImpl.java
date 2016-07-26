@@ -106,4 +106,10 @@ public class ReservationDaoImpl extends BaseDao implements Dao {
 		// TODO Auto-generated method stub
 		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.reservation.selectGetCurrentStatus");
 	}
+
+	public Object selectIdentifierBySpot(int spot) {
+		// TODO Auto-generated method stub
+		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectGetIdentifierBySpot", spot);
+		
+	}
 }

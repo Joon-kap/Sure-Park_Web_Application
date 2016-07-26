@@ -174,6 +174,7 @@ function updateLED() {
 	GetSensorValue();
 
 }
+var selectLog;
 window.onload = function() {                         // 페이지가 로딩되면 실행
 	updateTimeHHMM();
 	updateLED();
@@ -181,12 +182,54 @@ window.onload = function() {                         // 페이지가 로딩되�
 	send_message();
 	UpdateSlots();
 	
+	
+	selectLog = document.getElementById("logSelect");
+	
+	var objOption = document.createElement("option");        
+	objOption.text = "Parking Lot Monitor Started	" + getLogTime();
+	objOption.value = "aaaa";
+	    
+	selectLog.options.add(objOption);
+	
+	
+		
+	
 }
 
 function webSocketRequest() {
 	
 }
 
+function getLogTime(){
+//21:00:11 07/20/2015
+	
+	var now = new Date(); // 현재시간
+	var sec = parseInt(now.getSeconds());
+	var min = parseInt(now.getMinutes());
+	var hour = parseInt(now.getHours());
+	var mon = parseInt((now.getMonth()+1));
+	var day = parseInt(now.getDate());
+	
+	if(sec < 10)
+		sec = "0" + sec;
+	
+	if(min < 10)
+		min = "0" + min;
+	
+	if(hour < 10)
+		hour = "0" + hour;
+	
+	if(mon < 10)
+		mon = "0" + mon;
+	
+	if(day < 10)
+		day = "0" + day;
+
+    var nowTime = hour + ":" + min + ":" + sec +" " + mon + "/" + day + "/" + now.getFullYear();
+    
+    //	now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" +  + "초";
+    return nowTime;
+}
 
 var wsUri = "ws://"+domainText+"/surepark_server/echo";
 
@@ -228,17 +271,16 @@ function onMessage(evt) {
 	}else if(evt.data == '003'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "OPENED";
-//		sleep(2000);
-//		UpdateSlots();
-//		setTimeout(UpdateSlots(), 10000);
-		//UpdateSlots();
 	}else if(evt.data == '004'){
 		var exit = document.getElementById("exit");  
 		exit.innerHTML = "CLOSED";
 	}else if(evt.data == '200'){
-		
+		console.log(evt.data);
 		UpdateSlots();
 	}
+	
+	updateLog(evt.data);
+
 	
 }
 function onError(evt) {
@@ -263,4 +305,31 @@ function sleep(delay){
 }
 //window.addEventListener("load", init, false);
 
+function updateLog(evt){
 
+	if(evt.indexOf("005") != -1){
+		var str = evt.split("#");
+		
+		var objOption = document.createElement("option");        
+		objOption.text = "Slot #"+str[1]+" Parked	" + getLogTime();
+		objOption.value = "aaaa";
+		    
+		selectLog.options.add(objOption);
+		
+	}else if(evt.indexOf("006") != -1){
+		var str = evt.split("#");
+		
+		var objOption = document.createElement("option");        
+		objOption.text = "Slot #"+str[1]+" LEFT	" + getLogTime();
+		objOption.value = "aaaa";
+		    
+		selectLog.options.add(objOption);
+		
+	}else if(evt == "007"){
+		var objOption = document.createElement("option");        
+		objOption.text = "Reallocated	" + getLogTime();
+		objOption.value = "aaaa";
+		    
+		selectLog.options.add(objOption);
+	}
+}

@@ -224,9 +224,24 @@ public class ReservationController {
 			
 			rp.put("cTime", ctime);
 			rp.put("pSpotNumber", spot);
+			
+			if(spot != revSpot){
+				/*reallocation*/
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				revService.reallocation(spot,revSpot);
+				if(WebSocketModule.thisSession != null)
+					WebSocketModule.thisSession.getBasicRemote().sendText(Log.REALLOCATION, true);
+			}
+			
 			revService.updateSpot(rp);
 			if(WebSocketModule.thisSession != null)
 				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+			
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.PARKED+"#"+spot, true);
 		}
 		
 		retMap = (HashMap) revService.getCurrentStatusObject(rp);
@@ -238,13 +253,7 @@ public class ReservationController {
 			mv.addObject("map", map);
 		}else{
 			mv.addObject("map", retMap);
-			if(spot != revSpot){
-				/*reallocation*/
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-			}
+			
 			releaseStatus = 1;
 		}
 		
@@ -387,6 +396,9 @@ public class ReservationController {
 				System.out.println("===========Log.SPOT_REFRESH=============");
 				System.out.println("===========Log.SPOT_REFRESH=============");
 			}
+			
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.EXITED+"#"+rev.getpSpotNumber(), true);
 			
 		}else{
 			retMap.put("STATUS", "FAIL");

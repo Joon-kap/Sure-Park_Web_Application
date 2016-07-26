@@ -143,5 +143,12 @@
 			AND RM.P_CANCEL_YN = 'N'
 	</select>
 	
+	<select id="selectGetIdentifierBySpot" parameterClass="Integer" resultClass="RequestParameter">
+		SELECT RM.P_IDENTIFIER FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER = #spot#
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
 	
 </sqlMap>
