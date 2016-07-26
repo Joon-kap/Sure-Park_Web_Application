@@ -2,7 +2,7 @@
 
 <!DOCTYPE sqlMapConfig
 	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
-	"C:\workspace\Sure-Park_Web_Application\Sure-Park_Web_Application\Sure-Park_Web_Application\surepark_server\src\sqlmap\sql-map-config-2.dtd">
+	"C:\Users\Minseong\Documents\CMU\Project\workspace\Sure-Park_Web_Application\Sure-Park_Web_Application\surepark_server\src\sqlmap\sql-map-config-2.dtd">
 
 <sqlMapConfig>
 	<settings useStatementNamespaces="true" />
