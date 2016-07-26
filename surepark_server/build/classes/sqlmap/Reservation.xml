@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.ajou.cmu.reservation">
+	<typeAlias alias ="RequestParameter" type="com.ajou.cmu.common.RequestParameter"/>		
+	
+	<typeAlias alias="rev" type="com.ajou.cmu.reservation.Reservation"/>
+	
+	<resultMap class="rev" id="revResult">
+		<result property="pReserId" column="P_RESER_ID"/>
+		<result property="pIdentifier" column="P_IDENTIFIER"/>
+		<result property="pReserTelno" column="P_RESER_TELNO"/>
+		<result property="pReserTime" column="P_RESER_TIME"/>
+		<result property="pSpotNumber" column="P_SPOT_NUMBER"/>
+		<result property="pPayment" column="P_PAYMENT"/>
+		<result property="pPaymentYn" column="P_PAYMENT_YN"/>
+		<result property="pCancelYn" column="P_CANCEL_YN"/>
+		<result property="pEnterTime" column="P_ENTER_TIME"/>
+		<result property="pExitTime" column="P_EXIT_TIME"/>
+		<result property="pCreateDt" column="P_CREATE_DT"/>
+		<result property="pUpdateDt" column="P_UPDATE_DT"/>		
+	</resultMap>
+	
+	<select id="selectByIdentifier" parameterClass="RequestParameter" resultMap="revResult">
+		SELECT * FROM P_RESER_MST as P WHERE P.P_IDENTIFIER = #pIdentifier#
+	</select>
+	
+	
+	<select id="selectParkingReservation" resultClass="java.util.HashMap">
+	SELECT 
+		AA.TOTAL_QTY, 
+		BB.PARKED_QTY, 
+		AA.TOTAL_QTY - BB.PARKED_QTY - CC.RESERVED_QTY AS AVABILE_QTY 
+	FROM ( 
+		( SELECT MAX(P_AVAIBLE_QTY) AS TOTAL_QTY FROM P_CONFIG_INFO ) AA, 
+		( SELECT COUNT(*) AS PARKED_QTY FROM P_RESER_MST WHERE ( P_SPOT_NUMBER IS NOT NULL AND P_PAYMENT_YN ='N' ))BB, 
+		( SELECT COUNT(*) AS RESERVED_QTY FROM P_RESER_MST WHERE P_SPOT_NUMBER IS NULL ) CC 
+		) 
+
+	</select>
+	
+	<select id="selectIdentifiers" parameterClass="RequestParameter" resultClass="java.util.HashMap">
+   		SELECT (SELECT  CASE COUNT(*) WHEN 0 THEN 'FAIL'
+									 WHEN 1 THEN 'SUCCESS' 
+									 ELSE 'ERROR' END
+		  FROM P_RESER_MST
+ 		WHERE P_IDENTIFIER = #pIdentifier#
+   		AND P_SPOT_NUMBER IS NOT NULL) as STATUS,
+   		(SELECT P_SPOT_NUMBER FROM P_RESER_MST WHERE P_IDENTIFIER = #pIdentifier#) AS SPOT
+   	</select>
+   	
+   	
+   	
+   	
+   	<!-- 대한 - 2016.07.18 13:12 - CurrentStateController에서 현재 주차장에 입차한 사용자의 정보를 보내기위한 쿼리 작성 --> 
+   	<select id="selectcurrentstatus" parameterClass="RequestParameter" resultClass="java.util.HashMap">
+   		SELECT 
+   		
+   		P_SPOT_NUMBER,
+   		P_ENTER_TIME
+   		
+   		FROM P_RESER_MST
+   		
+   		WHERE P_IDENTIFIER = #pIdentifier#
+   	</select>
+   	
+   	<!-- 대한 - 2016.07.18 23:38 - Identifier를 가져오기 전에 CurrentTime과 ReservationTime 비교를 위해서 ReservationTime 가져오는 쿼리  -->
+   	<select id="selectreservationtime" parameterClass="RequestParameter" resultMap="revResult">
+   		SELECT
+   		P_RESER_TIME
+   		FROM P_RESER_MST
+   		WHERE P_IDENTIFIER = #pIdentifier#
+	</select>
+	
+	<insert id="insertPakingReservation" parameterClass="RequestParameter">
+		 INSERT INTO p_reser_mst(
+			P_IDENTIFIER,
+			P_RESER_TELNO,
+			P_RESER_TIME,
+			P_SPOT_NUMBER,
+			P_CREATE_DT,
+			P_UPDATE_DT)
+		VALUE(
+			#pIdentifier#,
+			#pReserTelno#,
+			#pReserTime#,
+			#pSpotNumber#,
+			now(),
+			now())
+	</insert>
+	
+	<update id="updatePakingSpot" parameterClass="RequestParameter">
+		 UPDATE p_reser_mst
+   			SET p_spot_number  = #pSpotNumber#,   				
+   			    P_enter_time   = #cTime#
+         WHERE p_identifier = #pIdentifier#
+           
+	</update>
+	
+	<update id="updatePayment" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_PAYMENT  = #pPayment#,
+   				P_EXIT_TIME = #pExitTime#
+         WHERE P_IDENTIFIER = #pIdentifier#
+	</update>
+	
+	<select id="selectAvailableSpot" resultClass="RequestParameter">
+		SELECT P_SPOT_NUMBER 
+		FROM P_RESER_MST RM 
+		WHERE 
+			RM.P_SPOT_NUMBER IS NOT NULL AND 
+			RM.P_PAYMENT_YN = 'N' AND 
+			RM.P_CANCEL_YN = 'N'; 
+	</select>
+
+
+	<update id="updatePaymentYn" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_PAYMENT_YN  = #pPaymentYn#
+         WHERE P_IDENTIFIER = #pIdentifier#
+	</update>
+	
+	<update id="updateCancelYn" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_CANCEL_YN  = #pCancelYn#
+         WHERE P_IDENTIFIER = #pIdentifier#
+	</update>
+
+	<select id="selectGetListGP" resultClass="RequestParameter">
+		SELECT * FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER IS NOT NULL
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+			AND RM.P_ENTER_TIME IS NULL
+	</select>
+	
+	<select id="selectGetCurrentStatus" resultClass="RequestParameter">
+		SELECT * FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER IS NOT NULL
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
+	<select id="selectGetIdentifierBySpot" parameterClass="Integer" resultClass="RequestParameter">
+		SELECT RM.P_IDENTIFIER FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER = #spot#
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
+	
+</sqlMap>

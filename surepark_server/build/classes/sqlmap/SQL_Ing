@@ -1,0 +1,124 @@
+
+/* 2016.07.15버전 */
+
+ /* 1번 예약테이블*/ 
+ CREATE TABLE P_RESER_MST (
+	P_RESER_ID 		   INT(5) NOT NULL COMMENT "예약자ID(KEY)",
+	P_IDENTIFIER      VARCHAR(30)     COMMENT "승인식별자(예)RT전화번호+구분자+ 시간))",
+	P_RESER_TELNO     VARCHAR(20)     COMMENT "예약자 전화번호",
+	P_RESER_TIME      VARCHAR(12)     COMMENT "예약 시간",
+	P_SPOT_NUMBER     VARCHAR(2)      COMMENT "주차자리:예약할때, 시스템에서 부여함",
+   P_PAYMENT         VARCHAR(12)     COMMENT "결제금액",
+   P_PAYMENT_YN      VARCHAR(1)  DEFAULT 'N' COMMENT "결제완료여부",
+   P_CANCEL_YN       VARCHAR(1)  DEFAULT 'N' COMMENT "예약취소여부(취소일때만 'Y')",
+   P_ENTER_TIME      VARCHAR(12)     COMMENT "예약자가 들어온 시간",
+   P_EXIT_TIME       VARCHAR(12)     COMMENT "예약자가 나간  시간",
+   P_CREATE_DT       VARCHAR(20)     COMMENT "생성일자",
+	P_UPDATE_DT       VARCHAR(20)     COMMENT "수정일자",
+	PRIMARY KEY (P_RESER_ID)
+)
+
+
+
+/*주차상황테이블(P_STATUS) 일단 보류 
+/*예약할때, 자리번호를 부여해야함, 어떤 주차자리가 가능한지 계속 체크해야함
+/*각 자리마다, 예약시간, 결제금액을 표시 - 예약테이블과 조인해서, 각 자리의 상황을 보여줌 
+ CREATE TABLE P_RESER_MST (
+	P_PARKID				VARCHAR(5) COMMENT "주차장 코드(주차장이 여러곳일 경우 구분을 위함",
+	P_SPOT_NUMBER1		VARCHAR(2)  COMMENT "주차자리(EX, 1번)",
+	P_SPOT_NUMBER2		VARCHAR(2)  COMMENT "주차자리(EX, 2번)",
+	P_SPOT_NUMBER3		VARCHAR(2)  COMMENT "주차자리(EX, 3번)",
+	P_SPOT_NUMBER4		VARCHAR(2)  COMMENT "주차자리(EX, 4번)",
+	P_CREATE_DT			VARCHAR(20) COMMENT "생성일자",
+	P_UPDATE_DT	      VARCHAR(20) COMMENT "수정일자",
+PRIMARY KEY(P_CODE)
+} */
+
+
+/* 3번 주차장정보 P_CONFIG_INFO */
+CREATE TABLE P_CONFIR_INFO (
+	P_PARK_ID				VARCHAR(5) 		COMMENT "주차장코드(주차장이 여러곳일 경우 구분을 위함", 
+	P_NAME					VARCHAR(30) 	COMMENT "주차장이름",
+	P_ADDRESS				VARCHAR(30) 	COMMENT "주차장 주소",
+	P_OWNER					VARCHAR(20)	   COMMENT "대표이름",
+	P_TELNO					VARCHAR(20)    COMMENT "회사대표전화",
+	P_MANAGER				VARCHAR(20) 	COMMENT "매니저 이름",
+	P_MANAGER_TELNO		VARCHAR(20)  	COMMENT  "매니저 전화번호",
+	P_AVAIBLE_QTY			VARCHAR(2)     COMMENT  "주차가능 차량수",
+	P_PERIOD_TIME			VARCHAR(2)     COMMENT  "유효시간설정(ex)30분단위, 1시간 단위)",
+	P_DISABILITY_SPOT_YN	VARCHAR(1)  DEFAULT 'N' COMMENT "N:장애주차시설이 없음",
+	P_DESC					VARCHAR(50) 	COMMENT  "비고",            
+	P_CREATE_DT				VARCHAR(20)		COMMENT  "생성일자",
+	P_UPDATE_DT				VARCHAR(20)    COMMENT  "수정일자",
+PRIMARY KEY(P_PARK_ID)
+)
+
+
+
+/* 4번 장애내역  P_FAILURE_MST */
+/*장애가 발생시, 아두이노센서로부터, P_FAILURE_GUBUN에 값을 받아서 데이타 생성*/
+CREATE TABLE P_FAILURE_MST (
+	P_FAILURE_ID      VARCHAR(5)  COMMENT "장애ID - 내역 입력시 생성함 EX)900000",
+	P_YYYYMMDD			VARCHAR(8)  COMMENT "장애발생일(년월일)",
+	P_FAILURE_GUBUN	VARCHAR(6)  COMMENT "장애코드구분('IR','AR','GA', 두개이상 'IRAR','ARGA')",
+	P_FAILURE_CODE		VARCHAR(10) COMMENT "장애코드에 관련된 에러코드 (코드 테이블(P_CODE_MST) 정의)",
+	P_FAILURE_TIME		VARCHAR(6)  COMMENT "장애발생시간",
+	P_FAILURE_REASON	VARCHAR(50) COMMENT "장애발생원인",
+	P_SLOVE_YN			VARCHAR(1)  DEFAULT 'N' COMMENT "최종처리여부",
+	P_ALAMR_YN			VARCHAR(1)  DEFAULT 'N' COMMENT "알람전송여부",
+	P_CREATE_USER		VARCHAR(20) COMMENT "장애내역을 입력한 사람",
+	P_CERATE_DT			VARCHAR(12) COMMENT "생성일자",
+	P_UPDATE_DT			VARCHAR(12) COMMENT "수정일자",
+PRIMARY KEY(P_FAILURE_ID,P_YYYYMMDD)
+)
+
+
+/* 5번 처리내역 테이블   P_FAILURE_DET */
+CREATE TABLE P_FAILURE_DET (
+   P_FAILURE_ID      VARCHAR(5)  COMMENT " ㅍ 내역 입력시 생성함 EX)900000",
+	P_YYYYMMDD			VARCHAR(8)  COMMENT "처리날짜(년원일)",   
+	P_SLOVE_SEQ			VARCHAR(2)  COMMENT "처리내역 순번(추가될때마다 증가됨)",
+	P_SLOVE_DESC		VARCHAR(100) COMMENT "처리내역",
+	P_SLOVE_YN			VARCHAR(2)   COMMENT "처리내역 완료여부",
+	P_SLOVE_USER		VARCHAR(20)  COMMENT "처리자",
+	P_OWNER_OPINION	VARCHAR(50)  COMMENT "오너의견/승인여부",
+	P_CERATE_DT			VARCHAR(12)  COMMENT "생성일자",
+PRIMARY KEY(P_FAILURE_ID)
+)
+	
+
+
+
+/* 6번 처리내역 테이블   P_EMP_MST */
+CREATE TABLE P_EMP_MST (
+	P_EMP_ID					VARCHAR(5) COMMENT "직원ID",
+	P_EMP_PASSWD			VARCHAR(5) COMMENT "직원비밀번호",
+	P_EMP_NAME				VARCHAR(20) COMMENT "직원이름",
+	P_EMP_ADDR				VARCHAR(30) COMMENT "직원주소",
+	P_EMP_TELNO				VARCHAR(20) COMMENT "직원전화번호",
+	P_EMP_WORKTIME_FROM	VARCHAR(4)  COMMENT "근무시간_FROM",
+	P_EMP_WORKTIME_TO		VARCHAR(4)  COMMENT "근무시간_TO",
+	P_EMP_JOIN_DT			VARCHAR(12) COMMENT "입사일자",
+	P_EMP_OUT_DT			VARCHAR(12) COMMENT "퇴사일자",
+	P_EMP_YN					VARCHAR(1)  COMMENT "직원여부",
+PRIMARY KEY(P_EMP_ID)
+} 
+
+
+/* 7번 코드마스터(P_CODE_MST) */
+CREATE TABLE P_CODE_MST (
+	P_CODE				VARCHAR(5)  COMMENT "시스템에서 쓰는 코드 정의 ex)'IR','GA','FA(Failure)" ,
+	P_CODE_TITLE 		VARCHAR(10) COMMENT "코드TITLE정의",
+	P_CODE_INDEX		VARCHAR(5)  COMMENT  "P_CODE의 하위 INDEX (EX)'IR001'",
+	P_CODE_INDEX_TITLE	VARCHAR(5)  COMMENT  "P_CODE의 하위 INDEX제목",
+	P_CODE_DESC			VARCHAR(50) COMMENT "코드의 상세내역",
+	P_CODE_USER_YN		VARCHAR(2)  COMMENT "코드사용여부",
+	P_CREATE_DT			VARCHAR(12) COMMENT "생성일자",
+	P_UPDATE_DT 		VARCHAR(12) COMMENT "수정일자",
+PRIMARY KEY(P_CODE)
+) 
+
+
+
+
+
