@@ -54,6 +54,8 @@ public class ConnArduino implements Runnable {
     	int	portNum = 550;											// Port number for server socket
     	int check = 0;
     	
+			
+    	
     	while(true)
 		{
     		/*****************************************************************************
@@ -145,6 +147,8 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenEntryMessage message to client...." );
 		   				out.write( msg, 0, msg.length() );
 						out.flush();
+						if(WebSocketModule.thisSession != null)
+							WebSocketModule.thisSession.getBasicRemote().sendText(Log.ENTRY_DOOR_OPENED, true);
 						continue;
 						
 					} else if(SensorStatus.getExitGate(1)==0 && ReservationController.identification == 1) {
@@ -155,6 +159,8 @@ System.out.println("-------while(true) ENTER------------");
 		 				System.out.println( "Sending OpenExitMessage message to client...." );
 		   				out.write( OpenExitMessage, 0, OpenExitMessage.length() );
 						out.flush();
+						if(WebSocketModule.thisSession != null)
+							WebSocketModule.thisSession.getBasicRemote().sendText(Log.EXIT_DOOR_OPENED, true);
 						continue;
 					} /*
 						else if(ReservationController.spot != 0){
@@ -169,6 +175,8 @@ System.out.println("-------while(true) ENTER------------");
 		   				out.write( releaseStatus, 0, releaseStatus.length() );
 		   				ReservationController.releaseStatus = 0;
 						out.flush();
+						if(WebSocketModule.thisSession != null)
+							WebSocketModule.thisSession.getBasicRemote().sendText(Log.ENTRY_DOOR_CLOSED, true);
 						continue;
 					}
 					

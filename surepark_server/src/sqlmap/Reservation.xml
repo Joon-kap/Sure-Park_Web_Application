@@ -121,5 +121,34 @@
    			SET P_PAYMENT_YN  = #pPaymentYn#
          WHERE P_IDENTIFIER = #pIdentifier#
 	</update>
+	
+	<update id="updateCancelYn" parameterClass="RequestParameter">
+		 UPDATE P_RESER_MST
+   			SET P_CANCEL_YN  = #pCancelYn#
+         WHERE P_IDENTIFIER = #pIdentifier#
+	</update>
 
+	<select id="selectGetListGP" resultClass="RequestParameter">
+		SELECT * FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER IS NOT NULL
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+			AND RM.P_ENTER_TIME IS NULL
+	</select>
+	
+	<select id="selectGetCurrentStatus" resultClass="RequestParameter">
+		SELECT * FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER IS NOT NULL
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
+	<select id="selectGetIdentifierBySpot" parameterClass="Integer" resultClass="RequestParameter">
+		SELECT RM.P_IDENTIFIER FROM P_RESER_MST RM
+			WHERE RM.P_SPOT_NUMBER = #spot#
+			AND RM.P_PAYMENT_YN ='N'
+			AND RM.P_CANCEL_YN = 'N'
+	</select>
+	
+	
 </sqlMap>

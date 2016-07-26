@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ajou.cmu.common.Log;
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
 import com.ajou.cmu.common.WebSocketModule;
@@ -107,6 +108,10 @@ public class ReservationController {
 		else 
 			map.put("fail", "Fail to Registration");
 		*/
+		
+		if(WebSocketModule.thisSession != null)
+			WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+		
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 
@@ -146,8 +151,7 @@ public class ReservationController {
 		mv.addObject("map", map);
 		mv.addObject("callback", req.getParameter("callback"));
 		
-		if(WebSocketModule.thisSession != null)
-			WebSocketModule.thisSession.getBasicRemote().sendText("aaa", true);
+		
 		
 		return mv;
 		
@@ -178,6 +182,13 @@ public class ReservationController {
 		if(spot == 0){
 			map.put("result", "fail");
 			mv.addObject("map", map);
+			mv.addObject("callback", req.getParameter("callback"));
+			return mv;
+		}else if(SensorStatus.getExitGate(1) == 0){
+			map.put("result", "fail");
+			map.put("EXIT_GATE", "Detected");
+			mv.addObject("map", map);
+			
 			mv.addObject("callback", req.getParameter("callback"));
 			return mv;
 		}else{
@@ -213,7 +224,24 @@ public class ReservationController {
 			
 			rp.put("cTime", ctime);
 			rp.put("pSpotNumber", spot);
+			
+			if(spot != revSpot){
+				/*reallocation*/
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				System.out.println("============REALLOCATION=============");
+				revService.reallocation(spot,revSpot);
+				if(WebSocketModule.thisSession != null)
+					WebSocketModule.thisSession.getBasicRemote().sendText(Log.REALLOCATION, true);
+			}
+			
 			revService.updateSpot(rp);
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+			
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.PARKED+"#"+spot, true);
 		}
 		
 		retMap = (HashMap) revService.getCurrentStatusObject(rp);
@@ -225,13 +253,7 @@ public class ReservationController {
 			mv.addObject("map", map);
 		}else{
 			mv.addObject("map", retMap);
-			if(spot != revSpot){
-				/*reallocation*/
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-				System.out.println("============REALLOCATION=============");
-			}
+			
 			releaseStatus = 1;
 		}
 		
@@ -311,6 +333,8 @@ public class ReservationController {
 			map.put("STATUS", "SUCCESS");
 			map.put("pPayment",pay );
 			map.put("pExitTime", cTime);
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
 		}else{
 			map.put("STATUS", "FAIL");
 		}
@@ -362,6 +386,20 @@ public class ReservationController {
 			
 			retMap.put("STATUS", "SUCCESS");
 			mv.addObject("map", retMap);
+			
+			if(WebSocketModule.thisSession != null){
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.SPOT_REFRESH, true);
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+				System.out.println("===========Log.SPOT_REFRESH=============");
+			}
+			
+			if(WebSocketModule.thisSession != null)
+				WebSocketModule.thisSession.getBasicRemote().sendText(Log.EXITED+"#"+rev.getpSpotNumber(), true);
+			
 		}else{
 			retMap.put("STATUS", "FAIL");
 			mv.addObject("map", retMap);
@@ -372,6 +410,65 @@ public class ReservationController {
 		return mv;
 	}
 	
+	@RequestMapping("/rev/updateGP.do")
+	public ModelAndView updateGracePeriod(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		List<RequestParameter> list = (List<RequestParameter>)revService.getListGp();
+		
+		int cTime = Integer.parseInt(getCurrentTime().substring(4, 12));
+		
+		
+		for(int i=0; i<list.size(); i++){
+			int rTime = Integer.parseInt((list.get(i).get("P_RESER_TIME").toString()).substring(4, 12));
+			System.out.println("cTime : " + cTime);
+			System.out.println("rTime : " + rTime);
+			if((rTime + gp) < cTime){
+				rp.put("pCancelYn", "Y");
+				rp.put("pIdentifier", list.get(i).get("P_IDENTIFIER"));
+				revService.updateCancelYn(rp);
+			}
+		}
+		
+		map.put("STATUS", "SUCCESS");
+		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
+		return mv;
+	}
+	
+	
+	@RequestMapping("/rev/currentParkedStatus.do")
+	public ModelAndView currentParkedStatus(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);
+		ModelAndView mv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		List<RequestParameter> list = (List<RequestParameter>)revService.getListCurrentStatus();
+		map.put("LIST", list);
+		/*
+		for(int i=0; i<list.size(); i++){
+			int rTime = Integer.parseInt((list.get(i).get("P_RESER_TIME").toString()).substring(4, 12));
+			System.out.println("cTime : " + cTime);
+			System.out.println("rTime : " + rTime);
+			if((rTime + gp) < cTime){
+				rp.put("pCancelYn", "Y");
+				rp.put("pIdentifier", list.get(i).get("P_IDENTIFIER"));
+				revService.updateCancelYn(rp);
+			}
+		}
+		map.put("STATUS", "SUCCESS");
+		
+		*/
+		
+		mv.addObject("map", map);
+		mv.addObject("callback", req.getParameter("callback"));
+		return mv;
+	}
 	
 	
 	

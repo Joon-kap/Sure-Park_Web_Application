@@ -252,57 +252,145 @@ table.MsoTableGrid
   <o:idmap v:ext="edit" data="1"/>
  </o:shapelayout></xml><![endif]-->
 </head>
+
 <script>
-var now = new Date();
-function updateTimeDD() {
-    var clock = document.getElementById("clock_DD");            // 출력할 장소 선택
-    var nowTime = ""+now.getDate();
-    clock.innerHTML = nowTime;
+var fee15min = 0.25;		//15min per 25cent
+
+
+function updateTest() {
+    var stat = document.getElementById("slot"+slotnum+"_stat");
+    var from = document.getElementById("slot"+slotnum+"_from");
+    var during = document.getElementById("slot"+slotnum+"_during");
+    var fee = document.getElementById("slot"+slotnum+"_fee");
+
+    stat.innerHTML = "# 1 : 2222";
+    stat.style.fontWeight = "bold";
+    from.innerHTML = "From : 10:10";
+    from.style.fontWeight = "normal";
+    during.innerHTML = "During : 10:10";
+    during.style.fontWeight = "bold";
+
+    fee.innerHTML = "$122";
+
 }
 
-var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-                  "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-function updateTimeMM() {
-    var clock = document.getElementById("clock_MM");            // 출력할 장소 선택
-    var nowTime = monthNames[now.getMonth()];
-    clock.innerHTML = nowTime;           // 현재시간을 출력
-    //.fontcolor("green")
+
+function UpdateSlots(){
+	
+	for(var i=1; i<5; i++){
+		var stat = document.getElementById("slot"+i+"_stat");
+	    var from = document.getElementById("slot"+i+"_from");
+	    var during = document.getElementById("slot"+i+"_during");
+	    var fee = document.getElementById("slot"+i+"_fee");
+	    
+	    stat.innerHTML = "# "+i+" : ";
+	    from.innerHTML = "";
+	    during.innerHTML = "";
+	    fee.innerHTML = "";
+	    
+	}
+	
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/rev/currentParkedStatus.do",
+        callback: "callbak",
+		dataType: "jsonp",
+        success: function(data){
+        	var slotnum=1;
+
+        	$.each(data, function(k,v){
+               	if(k=="LIST"){
+               		for(i=0; i<v.length; i++) {
+                  		console.log("LIST: " + v[0]['P_RESER_ID']);
+                  	//	if((v[i]['P_CANCEL']!="N")&&(v[i]['P_PAYMENT']!="N")) {
+                  			slotnum = v[i]['P_SPOT_NUMBER'];
+                            var stat = document.getElementById("slot"+slotnum+"_stat");
+                            var from = document.getElementById("slot"+slotnum+"_from");
+                            var during = document.getElementById("slot"+slotnum+"_during");
+                            var fee = document.getElementById("slot"+slotnum+"_fee");
+                            
+                            console.log("LIST len: " + "slot"+slotnum+"_stat");
+                            console.log(v);
+                            
+                            //stat.innerHTML = "# "+slotnum+" : "+ v[i]['P_RESER_TELNO'];
+                            stat.innerHTML = "# "+slotnum+" : ";
+
+                            for(j=v[i]['P_RESER_TELNO'].length-4; j<v[i]['P_RESER_TELNO'].length; j++) {
+                            	stat.innerHTML+=v[i]['P_RESER_TELNO'][j];
+                            }
+                            stat.style.fontWeight = "bold";
+
+//                            from.innerHTML = "From : "+ v[i]['P_RESER_TIME'];
+                            from.innerHTML = "From : ";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][4]+ v[i]['P_RESER_TIME'][5]+"/";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][6]+ v[i]['P_RESER_TIME'][7]+" ";
+                           
+                            from.innerHTML+= v[i]['P_RESER_TIME'][8]+ v[i]['P_RESER_TIME'][9]+":"+
+                            					v[i]['P_RESER_TIME'][10]+ v[i]['P_RESER_TIME'][11];
+
+                            from.style.fontWeight = "normal";
+
+                            //var clock = ;            // 출력할 장소 선택
+//                            during.innerHTML = "During : "+ v[i]['P_RESER_TIME'];
+                            if(v[i]['P_ENTER_TIME'] == null) {
+                            	during.innerHTML = "Reserved";
+                                //during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";                           	
+                            } else {
+                            	during.innerHTML = "During : ";
+                                during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";
+                                //during.innerHTML += document.getElementById("clock_HHMM").innerHTML;
+                                fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
+                            }
+                            during.style.fontWeight = "bold";
+                  	//	}
+               		}
+              		console.log("LIST len: " + v.length);
+					
+              		/*
+              		null({"LIST":[{"P_RESER_ID":114,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"3","P_ENTER_TIME":null,"P_UPDATE_DT":"2016-07-23 09:00:00","P_RESER_TIME":"201607231100","P_IDENTIFIER":"RT23223230ET201607231100","P_RESER_TELNO":"23223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"},
+              		              {"P_RESER_ID":115,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"2","P_ENTER_TIME":null,"P_UPDATE_DT":null,"P_RESER_TIME":"201607231300","P_IDENTIFIER":"RT33223230ET201607231300","P_RESER_TELNO":"33223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"}]})*/
+              		
+                  	}
+        	});
+        	        	
+        }
+    });
 }
 
-var dayofweek=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function updateTimeWEEK() {
-    var clock = document.getElementById("clock_WEEK");            // 출력할 장소 선택
-    var nowTime = dayofweek[now.getDay()];
-    clock.innerHTML = nowTime;           // 현재시간을 출력
+
+
+function getDuring(fromTime) {
+	var fromstr = fromTime[0]+fromTime[1]+fromTime[2]+fromTime[3]+"/"+	//YYYY
+					fromTime[4]+fromTime[5]+"/"+	//MM
+					fromTime[6]+fromTime[7]+" "+	//DD
+					fromTime[8]+fromTime[9]+":"+	//HH
+					fromTime[10]+fromTime[11];		//MM
+
+	var diff = Math.abs(new Date(fromstr) - new Date());
+		console.log("LIST len: " + fromTime + " : " + diff/60000+ " << " );
+	return (diff/60000).toFixed(0);
 }
 
-function updateTimeHHMM() {
-    var clock = document.getElementById("clock_HHMM");            // 출력할 장소 선택
-    now = new Date();                                                  // 현재시간
-//  var nowTime = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
-    var nowTime = now.getHours(2) + ":" + now.getMinutes(2);
-    clock.innerHTML = nowTime;           // 현재시간을 출력
-    updateTimeDD();
-    updateTimeMM();
-    updateTimeWEEK();
-    setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
-         
-}
-/*aa
-function updateLED()
-*/
 
+function getFee(fromTime) {
+
+	return (getDuring(fromTime)/15)*fee15min;
+}
+/*
 window.onload = function() {                         // 페이지가 로딩되면 실행
-	updateTimeHHMM();
-
+	//updateTest();
+	
 }
+*/
 </script>
+
 
 <body bgcolor="#EDEBE9" lang=KO style='tab-interval:40.0pt'>
 
 <div class=WordSection1>
-<input type="button" value="AAAAA" onclick="testButton()">
 <table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-yfti-tbllook:1184;mso-padding-alt:
  0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none'>
@@ -414,7 +502,9 @@ window.onload = function() {                         // 페이지가 로딩되면 실행
   style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></b></p>
   </td>
  </tr>
- <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes;height:42.2pt'>
+  
+  
+  <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes;height:42.2pt'>
   <td width=360 valign=top style='width:216.05pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:42.2pt'>
   <div align=center>
@@ -424,43 +514,47 @@ window.onload = function() {                         // 페이지가 로딩되면 실행
    none;mso-border-insidev:none'>
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-bottom:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    border-bottom:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot1_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    1 : 753-333-3333<o:p></o:p></span></b></p>
+    1<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot1_from lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot1_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:3;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>$
-    10<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot1_fee lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    border-top:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot1_led lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>■<o:p></o:p></span></b></p>
     </td>
    </tr>
@@ -476,44 +570,47 @@ window.onload = function() {                         // 페이지가 로딩되면 실행
    none;mso-border-insidev:none'>
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-bottom:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    border-bottom:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot2_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    2 : 232-222-2222<o:p></o:p></span></b></p>
+    2<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>From
-    : 12:00<b style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot2_from lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><b style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>During : 9:27<o:p></o:p></span></b></p>
+    style='mso-bidi-font-weight:normal'><span id=slot2_during lang=EN-US style='font-size:18.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:3;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>$
-    50<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot2_fee lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    border-top:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot2_led lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>■<o:p></o:p></span></b></p>
     </td>
    </tr>
@@ -529,44 +626,47 @@ window.onload = function() {                         // 페이지가 로딩되면 실행
    none;mso-border-insidev:none'>
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-bottom:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    border-bottom:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot3_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    3 : RESERVED<o:p></o:p></span></b></p>
+    3<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>From
-    : 12:00<o:p></o:p></span></p>
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_from lang=EN-US
+    style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:3;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot3_fee lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    border-top:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;color:#00B050;
-    mso-themecolor:accent5'>■</span></b><b style='mso-bidi-font-weight:normal'><span
+    style='mso-bidi-font-weight:normal'><span  id=slot3_led lang=EN-US style='font-size:18.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;'>■</span></b><b style='mso-bidi-font-weight:normal'><span
     lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:
     "Arial",sans-serif'><o:p></o:p></span></b></p>
     </td>
@@ -582,44 +682,48 @@ window.onload = function() {                         // 페이지가 로딩되면 실행
    none;mso-border-insidev:none'>
    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-bottom:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
-    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+    border-bottom:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span id=slot4_stat lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>#
-    4 : EMPTY<o:p></o:p></span></b></p>
+    4<o:p></o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
+    style='mso-bidi-font-weight:normal'><span id=slot4_from lang=EN-US style='font-size:18.0pt;
     mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:2;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot4_during lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:3;height:42.75pt'>
     <td width=306 style='width:183.6pt;border-top:none;border-left:solid windowtext 1.5pt;
-    border-bottom:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;
+    border-bottom:none;border-right:solid windowtext 1.5pt;background:white;
+    mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
     height:42.75pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot4_fee lang=EN-US
     style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:41.65pt'>
     <td width=306 style='width:183.6pt;border:solid windowtext 1.5pt;
-    border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
+    border-top:none;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:41.65pt'>
     <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;color:#00B050;
-    mso-themecolor:accent5'>■</span></b><b style='mso-bidi-font-weight:normal'><span
+    style='mso-bidi-font-weight:normal'><span id=slot4_led lang=EN-US style='font-size:18.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;'>■</span></b><b style='mso-bidi-font-weight:normal'><span
     lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:
     "Arial",sans-serif'><o:p></o:p></span></b></p>
     </td>
@@ -665,19 +769,13 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
     <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>SENSOR<o:p></o:p></span></p>
     </td>
-    <td width=232 style='width:139.25pt;border:solid windowtext 1.0pt;
-    border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
-    solid windowtext .5pt;background:#A39D95;mso-background-themecolor:accent2;
-    padding:0cm 5.4pt 0cm 5.4pt;height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LED<o:p></o:p></span></p>
-    </td>
+
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:23.1pt'>
     <td width=218 style='width:130.65pt;border:solid windowtext 1.0pt;
     border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:
     solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="entry" lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>CLOSED<o:p></o:p></span></p>
     </td>
     <td width=251 style='width:150.6pt;border-top:none;border-left:none;
@@ -685,19 +783,8 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;
     height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot_entry lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>BLOCKED<o:p></o:p></span></p>
-    </td>
-    <td width=232 style='width:139.25pt;border-top:none;border-left:none;
-    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-    mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;
-    height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;color:#00B050;
-    mso-themecolor:accent5'>■</span></b><span lang=EN-US style='font-size:14.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></p>
     </td>
    </tr>
   </table>
@@ -711,22 +798,22 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
   height:88.75pt'></td>
   <td width=484 rowspan=3 valign=top style='width:290.6pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:88.75pt'>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LOG<o:p></o:p></span></b></p>
-  <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal align=right style='text-align:right'><b style='mso-bidi-font-weight:
-  normal'><span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;
-  font-family:"Arial",sans-serif'><SELECT NAME="Event LOG" SIZE="6"
-  style="font-size:18.0pt;mso-bidi-font-size:12.0pt;&#13;&#10;  font-family:&quot;Arial&quot;,sans-serif">
-<OPTION VALUE="LOG1"> Driver doesn't enter in space. 21:00 07/20/2015
-<OPTION VALUE="LOG2"> Gate broken. 12:00 07/21/2015
-<OPTION VALUE="LOG3"> Beer out of stock. 02:00 07/22/2015
-<OPTION SELECTED VALUE="LOG4"> Whiskey purchase declined. 23:00 07/23/2015
-<OPTION VALUE="LOG5"> This Friday is no work day. 21:00 07/20/2015
-<OPTION VALUE="LOG6"> Driver doesn't enter in space. 12:00 07/21/2015
-<OPTION VALUE="LOG7"> Driver doesn't enter in space. 02:00 07/22/2015
-<OPTION VALUE="LOG8"> Driver doesn't enter in space. 23:00 07/23/2015
-</SELECT><o:p></o:p></span></b></p>
+  	<p class=MsoNormal>
+  		<b style='mso-bidi-font-weight:normal'>
+  			<span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LOG<o:p></o:p></span>
+  		</b>
+  	</p>
+  	<p class=MsoNormal>
+  		<span lang=EN-US style='font-size:10.0pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+  	</p>
+  	<p class=MsoNormal align=right style='text-align:right'>
+  		<b style='mso-bidi-font-weight:normal'>
+  			<span lang=EN-US style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>
+  				<SELECT id="logSelect" NAME="Event LOG" SIZE="6" style="font-size:18.0pt;mso-bidi-font-size:12.0pt;&#13;&#10; font-family:&quot;Arial&quot;,sans-serif">
+									</SELECT><o:p></o:p>
+			</span>
+		</b>
+	</p>
   </td>
   <td width=177 rowspan=3 style='width:106.3pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:88.75pt'></td>
@@ -759,19 +846,12 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
     <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>SENSOR<o:p></o:p></span></p>
     </td>
-    <td width=232 style='width:139.25pt;border:solid windowtext 1.0pt;
-    border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
-    solid windowtext .5pt;background:#A39D95;mso-background-themecolor:accent2;
-    padding:0cm 5.4pt 0cm 5.4pt;height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>LED<o:p></o:p></span></p>
-    </td>
-   </tr>
+    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:23.1pt'>
     <td width=218 style='width:130.65pt;border:solid windowtext 1.0pt;
     border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:
     solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="exit" lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>CLOSED<o:p></o:p></span></p>
     </td>
     <td width=251 style='width:150.6pt;border-top:none;border-left:none;
@@ -779,20 +859,10 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;
     height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id=slot_exit lang=EN-US
     style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>OPEN<o:p></o:p></span></p>
     </td>
-    <td width=232 style='width:139.25pt;border-top:none;border-left:none;
-    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-    mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;
-    height:23.1pt'>
-    <p class=MsoNormal align=center style='text-align:center'><b
-    style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:18.0pt;
-    mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif;color:red'>■</span></b><span
-    lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:12.0pt;font-family:
-    "Arial",sans-serif'><o:p></o:p></span></p>
-    </td>
+
    </tr>
   </table>
   </td>
