@@ -38,6 +38,44 @@ PRIMARY KEY(P_CODE)
 /* 3번 주차장정보 P_CONFIG_INFO */
 CREATE TABLE P_CONFIR_INFO (
 	P_PARK_ID				VARCHAR(5) 		COMMENT "주차장코드(주차장이 여러곳일 경우 구분을 위함", 
+	P_GRACEPERI_MIN			VARCHAR(4)		COMMENT	"Grace Period",
+	P_F00					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F01					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F02					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F03					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F04					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F05					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F06					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F07					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F08					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F09					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F10					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F11					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F12					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F13					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F14					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F15					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F16					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F17					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F18					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F19					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F20					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F21					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F22					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	P_F23					VARCHAR(4)		COMMENT		"시간대별 주차요금(15분당)"		,
+	
+	P_ENTRY_QTY				VARCHAR(4)		COMMENT	"Entry gate 갯수"	,
+	P_EXIT_QTY				VARCHAR(4)		COMMENT	"Exit gate 갯수",	
+	P_SLOT_QTY				VARCHAR(4)		COMMENT	"Parking Slot 갯수"	,
+
+	P_DESC					VARCHAR(50) 	COMMENT  "비고",            
+	P_CREATE_DT				VARCHAR(20)		COMMENT  "생성일자",
+	P_UPDATE_DT				VARCHAR(20)    COMMENT  "수정일자",
+PRIMARY KEY(P_PARK_ID)
+)
+
+/*CREATE TABLE P_CONFIR_INFO (
+	P_PARK_ID				VARCHAR(5) 		COMMENT "주차장코드(주차장이 여러곳일 경우 구분을 위함", 
 	P_NAME					VARCHAR(30) 	COMMENT "주차장이름",
 	P_ADDRESS				VARCHAR(30) 	COMMENT "주차장 주소",
 	P_OWNER					VARCHAR(20)	   COMMENT "대표이름",
@@ -51,7 +89,7 @@ CREATE TABLE P_CONFIR_INFO (
 	P_CREATE_DT				VARCHAR(20)		COMMENT  "생성일자",
 	P_UPDATE_DT				VARCHAR(20)    COMMENT  "수정일자",
 PRIMARY KEY(P_PARK_ID)
-)
+)*/
 
 
 
@@ -117,7 +155,6 @@ CREATE TABLE P_CODE_MST (
 	P_UPDATE_DT 		VARCHAR(12) COMMENT "수정일자",
 PRIMARY KEY(P_CODE)
 ) 
-
 
 
 

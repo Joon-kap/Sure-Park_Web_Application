@@ -1,4 +1,5 @@
-var domainText = "192.168.1.6:8080";
+//var domainText = "192.168.1.6:8080";
+var domainText = "localhost:8080";
 
 
 function testButton(){
