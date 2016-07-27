@@ -165,7 +165,7 @@ function updateTimeHHMM() {
     updateTimeMM();
     updateTimeWEEK();
     setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
-    
+    setInterval("ozit_interval_test()", 60000);
 }
 /*aa
 function updateLED()
@@ -184,6 +184,7 @@ window.onload = function() {                         // 페이지가 로딩되�
 	UpdateSlots();
 	
 	
+	
 	selectLog = document.getElementById("logSelect");
 	
 	var objOption = document.createElement("option");        
@@ -195,6 +196,22 @@ window.onload = function() {                         // 페이지가 로딩되�
 	
 		
 	
+}
+
+function ozit_interval_test(){
+	$.ajax({
+        type: "GET",
+        url: "http://"+domainText+"/surepark_server/rev/updateGP.do",
+        callback: "callbak",
+		dataType: "jsonp",
+	    success: function(data){
+        	$.each(data, function(k,v){
+               	
+        	});
+        	        	
+        }
+    });
+	UpdateSlots();
 }
 
 function webSocketRequest() {
@@ -332,5 +349,15 @@ function updateLog(evt){
 		objOption.value = "aaaa";
 		    
 		selectLog.options.add(objOption);
+	}else if(evt == '008'){
+		console.log(evt)
+		var objOption = document.createElement("option");        
+		objOption.text = "Reservation Canceled	" + getLogTime();
+		objOption.value = "aaaa";
+		
+		selectLog.options.add(objOption);
+		UpdateSlots();
 	}
 }
+
+

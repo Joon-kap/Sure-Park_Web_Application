@@ -43,7 +43,7 @@ import com.ajou.cmu.sensor.SensorStatus;
 public class ReservationController {
 	
 	public static int identification = 0;
-	public static int gp = 30;
+	public static int gp = 1;
 	public static int spot = 0;
 	private String spots[] = {"1","2","3","4"};
 	public static int releaseStatus = 0;
@@ -462,10 +462,13 @@ public class ReservationController {
 			int rTime = Integer.parseInt((list.get(i).get("P_RESER_TIME").toString()).substring(4, 12));
 			System.out.println("cTime : " + cTime);
 			System.out.println("rTime : " + rTime);
-			if((rTime + gp) < cTime){
+			if((rTime + gp) <= cTime){
 				rp.put("pCancelYn", "Y");
 				rp.put("pIdentifier", list.get(i).get("P_IDENTIFIER"));
 				revService.updateCancelYn(rp);
+				Thread.sleep(2000);
+				if(WebSocketModule.thisSession != null)
+					WebSocketModule.thisSession.getBasicRemote().sendText(Log.NOSHOW, true);
 			}
 		}
 		
