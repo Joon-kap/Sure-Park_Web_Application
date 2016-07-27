@@ -313,7 +313,7 @@ public class ReservationController {
 		
 		
 		Reservation rev = (Reservation)revService.getObject(rp);
-		System.out.println("===============" + rev.getpSpotNumber());
+		System.out.println("=============== rev.getpSpotNumber() : " + rev.getpSpotNumber());
 		int spotNum = Integer.parseInt(rev.getpSpotNumber());
 	
 		
@@ -323,14 +323,24 @@ public class ReservationController {
 
 		int pay = 0;
 		
-		if(spotStatus == 1){
+		System.out.println("=============== spotStatus : " + spotStatus);
+		
+		if(spotStatus == 1 && SensorStatus.getExitGate(1) == 0){
 			String cTime = getCurrentTime();
 			Payment.setPayment(rev.getpEnterTime(), cTime);
 			pay = Payment.getPayment();
 			rp.put("pPayment", pay);
 			rp.put("pExitTime", cTime);
 			revService.setPayNexitTime(rp);
+			/*
+			if(SensorStatus.getExitGate(1) == 0){
+				map.put("STATUS", "FAIL");
+			}else{
+				map.put("STATUS", "SUCCESS");
+			}
+			*/
 			map.put("STATUS", "SUCCESS");
+
 			map.put("pPayment",pay );
 			map.put("pExitTime", cTime);
 			if(WebSocketModule.thisSession != null)
