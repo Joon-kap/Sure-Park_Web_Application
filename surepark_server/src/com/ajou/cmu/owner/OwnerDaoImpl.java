@@ -14,7 +14,7 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public Object select(Object obj) throws SQLException {
-		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectAll", obj);
+		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.owner.selectAll", obj);
 	}
 	
 //	//대한 - 2016.07.17 21:35 - ServiceImpl의 getIdentifierObject에 매핑되는 Dao 구현
@@ -63,9 +63,18 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 	@Override
 	public void update(Object obj) throws SQLException {
 		// TODO Auto-generated method stub
-		getSqlMapClientTemplate().queryForObject("com.ajou.cmu.owner.updateInfo", obj);
+		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updateInfo", obj);
+	}
+	public void updateConf(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updateConf", obj);
+	}
+	public void updatefacil(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updatefacil", obj);
 	}
 
+	
 	public Object selectAvailable() throws SQLException{
 		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.reservation.selectParkingReservation");
 	}
