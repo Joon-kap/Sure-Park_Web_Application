@@ -57,6 +57,38 @@ public class OwnerController {
 		return mnv;
 	}
 	
+	@RequestMapping("/owner/updateConf.do")
+	public ModelAndView updateConf(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		System.out.println(rp);
+		
+		atService.updateConf(rp);
+	
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
+	
+
+	
+	@RequestMapping("/owner/updatefacil.do")
+	public ModelAndView updatefacil(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		System.out.println(rp);
+		
+		atService.updatefacil(rp);
+	
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
+	
 	@RequestMapping("/owner/select.do")
 	public ModelAndView select(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	

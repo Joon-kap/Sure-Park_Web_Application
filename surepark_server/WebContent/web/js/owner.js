@@ -2,23 +2,55 @@ var domainText = "localhost:8080";
 
 
 function conf1Apply(){
-	var seq = "aaaa";
-	var testData = "bbbb";
-	var params = "seq="+seq+"&testdata="+testData;
+	
+	//var graceperi = confGracePeriod.innerHTML;
+	var graceperi = document.getElementById("confGracePeriod");
+	
+	var fee25min = confFeeper15min.innerHTML;
+	var fee25min = document.getElementById("confFeeper15min");
+
+	var params = "P_GRACEPERI_MIN="+graceperi.value;//+"&testdata="+testData;
+	params+="&P_F00="	+fee25min.value;
+	params+="&P_F01="	+fee25min.value;
+	params+="&P_F02="	+fee25min.value;
+	params+="&P_F03="	+fee25min.value;
+	params+="&P_F04="	+fee25min.value;
+	params+="&P_F05="	+fee25min.value;
+	params+="&P_F06="	+fee25min.value;
+	params+="&P_F07="	+fee25min.value;
+	params+="&P_F08="	+fee25min.value;
+	params+="&P_F09="	+fee25min.value;
+	params+="&P_F10="	+fee25min.value;
+	params+="&P_F11="	+fee25min.value;
+	params+="&P_F12="	+fee25min.value;
+	params+="&P_F13="	+fee25min.value;
+	params+="&P_F14="	+fee25min.value;
+	params+="&P_F15="	+fee25min.value;
+	params+="&P_F16="	+fee25min.value;
+	params+="&P_F17="	+fee25min.value;
+	params+="&P_F18="	+fee25min.value;
+	params+="&P_F19="	+fee25min.value;
+	params+="&P_F20="	+fee25min.value;
+	params+="&P_F21="	+fee25min.value;
+	params+="&P_F22="	+fee25min.value;
+	params+="&P_F23="	+fee25min.value;
+
 	
 	$.ajax({
         type: "POST",
-        url: "http://"+domainText+"/surepark_server/att/test.do",
+        url: "http://"+domainText+"/surepark_server/owner/updateConf.do",
         callback: "callbak",
 		dataType: "jsonp",
 		data:params,
         success: function(data){
         	$.each(data, function(k,v){
-            	if(k=="TEST"){
+        		console.log(k);
+        		console.log(v);
+            	/*if(k=="TEST"){
             		alert("Success!!!");
             		console.log(v);
             		console.log(v['P_RESER_ID']);
-            	}
+            	}*/
             	
             	if(k=="fail"){
             		alert("실패");
@@ -30,47 +62,56 @@ function conf1Apply(){
     });
 }
 
-$(function() {
-    var startDate;
-    var endDate;
-    
-    var selectCurrentWeek = function() {
-        window.setTimeout(function () {
-            $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
-        }, 1);
-    }
-    
-    $('#weekpicker').datepicker( {
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        onSelect: function(dateText, inst) { 
-            var date = $(this).datepicker('getDate');
-            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
-            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
-            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-            
-/*            $('#weekpicker').text($.datepicker.formatDate( dateFormat, startDate, inst.settings ) + " - " +
-            		$.datepicker.formatDate( dateFormat, endDate, inst.settings );*/
-            $('#startDate').text($.datepicker.formatDate( dateFormat, startDate, inst.settings ));
-            $('#endDate').text($.datepicker.formatDate( dateFormat, endDate, inst.settings ));
-            
-            selectCurrentWeek();
-        },
-        beforeShowDay: function(date) {
-            var cssClass = '';
-            if(date >= startDate && date <= endDate)
-                cssClass = 'ui-datepicker-current-day';
-            return [true, cssClass];
-        },
-        onChangeMonthYear: function(year, month, inst) {
-            selectCurrentWeek();
+function conf2Apply(){
+	
+	//var graceperi = confGracePeriod.innerHTML;
+	var confEntrygate = document.getElementById("confEntrygate");
+	var confExitgate = document.getElementById("confExitgate");
+	var confpakringslots = document.getElementById("confpakringslots");
+
+
+
+	var params = "P_ENTRY_QTY="+confEntrygate.value;//+"&testdata="+testData;
+	params+="&P_EXIT_QTY="	+confExitgate.value;
+	params+="&P_SLOT_QTY="	+confpakringslots.value;
+
+
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/updatefacil.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+        		console.log(k);
+        		console.log(v);
+            	/*if(k=="TEST"){
+            		alert("Success!!!");
+            		console.log(v);
+            		console.log(v['P_RESER_ID']);
+            	}*/
+            	
+            	if(k=="fail"){
+            		alert("실패");
+            	}
+        		
+        	});
+        	        	
         }
     });
-    
-    $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
-    $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
-});
+}
+$( function() {
+	$( "#datepickerfrom" ).datepicker();
+} );
+
 
 $( function() {
-  $( "#datepicker" ).datepicker();
+  $( "#datepickerto" ).datepicker();
+  //$('#pickertype').text("Select Day");
 } );
+
+function DoAnalyze(){
+	var confpakringslots = document.getElementById("confpakringslots");
+}
+

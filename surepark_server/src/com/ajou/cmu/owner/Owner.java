@@ -190,6 +190,32 @@ public class Owner {
 	public void setpF23(String pF23) {
 		this.pF23 = pF23;
 	}
+	public void setpFeeAll(String pFee) {
+		this.pF00 = pFee;
+		this.pF01 = pFee;
+		this.pF02 = pFee;
+		this.pF03 = pFee;
+		this.pF04 = pFee;
+		this.pF05 = pFee;
+		this.pF06 = pFee;
+		this.pF07 = pFee;
+		this.pF08 = pFee;
+		this.pF09 = pFee;
+		this.pF10 = pFee;
+		this.pF11 = pFee;
+		this.pF12 = pFee;
+		this.pF13 = pFee;
+		this.pF14 = pFee;
+		this.pF15 = pFee;
+		this.pF16 = pFee;
+		this.pF17 = pFee;
+		this.pF18 = pFee;
+		this.pF19 = pFee;
+		this.pF20 = pFee;
+		this.pF21 = pFee;
+		this.pF22 = pFee;
+		this.pF23 = pFee;
+	}
 	public String getpEntryQty() {
 		return pEntryQty;
 	}
