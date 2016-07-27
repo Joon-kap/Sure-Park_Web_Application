@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ajou.cmu.common.Encryption;
 import com.ajou.cmu.common.Log;
+import com.ajou.cmu.common.RSAUtils;
 import com.ajou.cmu.common.RequestParameter;
 import com.ajou.cmu.common.Utils;
 import com.ajou.cmu.common.WebSocketModule;
@@ -80,8 +82,16 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Reservation reservation = new Reservation();
 		
+		
 		String phone = rp.get("pReserTelno").toString();
 		String time = rp.get("pReserTime").toString();
+		
+		
+		System.out.println("phone : " + phone);
+		phone = RSAUtils.decrypt(phone, Encryption.privKey);
+		System.out.println("str : " + phone);
+		rp.put("pReserTelno", phone);
+		
 		String id = createIdentifier(phone, time);
 		
 		int inSpot = 0;
@@ -140,8 +150,12 @@ public class ReservationController {
 			System.out.println(obj.get("TOTAL_QTY"));
 			System.out.println(obj.get("AVABILE_QTY"));
 			
+			map.put("PUBLIC_KEY", Encryption.pubKeyStr);
 			map.put("TOTAL_QTY", obj.get("TOTAL_QTY"));
 			map.put("AVABILE_QTY", obj.get("AVABILE_QTY"));
+			
+			System.out.println(Encryption.pubKeyStr);
+			
 			
 		}
 		
@@ -287,6 +301,7 @@ public class ReservationController {
 				identification = 1;
 				spot = Integer.parseInt(retMap.get("SPOT").toString());
 				mv.addObject("map", retMap);
+				blockIdentify();
 				System.out.println("===========SUCCESS======================");
 			}else{
 				retMap.put("STATUS", "FAIL");
@@ -301,6 +316,17 @@ public class ReservationController {
 		return mv;
 	}
 	
+	private void blockIdentify() {
+		while(identification == 1){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@RequestMapping("/rev/exitProceed.do")
 	public ModelAndView exitProceed(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);
