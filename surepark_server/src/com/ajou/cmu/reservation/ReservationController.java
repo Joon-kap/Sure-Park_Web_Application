@@ -182,6 +182,7 @@ public class ReservationController {
 		if(spot == 0){
 			map.put("result", "fail");
 			if(SensorStatus.getExitGate(1) == 0){
+				releaseStatus = 1;
 				map.put("EXIT_GATE", "Detected");
 				map.put("P_SPOT_NUMBER", "0");
 				map.put("P_ENTER_TIME", "0");

@@ -69,7 +69,7 @@ public class SensorController {
 	      */
 
 	      //SensorController.gateIrStatus;
-	      
+			  
 	      mnv.addObject("map", map);
 	      mnv.addObject("callback", req.getParameter("callback"));
 	      
