@@ -56,4 +56,12 @@ public class UserServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
+	public List ownerlogin(Object obj) throws SQLException  {
+
+		return 	dao.ownerlogin(obj);
+	}
+	
+	
 }

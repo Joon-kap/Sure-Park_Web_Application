@@ -2,6 +2,7 @@ package com.ajou.secure.user;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -127,6 +128,24 @@ public class UserController {
 	
 	
 
+	@RequestMapping("/owner/ownerlogin.do")
+	public ModelAndView ownerlogincheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		
+		
+		List<HashMap> list = userService.ownerlogin(rp);
+		
+		map.put("OWNER",list.get(0));
+		//atService.selectAllConfigInfo();
+		//System.out.println(rp);
+
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
 	
 
 }

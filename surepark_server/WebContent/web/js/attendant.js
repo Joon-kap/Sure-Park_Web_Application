@@ -419,7 +419,6 @@ function getConfigfromDB(temp){
         	$.each(data, function(k,v){
             	if(k=="GETCONF"){
             		//alert("Success!!!");
-            		//console.log(v['P_GRACEPERI_MIN']);
             		maxEntryGate = v['P_ENTRY_QTY'];
             		maxExitGate = v['P_EXIT_QTY'];
             		maxPSlot = v['P_SLOT_QTY'];
@@ -436,7 +435,7 @@ function getConfigfromDB(temp){
             	    rets[0] = maxEntryGate;
             	    rets[1] = maxExitGate;
             	    rets[2] = maxPSlot;
-                    
+            		
             		return rets;
 
             	}
