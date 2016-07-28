@@ -153,6 +153,7 @@ public class ReservationController {
 			map.put("PUBLIC_KEY", Encryption.pubKeyStr);
 			map.put("TOTAL_QTY", obj.get("TOTAL_QTY"));
 			map.put("AVABILE_QTY", obj.get("AVABILE_QTY"));
+			map.put("P_PERIOD_TIME", obj.get("P_PERIOD_TIME"));
 			
 			System.out.println(Encryption.pubKeyStr);
 			

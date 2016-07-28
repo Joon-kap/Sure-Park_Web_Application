@@ -1,5 +1,6 @@
 var domainText = "localhost:8080";
-
+var T = new Array();
+var T_MAX = 24;
 
 function conf1Apply(){
 	
@@ -117,6 +118,34 @@ function dataPickerToString(picker){
 	return fromStr;
 }
 
+function setConfig(){
+	
+	
+	var gp = document.getElementById("confGracePeriod");
+	var entry = document.getElementById("entry");
+	var exit = document.getElementById("exit");
+	var slot = document.getElementById("slot");
+	
+	var params = "gp="+gp.value+"&entry="+entry+"&exit="+exit+"&slot="+slot;
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/setgp.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+        		console.log(v);
+        	});
+        	
+        }
+    });
+	
+	
+}
+
 function DoAnalyze(){
 	var from = document.getElementById("datepickerfrom");
 	var to = document.getElementById("datepickerto");
@@ -130,7 +159,26 @@ function DoAnalyze(){
 	
 	var params = "fromDay="+fromStr+"&toDay="+toStr;
 	var totalHour = 0;
+	var totalPay = 0;
 	var i=0;
+	var spot_num1 = 0;
+	var spot_num2 = 0;
+	var spot_num3 = 0;
+	var spot_num4 = 0;
+	
+	
+	var spot1_time = 0;
+	var spot2_time = 0;
+	var spot3_time = 0;
+	var spot4_time = 0;
+	
+	var j=0;
+	var k=0;
+	
+	for(j=0; j<24; j++) {
+		T[j] = 0;
+	}
+	
 	
 	$.ajax({
         type: "POST",
@@ -142,53 +190,81 @@ function DoAnalyze(){
         	$.each(data, function(k,v){
         		i++;
         		//console.log(k);
-        		//console.log(v);
-        		console.log(v['P_STAY_TIME']);
-            	/*if(k=="TEST"){
-            		alert("Success!!!");
-            		console.log(v);
-            		console.log(v['P_RESER_ID']);
-            	}*/
-        		if(v['P_STAY_TIME'] != null){
-        			console.log("aaaa");
-        			totalHour = totalHour + parseInt(v['P_STAY_TIME']);
-        		}
-            	
-            	if(k=="fail"){
-            		alert("실패");
-            	}
-            	console.log(i);
-            	var hour = document.getElementById("totalHour");
-            	hour.innerText = totalHour/60;
-            	
-        	});
-        }
-    });
-	console.log(totalHour);
-	
-	
-	
-	$.ajax({
-        type: "POST",
-        url: "http://"+domainText+"/surepark_server/owner/getReserInfo.do",
-        callback: "callbak",
-		dataType: "jsonp",
-        success: function(data){
-        	$.each(data, function(k,v){
-        		
-        		console.log(k);
         		console.log(v);
-        		console.log(v['P_STAY_TIME']);
+        		//console.log(v['P_STAY_TIME']);
             	/*if(k=="TEST"){
             		alert("Success!!!");
             		console.log(v);
             		console.log(v['P_RESER_ID']);
             	}*/
         		if(v['P_STAY_TIME'] != null){
-        			console.log("aaaa");
+        		//	console.log("aaaa");
         			totalHour = totalHour + parseInt(v['P_STAY_TIME']);
+        			if(v['P_SPOT_NUMBER'] == '1'){
+            			spot1_time += parseInt(v['P_STAY_TIME']);
+        			}else if(v['P_SPOT_NUMBER'] == '2'){
+            			spot2_time += parseInt(v['P_STAY_TIME']);
+        			}else if(v['P_SPOT_NUMBER'] == '3'){
+            			spot3_time += parseInt(v['P_STAY_TIME']);
+        			}else if(v['P_SPOT_NUMBER'] == '4'){
+            			spot4_time += parseInt(v['P_STAY_TIME']);
+        			}
         		}
+        		
+        		if(v['P_PAYMENT'] != null){
+        			totalPay = totalPay + parseInt(v['P_PAYMENT']);
+        		}
+        		
+        		if(v['P_SPOT_NUMBER'] != null){
+        			if(v['P_SPOT_NUMBER'] == '1'){
+        				spot_num1 = spot_num1+1;
+        			}
+        			if(v['P_SPOT_NUMBER'] == '2'){
+        				spot_num2++;
+        			}
+        			if(v['P_SPOT_NUMBER'] == '3'){
+        				spot_num3++;
+        			}
+        			if(v['P_SPOT_NUMBER'] == '4'){
+        				spot_num4++;
+        			}
+        		}
+        		//console.log(v['P_ENTER_TIME'][8]);
+        		
+        		if((v['P_ENTER_TIME']!=null)&&(v['P_EXIT_TIME']!=null)) {
+        			
+        			console.log(v['P_ENTER_TIME'][8]+v['P_ENTER_TIME'][9]);
+        			var EThour = parseInt(v['P_ENTER_TIME'][8]+v['P_ENTER_TIME'][9]);	
+                	var ETmin = parseInt(v['P_ENTER_TIME'][10]+v['P_ENTER_TIME'][11]);
+                	
+                	var EXhour = parseInt(v['P_EXIT_TIME'][8]+v['P_EXIT_TIME'][9]);
+                	var EXmin = parseInt(v['P_EXIT_TIME'][10]+v['P_EXIT_TIME'][11]);
+                	//for(var day=fromStr; day<toStr; day++) {
+            		
+            		//}
+                	console.log(EThour);
+                	console.log(EXhour);
+                	
+                	for(k=EThour; k<=EXhour; k++) {
+                	
+                		if(EThour==EXhour) {
+                			T[k] += EXmin - ETmin; 
+                		} else if(k == EThour) {
+                			T[k] += 60 - ETmin;
+                		} else if(k == EXhour) {
+                			T[k] += EXmin;
+                		} else {
+                			T[k] += 60;
+                		}
+                		console.log("T["+k+"] : " + T[k]);
+                	}
+                		
+        			
+        		}
+        		
+        		
             	
+            	        		
             	if(k=="fail"){
             		alert("실패");
             	}
@@ -196,18 +272,83 @@ function DoAnalyze(){
             	var hour = document.getElementById("totalHour");
             	hour.innerText = totalHour/60;
             	
+            	var pay = document.getElementById("pay");
+            	pay.innerText = totalPay;
+            	
+            	
+            	
+            	
         	});
+        	
+        	var slot1 = document.getElementById("slot1");
+        	var slot2 = document.getElementById("slot2");
+        	var slot3 = document.getElementById("slot3");
+        	var slot4 = document.getElementById("slot4");
+        	slot1.innerText = spot_num1;
+        	slot2.innerText = spot_num2;
+        	slot3.innerText = spot_num3;
+        	slot4.innerText = spot_num4;
+        	var slotTotal = document.getElementById("slotTotal");
+        	slotTotal.innerText = spot_num1+spot_num2+spot_num3+spot_num4;
+        	
+        	var wholeDay = wholeHour/4;
+        	
+        	console.log(spot1_time);
+        	console.log(spot2_time/wholeDay);
+        	console.log(spot3_time/wholeDay);
+        	console.log(spot4_time/wholeDay);
+        	console.log(wholeDay);
+        	
+        	
+        	var slot1 = document.getElementById("slot1Occ");
+        	var slot2 = document.getElementById("slot2Occ");
+        	var slot3 = document.getElementById("slot3Occ");
+        	var slot4 = document.getElementById("slot4Occ");
+        	
+        	slot1.innerText = roundXL(spot1_time/wholeDay, 2);
+        	slot2.innerText = roundXL(spot2_time/wholeDay, 2);
+        	slot3.innerText = roundXL(spot3_time/wholeDay, 2);
+        	slot4.innerText = roundXL(spot4_time/wholeDay, 2);
+        	
+        	console.log("T=" + T);
+        	
+        	for(i=0; i<24; i++){
+        		var t1 = document.getElementById("t" + i);
+        		
+        		t1.innerText = T[i];
+        	}
+        	
+        	
         }
     });
+	
+	
+	
+	
 	
 }
 
+function roundXL(n, digits) {
+	  if (digits >= 0) 
+		  return parseFloat(n.toFixed(digits)); // 소수부 반올림
+
+	  digits = Math.pow(10, digits); // 정수부 반올림
+	  var t = Math.round(n * digits) / digits;
+
+	  return parseFloat(t.toFixed(0));
+}
+	
+
+
 
 var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+var test = function(i){ return T[i];}
 var months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"];
 var barChart = null;
 var barChartData = {
-	labels : ["00~03","03~06","06~09","09~12","12~15","15~18","18~21","21~24"],
+//	labels : ["00~03","03~06","06~09","09~12","12~15","15~18","18~21","21~24"],
+//	labels : ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+	labels : ["18", "19", "20", "21", "22", "23"],
 	datasets : [
 	/*
 		{
@@ -223,12 +364,44 @@ var barChartData = {
 			strokeColor : "rgba(151,187,205,0.8)",
 			highlightFill : "rgba(151,187,205,0.75)",
 			highlightStroke : "rgba(151,187,205,1)",
-			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+//			data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+//			data : [T[0],T[1],T[2],T[3],T[4],T[5],T[6],T[7],T[8],T[9],T[10],T[11],T[12],T[13],T[14],T[15],T[16],T[17],T[18],T[19],T[20],T[21],T[22],T[23]]
+			data : [154,125,30,0,0,0]
+
 		}
 	]
 
 };
 
+function displayChart(){
+
+	var ctx = document.getElementById("canvas").getContext("2d");
+	barChart = new Chart(ctx).Bar(barChartData, {
+		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+		scaleBeginAtZero : false,
+		//Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines : true,
+		//String - Colour of the grid lines
+		scaleGridLineColor : "rgba(0,0,0,0.05)",
+		//Number - Width of the grid lines
+		scaleGridLineWidth : 1,
+		//Boolean - If there is a stroke on each bar
+		barShowStroke : false,
+		//Number - Pixel width of the bar stroke
+		barStrokeWidth : 2,
+		//Number - Spacing between each of the X value sets
+		barValueSpacing : 5,
+		//Number - Spacing between data sets within X values
+		barDatasetSpacing : 1,
+		onAnimationProgress: function() {
+			console.log("onAnimationProgress");
+		},
+		onAnimationComplete: function() {
+			console.log("onAnimationComplete");
+		}
+	});
+}
+/*
 $(function() {
 	var ctx = document.getElementById("canvas").getContext("2d");
 	barChart = new Chart(ctx).Bar(barChartData, {
@@ -256,14 +429,15 @@ $(function() {
 		}
 	});
 });
-
+*/
+/*
 $("input#btnAdd").on("click", function() {
 	barChart.addData(
 		[randomScalingFactor(),randomScalingFactor()], 
 		months[(barChart.datasets[0].bars.length)%12]
 	);
 });
-
+ 
 $("canvas").on("click", function(e) {
 	var activeBars = barChart.getBarsAtEvent(e);
 	console.log(activeBars);
@@ -272,4 +446,6 @@ $("canvas").on("click", function(e) {
 		console.log(activeBars[i].value);
 	}
 });
+*/
+
 
