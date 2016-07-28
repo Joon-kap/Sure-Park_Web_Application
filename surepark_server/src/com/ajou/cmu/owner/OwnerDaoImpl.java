@@ -45,7 +45,7 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public List getList(Object obj) throws SQLException {
-		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.attendant.selectAllList");
+		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.owner.selectListByDate", obj);
 	}
 
 	@Override

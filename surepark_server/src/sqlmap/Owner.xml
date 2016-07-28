@@ -54,8 +54,10 @@
    			    P_SLOT_QTY	= #P_SLOT_QTY#
 	</update>
 	
-	<select id="selectAll"  resultClass="java.util.HashMap">
-		SELECT * FROM P_CONFIG_INFO
+	<select id="selectListByDate"  parameterClass="RequestParameter" resultClass="RequestParameter">
+		<![CDATA[
+		SELECT * FROM P_RESER_MST WHERE P_RESER_TIME > #fromDay# AND P_RESER_TIME < #toDay#
+		]]>
 	</select>
 	
 

@@ -39,7 +39,7 @@ import com.ajou.cmu.sensor.SensorStatus;
 public class OwnerController {
 	
 	@Resource(name = "ownerService")
-	private OwnerServiceImpl atService;
+	private OwnerServiceImpl owService;
 	
 		
 	@RequestMapping("/owner/update.do")
@@ -50,7 +50,7 @@ public class OwnerController {
 
 		System.out.println(rp);
 		
-		atService.update(rp);
+		owService.update(rp);
 
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));
@@ -65,7 +65,7 @@ public class OwnerController {
 	
 		System.out.println(rp);
 		
-		atService.updateConf(rp);
+		owService.updateConf(rp);
 	
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));
@@ -82,7 +82,7 @@ public class OwnerController {
 	
 		System.out.println(rp);
 		
-		atService.updatefacil(rp);
+		owService.updatefacil(rp);
 	
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));
@@ -97,11 +97,31 @@ public class OwnerController {
 
 		System.out.println(rp);
 		
-		Owner ow = (Owner) atService.getObject(rp);
+		Owner ow = (Owner) owService.getObject(rp);
 		
 		map.put("object", ow);
 
 		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
+	
+	
+	@RequestMapping("/owner/getReserInfo.do")
+	public ModelAndView getReserInfo(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		System.out.println(rp);
+		
+		List<RequestParameter> list = owService.getList(rp);
+		
+		
+		
+		//map.put("object", ow);
+
+		mnv.addObject("map", list);
 		mnv.addObject("callback", req.getParameter("callback"));
 		return mnv;
 	}

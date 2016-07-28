@@ -124,4 +124,9 @@ public class ReservationServiceImpl implements com.ajou.cmu.common.Service {
 			dao.updateParkingSpot(rp);
 		}
 	}
+
+	public void cancelUpdate(RequestParameter rp) {
+		// TODO Auto-generated method stub
+		dao.updateCancelYn(rp);
+	}
 }
