@@ -13,6 +13,7 @@
    P_CANCEL_YN       VARCHAR(1)  DEFAULT 'N' COMMENT "예약취소여부(취소일때만 'Y')",
    P_ENTER_TIME      VARCHAR(12)     COMMENT "예약자가 들어온 시간",
    P_EXIT_TIME       VARCHAR(12)     COMMENT "예약자가 나간  시간",
+   P_STAY_TIME		 VARCHAR(12)     COMMENT "예약자가 머문  시간",
    P_CREATE_DT       VARCHAR(20)     COMMENT "생성일자",
 	P_UPDATE_DT       VARCHAR(20)     COMMENT "수정일자",
 	PRIMARY KEY (P_RESER_ID)
