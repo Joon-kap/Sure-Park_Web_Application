@@ -45,5 +45,9 @@ public class UserDaoImpl extends BaseDao implements Dao {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public List ownerlogin(Object obj) throws SQLException {
+		return getSqlMapClientTemplate().queryForList("com.ajou.cmu.owner.ownerlogin");
+	}
+	
 }

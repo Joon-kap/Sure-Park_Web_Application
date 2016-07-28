@@ -60,5 +60,10 @@
 		]]>
 	</select>
 	
-
+	<select id="ownerlogin"  parameterClass="RequestParameter" resultClass="RequestParameter">
+		<![CDATA[
+		SELECT * FROM P_USER_INFO
+		]]>
+	</select>
+	
 </sqlMap>
