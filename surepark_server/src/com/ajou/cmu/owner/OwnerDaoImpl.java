@@ -84,4 +84,9 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updategp", rp);
 	}
 
+	public void updateFee(RequestParameter rp) {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updatefee", rp);
+	}
+
 }

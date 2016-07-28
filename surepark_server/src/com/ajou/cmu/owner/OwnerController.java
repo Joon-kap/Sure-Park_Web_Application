@@ -142,5 +142,65 @@ public class OwnerController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		return mnv;
 	}
+	
+	@RequestMapping("/owner/setFee.do")
+	public ModelAndView setFee(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		System.out.println(rp);
+		int fromStr = Integer.parseInt(rp.get("fromStr").toString());
+		int toStr = Integer.parseInt(rp.get("toStr").toString());
+		
+		
+		
+		/*
+		for(int i=0; i<24; i++){
+			if(i>10){
+				if(fromStr != 0)
+					rp.put("P_F0"+i, fromStr);
+				else
+					rp.put("P_F0"+i, "0");
+			}
+			
+		}
+		*/
+		/*
+		params+="&P_F00="	+fee25min.value;
+		params+="&P_F01="	+fee25min.value;
+		params+="&P_F02="	+fee25min.value;
+		params+="&P_F03="	+fee25min.value;
+		params+="&P_F04="	+fee25min.value;
+		params+="&P_F05="	+fee25min.value;
+		params+="&P_F06="	+fee25min.value;
+		params+="&P_F07="	+fee25min.value;
+		params+="&P_F08="	+fee25min.value;
+		params+="&P_F09="	+fee25min.value;
+		params+="&P_F10="	+fee25min.value;
+		params+="&P_F11="	+fee25min.value;
+		params+="&P_F12="	+fee25min.value;
+		params+="&P_F13="	+fee25min.value;
+		params+="&P_F14="	+fee25min.value;
+		params+="&P_F15="	+fee25min.value;
+		params+="&P_F16="	+fee25min.value;
+		params+="&P_F17="	+fee25min.value;
+		params+="&P_F18="	+fee25min.value;
+		params+="&P_F19="	+fee25min.value;
+		params+="&P_F20="	+fee25min.value;
+		params+="&P_F21="	+fee25min.value;
+		params+="&P_F22="	+fee25min.value;
+		params+="&P_F23="	+fee25min.value;
+		*/
+		
+		
+		owService.setFee(rp);
+		
+		//map.put("object", ow);
+
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
 		
 }

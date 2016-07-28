@@ -126,7 +126,7 @@ function setConfig(){
 	var exit = document.getElementById("exit");
 	var slot = document.getElementById("slot");
 	
-	var params = "gp="+gp.value+"&entry="+entry+"&exit="+exit+"&slot="+slot;
+	var params = "gp="+gp.value+"&entry="+entry.value+"&exit="+exit.value+"&slot="+slot.value;
 	
 	
 	$.ajax({
@@ -144,6 +144,32 @@ function setConfig(){
     });
 	
 	
+}
+
+function setFee(){
+	var from = document.getElementById("selGpStartHour");
+	var to = document.getElementById("selGpEndHour");
+	
+	var fromStr = dataPickerToString(from.value);
+	var toStr = dataPickerToString(to.value);
+	
+	
+	
+	
+	var params = "fromStr="+fromStr+"&toStr="+toStr;
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/setFee.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+        		console.log(v);
+        	});
+        	
+        }
+    });
 }
 
 function DoAnalyze(){
