@@ -60,5 +60,13 @@
 		]]>
 	</select>
 	
+	<update id="updategp" parameterClass="RequestParameter">
+		UPDATE P_CONFIG_INFO
+   			SET P_ENTRY_QTY  = #P_ENTRY_QTY#,   				
+   			    P_EXIT_QTY   = #P_EXIT_QTY#,
+   			    P_SLOT_QTY	= #P_SLOT_QTY#,
+   			    P_PERIOD_TIME  = #gp# 				
+  </update>
+	
 
 </sqlMap>

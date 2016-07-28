@@ -125,5 +125,22 @@ public class OwnerController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		return mnv;
 	}
+	
+	@RequestMapping("/owner/setgp.do")
+	public ModelAndView setgp(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		System.out.println(rp);
+		
+		owService.setgp(rp);
+		
+		//map.put("object", ow);
+
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
 		
 }

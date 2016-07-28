@@ -104,4 +104,9 @@ public class OwnerServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		dao.updateConf(rp);
 	}
+
+	public void setgp(RequestParameter rp) {
+		// TODO Auto-generated method stub
+		dao.updateGP(rp);
+	}
 }

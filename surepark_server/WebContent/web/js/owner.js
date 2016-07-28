@@ -118,6 +118,34 @@ function dataPickerToString(picker){
 	return fromStr;
 }
 
+function setConfig(){
+	
+	
+	var gp = document.getElementById("confGracePeriod");
+	var entry = document.getElementById("entry");
+	var exit = document.getElementById("exit");
+	var slot = document.getElementById("slot");
+	
+	var params = "gp="+gp.value+"&entry="+entry+"&exit="+exit+"&slot="+slot;
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/setgp.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+        		console.log(v);
+        	});
+        	
+        }
+    });
+	
+	
+}
+
 function DoAnalyze(){
 	var from = document.getElementById("datepickerfrom");
 	var to = document.getElementById("datepickerto");
@@ -284,7 +312,7 @@ function DoAnalyze(){
         	
         	console.log("T=" + T);
         	
-        	for(i=1; i<25; i++){
+        	for(i=0; i<24; i++){
         		var t1 = document.getElementById("t" + i);
         		
         		t1.innerText = T[i];
