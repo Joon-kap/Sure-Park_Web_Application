@@ -14,10 +14,28 @@ public class Reservation {
 	private String pExitTime;
 	private String pCreateDt;
 	private String pUpdateDt;
+	private String pStayTime;
 	
 	public Reservation(){
 		
 	}
+	
+	
+
+	
+	public String getpStayTime() {
+		return pStayTime;
+	}
+
+
+
+
+	public void setpStayTime(String pStayTime) {
+		this.pStayTime = pStayTime;
+	}
+
+
+
 
 	public int getpReserId() {
 		return pReserId;
