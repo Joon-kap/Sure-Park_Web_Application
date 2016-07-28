@@ -257,19 +257,16 @@ table.MsoTableGrid
 var domainText = "localhost:8080";
 
 function checkOwner(){
-	
 	//var graceperi = confGracePeriod.innerHTML;
-	var owner_id = document.getElementById("OWNER_ID");
-	var owner_pass = document.getElementById("OWNER_PASS");
+	var owner_id = document.getElementById("owid");
+	var owner_pass = document.getElementById("owpw");
 
-
-
-	var params = "OWNER_ID="+ owner_id;
-	params+="&OWNER_PASS="	+ owner_pass;
+	var params = "userID="+ owner_id.value;
+	params+="&passwd="	+ owner_pass.value;
 
 	$.ajax({
         type: "POST",
-        url: "http://"+domainText+"/surepark_server/owner/ownerlogin.do",
+        url: "http://"+domainText+"/surepark_server/owner/login.do",
         callback: "callbak",
 		dataType: "jsonp",
 		data:params,
@@ -277,15 +274,51 @@ function checkOwner(){
         	$.each(data, function(k,v){
         		console.log(k);
         		console.log(v);
-            	if(k=="OWNER"){
-            		//if(owner_id.value == v['OWNER_ID'])
-            		alert("Success!!!");
-            		console.log(owner_id.value);
-            		console.log(owner_id.pass);
-
-            		console.log(v['OWNER_ID']);
-            		console.log(v['OWNER_PASS']);
+        		if(v['STATUS'] == 'FAIL')
+        			alert("Login Fail");
+        		else{
+        			//alert("Login Success");
+        			location.href = "./owner.html"
+        		}
+        		
+            	
+            	if(k=="fail"){
+            		alert("실패");
             	}
+        		
+        	});
+        	        	
+        }
+    });
+}
+
+
+function checkAtt(){
+	//var graceperi = confGracePeriod.innerHTML;
+	var owner_id = document.getElementById("atid");
+	var owner_pass = document.getElementById("atpw");
+
+	
+	var params = "userID="+ owner_id.value;
+	params+="&passwd="	+ owner_pass.value;
+
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/login.do",
+        callback: "callbak",
+		dataType: "jsonp",
+		data:params,
+        success: function(data){
+        	$.each(data, function(k,v){
+        		console.log(k);
+        		console.log(v);
+        		if(v['STATUS'] == 'FAIL')
+        			alert("Login Fail");
+        		else{
+        			//alert("Login Success");
+        			location.href = "./attendant.html"
+        		}
+        		
             	
             	if(k=="fail"){
             		alert("실패");
@@ -300,18 +333,7 @@ function checkOwner(){
 
 
 
-function checkOwner22(form)/*function to check userid & password*/
-{
- /*the following code checkes whether the entered userid and password are matching*/
- if(form.userid.value == "myuserid" && form.pswrd.value == "mypswrd")
-  {
-    window.open('target.html')/*opens the target page while Id & password matches*/
-  }
- else
- {
-   alert("Error Password or Username")/*displays error message*/
-  }
-}
+
 
 </script>
 
@@ -363,18 +385,16 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
 					ID
 				</td>
 				<td  width=180>
-					<INPUT TYPE="text" NAME="OWNER_ID" SIZE=15 MAXLENGTH=9>
+					<INPUT TYPE="text" id="owid" NAME="OWNER_ID" SIZE=15 MAXLENGTH=9>
 				</td>
 				<td width=100>
 					Password
 				</td>
 				<td  width=150>
-					<INPUT TYPE=PASSWORD NAME="OWNER_PASS" SIZE=15 MAXLENGTH=20>
+					<INPUT TYPE=PASSWORD id="owpw" NAME="OWNER_PASS" SIZE=15 MAXLENGTH=20>
 				</td>
 				<td >
-					<form action="" method="POST">
-					<input type="button" onclick="checkOwner(this.form)" value="LOGIN" />
-					</form>
+					<input type="button" onclick="checkOwner()" value="LOGIN" />
 				</td>
 
 			</tr>
@@ -387,18 +407,17 @@ style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif
 					ID
 				</td>
 				<td  width=180>
-					<INPUT TYPE=VALUE NAME=txtID SIZE=15 MAXLENGTH=9>
+					<INPUT TYPE=VALUE id="atid" NAME=txtID SIZE=15 MAXLENGTH=9>
 				</td>
 				<td width=100>
 					Password
 				</td>
 				<td  width=150>
-					<INPUT TYPE=PASSWORD NAME=txtPASS SIZE=15 MAXLENGTH=20>
+					<INPUT TYPE=PASSWORD id="atpw" NAME=txtPASS SIZE=15 MAXLENGTH=20>
 				</td>
 				<td valign="middle">
-					<form action="" method="POST">
-					<input type="submit" value="LOGIN" />
-					</form>
+					<input type="button" onclick="checkAtt()" value="LOGIN" />
+					
 				</td>
 
 			</tr>

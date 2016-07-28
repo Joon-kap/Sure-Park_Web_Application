@@ -15,7 +15,7 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 
 	@Override
 	public Object select(Object obj) throws SQLException {
-		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.owner.selectAll", obj);
+		return getSqlMapClientTemplate().queryForObject("com.ajou.cmu.owner.login", obj);
 	}
 	
 	@Override
@@ -89,4 +89,8 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updatefee", rp);
 	}
 
+	public Object getConf() {
+		// TODO Auto-generated method stub
+		return  getSqlMapClientTemplate().queryForObject("com.ajou.cmu.owner.getconf");
+	}
 }

@@ -2,6 +2,31 @@ var domainText = "localhost:8080";
 var T = new Array();
 var T_MAX = 24;
 
+function initData(){
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/owner/getConf.do",
+        callback: "callbak",
+		dataType: "jsonp",
+        success: function(data){
+        	console.log(data['P_EXIT_QTY']);
+        	console.log(data['P_ENTRY_QTY']);
+        	console.log(data['P_PERIOD_TIME']);
+        	console.log(data['P_SLOT_QTY']);
+        	        	
+        	
+        	var gp = document.getElementById("confGracePeriod");
+        	var entry = document.getElementById("entry");
+        	var exit = document.getElementById("exit");
+        	var slot = document.getElementById("slot");
+        	gp.value = data['P_PERIOD_TIME'];
+        	entry.value = data['P_ENTRY_QTY'];
+        	exit.value = data['P_EXIT_QTY'];
+        	slot.value = data['P_SLOT_QTY'];
+        }
+    });
+}
+
 function conf1Apply(){
 	
 	//var graceperi = confGracePeriod.innerHTML;

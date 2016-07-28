@@ -114,4 +114,9 @@ public class OwnerServiceImpl implements com.ajou.cmu.common.Service {
 		// TODO Auto-generated method stub
 		dao.updateFee(rp);
 	}
+
+	public Object getConfObject() {
+		// TODO Auto-generated method stub
+		return dao.getConf();
+	}
 }

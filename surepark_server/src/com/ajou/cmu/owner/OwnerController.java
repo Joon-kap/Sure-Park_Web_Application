@@ -126,6 +126,30 @@ public class OwnerController {
 		return mnv;
 	}
 	
+	@RequestMapping("/owner/login.do")
+	public ModelAndView login(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		System.out.println(rp);
+		
+		Object obj = owService.getObject(rp);
+		if(obj != null){
+			map.put("STATUS", "SUCCESS");
+		}else{
+			map.put("STATUS", "FAIL");
+		}
+		
+//		owService.setgp(rp);
+		
+		//map.put("object", ow);
+
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
+	
 	@RequestMapping("/owner/setgp.do")
 	public ModelAndView setgp(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		RequestParameter rp = Utils.extractRequestParameters(req);	
@@ -139,6 +163,23 @@ public class OwnerController {
 		//map.put("object", ow);
 
 		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
+	
+	@RequestMapping("/owner/getConf.do")
+	public ModelAndView getConf(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		System.out.println(rp);
+		RequestParameter rp1 = (RequestParameter) owService.getConfObject();
+		//owService.setgp(rp);
+		
+		//map.put("object", ow);
+
+		mnv.addObject("map", rp1);
 		mnv.addObject("callback", req.getParameter("callback"));
 		return mnv;
 	}

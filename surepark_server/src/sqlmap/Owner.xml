@@ -71,11 +71,9 @@
   </update>
   
   
-	<select id="ownerlogin"  parameterClass="RequestParameter" resultClass="RequestParameter">
-		<![CDATA[
-		SELECT * FROM P_USER_INFO
-		]]>
-	</select>
+	<select id="login"  parameterClass="RequestParameter" resultClass="RequestParameter">
+		SELECT * FROM P_USER_INFO WHERE USER_ID = #userID# AND PASSWD = #passwd#
+		</select>
 
   <update id="updatefee" parameterClass="RequestParameter">
 		UPDATE P_CONFIG_INFO
@@ -104,5 +102,12 @@
 				P_F22	= #P_F22#,
 				P_F23	= #P_F23# 				
   </update>
+  
+  <select id="getconf"  parameterClass="RequestParameter" resultClass="RequestParameter">
+		
+		SELECT * FROM P_CONFIG_INFO
+		
+	</select>
+  
 
 </sqlMap>
