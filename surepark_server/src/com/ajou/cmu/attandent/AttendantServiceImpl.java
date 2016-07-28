@@ -97,4 +97,12 @@ public class AttendantServiceImpl implements com.ajou.cmu.common.Service {
 		
 		return dao.selectAvailableSpot();
 	}
+	
+
+	public List selectAllConfigInfo(Object obj) throws SQLException  {
+
+		return 	dao.selectAllConfigInfo(obj);
+	}
+	
+	
 }

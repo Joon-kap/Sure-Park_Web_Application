@@ -1,5 +1,12 @@
 //var domainText = "192.168.1.6:8080";
 var domainText = "localhost:8080";
+var fee15min = 0.25;		//15min per 25cent
+
+var facilConf = getConfigfromDB();
+
+var maxEntryGate = facilConf[0];
+var maxExitGate = facilConf[1];
+var maxPSlot = facilConf[2];
 
 
 function testButton(){
@@ -38,7 +45,7 @@ function GetSensorValue(){
 	var params = "SENSORREQUEST="+"SENSORREQUEST";
 	
 	$.ajax({
-        type: "GET",
+        type: "POST",
         url: "http://"+domainText+"/surepark_server/sensor/getStatus.do",
         callback: "callbak",
 		dataType: "jsonp",
@@ -165,8 +172,7 @@ function updateTimeHHMM() {
     updateTimeMM();
     updateTimeWEEK();
     setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
-    setInterval("ozit_interval_test()", 60000);
-}
+`}
 /*aa
 function updateLED()
 */
@@ -361,3 +367,44 @@ function updateLog(evt){
 }
 
 
+<<<<<<< HEAD
+function getConfigfromDB(){
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/attendant/selectAllConfigInfo.do",
+        callback: "callbak",
+		dataType: "jsonp",
+        success: function(data){
+        	$.each(data, function(k,v){
+            	if(k=="GETCONF"){
+            		//alert("Success!!!");
+            		//console.log(v);
+            		//console.log(v['P_GRACEPERI_MIN']);
+            		maxEntryGate = v['P_ENTRY_QTY'];
+            		maxExitGate = v['P_EXIT_QTY'];
+            		maxPSlot = v['P_SLOT_QTY'];
+            		//SlotTableWrite(maxPSlot);
+            		//P_ENTRY_QTY
+            		//P_EXIT_QTY
+        			//P_SLOT_QTY
+            	    var rets = new Array();
+            	    rets[0] = maxEntryGate;
+            	    rets[1] = maxExitGate;
+            	    rets[2] = maxExitGate;
+                    
+            		return rets;
+
+            	}
+            	
+            	if(k=="fail"){
+            		alert("실패");
+            	}
+        		
+        	});
+        	        	
+        }
+    });
+}
+
+=======
+>>>>>>> branch 'master' of https://github.com/Joon-kap/Sure-Park_Web_Application.git
