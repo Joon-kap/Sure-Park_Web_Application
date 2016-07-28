@@ -71,7 +71,7 @@ public class AttendantController {
 		
 		map.put("GETCONF",list.get(0));
 		//atService.selectAllConfigInfo();
-		System.out.println(rp);
+		//System.out.println(rp);
 
 		mnv.addObject("map", map);
 		mnv.addObject("callback", req.getParameter("callback"));

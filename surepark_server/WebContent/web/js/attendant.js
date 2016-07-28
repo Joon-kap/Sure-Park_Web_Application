@@ -2,12 +2,12 @@
 var domainText = "localhost:8080";
 var fee15min = 0.25;		//15min per 25cent
 
-var facilConf = getConfigfromDB();
+var facilConf = new getConfigfromDB("22");
+sleep(200);
 
 var maxEntryGate = facilConf[0];
 var maxExitGate = facilConf[1];
 var maxPSlot = facilConf[2];
-
 
 function testButton(){
 	var seq = "aaaa";
@@ -49,11 +49,18 @@ function GetSensorValue(){
         url: "http://"+domainText+"/surepark_server/sensor/getStatus.do",
         callback: "callbak",
 		dataType: "jsonp",
+		async: "false",
 		data:params,
         success: function(data){
+
         	$.each(data, function(k,v){
                	if(k=="ENTRY"){
               		 var led = document.getElementById("slot_entry");  
+              	    console.log("led" + led);
+
+            	    if(led==null) {
+            	    	return;
+            	    }
               		 if(v=='1') {
               			 led.style.color="red";
 	           			 led.innerHTML = "OPEN"
@@ -65,6 +72,11 @@ function GetSensorValue(){
                   	}
         		if(k=="EXIT"){
            		 var led = document.getElementById("slot_exit");  
+          	    console.log("led" + led);
+
+        	    if(led==null) {
+        	    	return;
+        	    }
            		 if(v=='1') {
            			 led.style.color="red";
            			 led.innerHTML = "OPEN"
@@ -75,10 +87,16 @@ function GetSensorValue(){
            			 led.style.color="#00B050";
            		 }
            		console.log("LED1: " + v);
-               	}
+               	}	
                	
             	if(k=="LED1"){
             		 var led = document.getElementById("slot1_led");  
+             	    console.log("led" + led);
+
+            	    if(led==null) {
+            	    	return;
+            	    }
+            	    
             		 if(v=='1') {
             			 led.style.color="#00B050";
                			 led.innerHTML = "EMPTY";
@@ -90,6 +108,12 @@ function GetSensorValue(){
             	}
             	if(k=="LED2"){
            		 	var led = document.getElementById("slot2_led");  
+            	    console.log("led" + led);
+
+            	    if(led==null) {
+            	    	return;
+            	    }
+            	    
 	           		 if(v=='1') {
 	        			 led.style.color="#00B050";
 	           			 led.innerHTML = "EMPTY";
@@ -101,6 +125,12 @@ function GetSensorValue(){
             	}
             	if(k=="LED3"){
            		 	var led = document.getElementById("slot3_led");  
+            	    console.log("led" + led);
+
+            	    if(led==null) {
+            	    	return;
+            	    }
+            	    
 	           		 if(v=='1') {
 	        			 led.style.color="#00B050";
 	           			 led.innerHTML = "EMPTY";
@@ -112,6 +142,12 @@ function GetSensorValue(){
             	}
             	if(k=="LED4"){
            		 	var led = document.getElementById("slot4_led");  
+            	    console.log("led" + led);
+
+            	    if(led==null) {
+            	    	return;
+            	    }
+            	    
 	           		 if(v=='1') {
 	        			 led.style.color="#00B050";
 	           			 led.innerHTML = "EMPTY";
@@ -172,7 +208,9 @@ function updateTimeHHMM() {
     updateTimeMM();
     updateTimeWEEK();
     setTimeout("updateTimeHHMM()",60000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
-`}
+
+    //ozit_interval_test();
+}
 /*aa
 function updateLED()
 */
@@ -184,10 +222,12 @@ function updateLED() {
 var selectLog;
 window.onload = function() {                         // 페이지가 로딩되면 실행
 	updateTimeHHMM();
+	//getConfigfromDB("11");
+
 	updateLED();
 	init();
 	send_message();
-	UpdateSlots();
+	UpdateSlots("onload");
 	
 	
 	
@@ -217,7 +257,7 @@ function ozit_interval_test(){
         	        	
         }
     });
-	UpdateSlots();
+	UpdateSlots("ozit_interval_test");
 }
 
 function webSocketRequest() {
@@ -300,7 +340,7 @@ function onMessage(evt) {
 		exit.innerHTML = "CLOSED";
 	}else if(evt.data == '200'){
 		console.log(evt.data);
-		UpdateSlots();
+		UpdateSlots("onMessage");
 	}
 	
 	updateLog(evt.data);
@@ -362,27 +402,32 @@ function updateLog(evt){
 		objOption.value = "aaaa";
 		
 		selectLog.options.add(objOption);
-		UpdateSlots();
+		UpdateSlots("updateLog");
 	}
 }
 
 
-<<<<<<< HEAD
-function getConfigfromDB(){
+
+function getConfigfromDB(temp){
 	$.ajax({
         type: "POST",
         url: "http://"+domainText+"/surepark_server/attendant/selectAllConfigInfo.do",
         callback: "callbak",
 		dataType: "jsonp",
+		async: "false",
         success: function(data){
         	$.each(data, function(k,v){
             	if(k=="GETCONF"){
             		//alert("Success!!!");
-            		//console.log(v);
             		//console.log(v['P_GRACEPERI_MIN']);
             		maxEntryGate = v['P_ENTRY_QTY'];
             		maxExitGate = v['P_EXIT_QTY'];
             		maxPSlot = v['P_SLOT_QTY'];
+            		console.log(temp);
+            		console.log(maxEntryGate);
+            		console.log(maxExitGate);
+            		console.log(maxPSlot);
+
             		//SlotTableWrite(maxPSlot);
             		//P_ENTRY_QTY
             		//P_EXIT_QTY
@@ -390,7 +435,7 @@ function getConfigfromDB(){
             	    var rets = new Array();
             	    rets[0] = maxEntryGate;
             	    rets[1] = maxExitGate;
-            	    rets[2] = maxExitGate;
+            	    rets[2] = maxPSlot;
                     
             		return rets;
 
@@ -406,5 +451,122 @@ function getConfigfromDB(){
     });
 }
 
-=======
->>>>>>> branch 'master' of https://github.com/Joon-kap/Sure-Park_Web_Application.git
+
+function UpdateSlots(log){
+	
+	console.log(log);
+
+	
+	for(var i=1; i<5; i++){
+		var stat = document.getElementById("slot"+i+"_stat");
+	    var from = document.getElementById("slot"+i+"_from");
+	    var during = document.getElementById("slot"+i+"_during");
+	    var fee = document.getElementById("slot"+i+"_fee");
+	    
+	    console.log("maxPSlot" + maxPSlot);
+	    if(maxPSlot==undefined) {
+	    	return;
+	    }
+	    console.log("stat" + stat);
+
+	    if(stat==null) {
+	    	return;
+	    }
+	    stat.innerHTML = "# "+i+" : ";
+	    from.innerHTML = "";
+	    during.innerHTML = "";
+	    fee.innerHTML = "";
+	    
+	}
+	
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "http://"+domainText+"/surepark_server/rev/currentParkedStatus.do",
+        callback: "callbak",
+		dataType: "jsonp",
+        success: function(data){
+        	var slotnum=1;
+        	$.each(data, function(k,v){
+               	if(k=="LIST"){
+               		for(i=0; i<v.length; i++) {
+                  		console.log("LIST: " + v[0]['P_RESER_ID']);
+                  	//	if((v[i]['P_CANCEL']!="N")&&(v[i]['P_PAYMENT']!="N")) {
+                  			slotnum = v[i]['P_SPOT_NUMBER'];
+                            var stat = document.getElementById("slot"+slotnum+"_stat");
+                            var from = document.getElementById("slot"+slotnum+"_from");
+                            var during = document.getElementById("slot"+slotnum+"_during");
+                            var fee = document.getElementById("slot"+slotnum+"_fee");
+                            
+                            console.log("LIST len: " + "slot"+slotnum+"_stat");
+                            console.log(v);
+                            
+                            //stat.innerHTML = "# "+slotnum+" : "+ v[i]['P_RESER_TELNO'];
+                            stat.innerHTML = "# "+slotnum+" : ";
+
+                            for(j=v[i]['P_RESER_TELNO'].length-4; j<v[i]['P_RESER_TELNO'].length; j++) {
+                            	stat.innerHTML+=v[i]['P_RESER_TELNO'][j];
+                            }
+                            stat.style.fontWeight = "bold";
+
+//                            from.innerHTML = "From : "+ v[i]['P_RESER_TIME'];
+                            from.innerHTML = "From : ";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][4]+ v[i]['P_RESER_TIME'][5]+"/";
+                            from.innerHTML+= v[i]['P_RESER_TIME'][6]+ v[i]['P_RESER_TIME'][7]+" ";
+                           
+                            from.innerHTML+= v[i]['P_RESER_TIME'][8]+ v[i]['P_RESER_TIME'][9]+":"+
+                            					v[i]['P_RESER_TIME'][10]+ v[i]['P_RESER_TIME'][11];
+
+                            from.style.fontWeight = "normal";
+
+                            //var clock = ;            // 출력할 장소 선택
+//                            during.innerHTML = "During : "+ v[i]['P_RESER_TIME'];
+                            if(v[i]['P_ENTER_TIME'] == null) {
+                            	during.innerHTML = "Reserved";
+                                //during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";                           	
+                            } else {
+                            	during.innerHTML = "During : ";
+                                during.innerHTML +=getDuring(v[i]['P_ENTER_TIME'])+" min";
+                                //during.innerHTML += document.getElementById("clock_HHMM").innerHTML;
+                                fee.innerHTML = "$ " + getFee(v[i]['P_ENTER_TIME']).toFixed(2);
+                            }
+                            during.style.fontWeight = "bold";
+                  	//	}
+               		}
+              		console.log("LIST len: " + v.length);
+					
+              		/*
+              		null({"LIST":[{"P_RESER_ID":114,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"3","P_ENTER_TIME":null,"P_UPDATE_DT":"2016-07-23 09:00:00","P_RESER_TIME":"201607231100","P_IDENTIFIER":"RT23223230ET201607231100","P_RESER_TELNO":"23223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"},
+              		              {"P_RESER_ID":115,"P_PAYMENT_YN":"N","P_CANCEL_YN":"N","P_SPOT_NUMBER":"2","P_ENTER_TIME":null,"P_UPDATE_DT":null,"P_RESER_TIME":"201607231300","P_IDENTIFIER":"RT33223230ET201607231300","P_RESER_TELNO":"33223230","P_PAYMENT":null,"P_EXIT_TIME":null,"P_CREATE_DT":"2016-07-23 09:00:00"}]})*/
+              		
+                  	}
+        	});
+        	        	
+        }
+    });
+}
+
+
+
+
+function getDuring(fromTime) {
+	var fromstr = fromTime[0]+fromTime[1]+fromTime[2]+fromTime[3]+"/"+	//YYYY
+					fromTime[4]+fromTime[5]+"/"+	//MM
+					fromTime[6]+fromTime[7]+" "+	//DD
+					fromTime[8]+fromTime[9]+":"+	//HH
+					fromTime[10]+fromTime[11];		//MM
+
+	var diff = Math.abs(new Date(fromstr) - new Date());
+		console.log("LIST len: " + fromTime + " : " + diff/60000+ " << " );
+	return (diff/60000).toFixed(0);
+}
+
+
+function getFee(fromTime) {
+
+	return (getDuring(fromTime)/15)*fee15min;
+}
+
+
+
