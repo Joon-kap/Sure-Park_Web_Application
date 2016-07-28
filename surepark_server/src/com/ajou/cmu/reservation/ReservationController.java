@@ -301,7 +301,7 @@ public class ReservationController {
 				identification = 1;
 				spot = Integer.parseInt(retMap.get("SPOT").toString());
 				mv.addObject("map", retMap);
-				blockIdentify();
+				//blockIdentify();
 				System.out.println("===========SUCCESS======================");
 			}else{
 				retMap.put("STATUS", "FAIL");

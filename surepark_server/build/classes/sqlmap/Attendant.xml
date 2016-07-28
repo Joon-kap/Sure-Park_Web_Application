@@ -11,5 +11,9 @@
 		SELECT * FROM P_RESER_MST
 	</select>
 	
-
+	
+	<select id="selectAllConfigInfo"  resultClass="java.util.HashMap">
+		SELECT * FROM P_CONFIG_INFO
+	</select>
+	
 </sqlMap>

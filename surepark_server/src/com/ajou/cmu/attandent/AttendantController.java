@@ -57,5 +57,24 @@ public class AttendantController {
 		mnv.addObject("callback", req.getParameter("callback"));
 		return mnv;
 	}
+
+
+	@RequestMapping("/attendant/selectAllConfigInfo.do")
+	public ModelAndView updatefacil(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		RequestParameter rp = Utils.extractRequestParameters(req);	
+		ModelAndView mnv = new ModelAndView("/common/json_result");
+		Map<String, Object> map = new HashMap<String, Object>();
+	
 		
+		
+		List<HashMap> list = atService.selectAllConfigInfo(rp);
+		
+		map.put("GETCONF",list.get(0));
+		//atService.selectAllConfigInfo();
+		//System.out.println(rp);
+
+		mnv.addObject("map", map);
+		mnv.addObject("callback", req.getParameter("callback"));
+		return mnv;
+	}
 }
