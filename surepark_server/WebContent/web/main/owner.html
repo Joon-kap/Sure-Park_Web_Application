@@ -14,8 +14,14 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
 
+  
 <script type="text/javascript" src="../../js/jquery-1.5.2.min.js"></script>
+<!--  
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
+-->
 <script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
+
 <script type="text/javascript" src="../js/owner.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="../../js/jquery-ui.css">
 
@@ -270,6 +276,7 @@ table.MsoTableGrid
      <!--  
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
 	<script src="../js/Chart.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
 </head>
 
 
@@ -348,7 +355,7 @@ table.MsoTableGrid
 			    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 			    background1;padding:0cm 5.4pt 0cm 5.4pt;height:26.7pt'>
 				<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-			    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+			    style='font-size:14.0pt;font-family:"Arial",sans-serif' id="pay"><o:p>&nbsp;</o:p></span></p>
 				</td>
 			</tr>
 		 </table>
@@ -417,15 +424,15 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 				   mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot1" lang=EN-US
+					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;AAA</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
 					border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot2" lang=EN-US
 						style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
@@ -433,7 +440,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot3" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
@@ -441,7 +448,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot4" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=167 style='width:100.25pt;border-top:none;border-left:none;
@@ -449,7 +456,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slotTotal" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 			</tr>
@@ -466,7 +473,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot1Occ" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
@@ -474,7 +481,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 				 background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot2Occ" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
@@ -482,7 +489,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot3Occ" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=141 style='width:84.7pt;border-top:none;border-left:none;
@@ -490,7 +497,7 @@ table.MsoTableGrid
 					mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
 					mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
 					background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
-					<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+					<p class=MsoNormal align=center style='text-align:center'><span id="slot4Occ" lang=EN-US
 					style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 				</td>
 				<td width=167 style='width:100.25pt;border-top:none;border-left:none;
@@ -508,9 +515,394 @@ table.MsoTableGrid
 		<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
 			style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>Peak
 			usage hours<o:p></o:p></span></b></p>
-			<div style="width: 60%">
-		<canvas id="canvas" height="450" width="600"></canvas>
-	</div>
+		<div id="peek">
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=1196
+   style='width:717.85pt;margin-left:.05pt;border-collapse:collapse;border:
+   none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   0cm 5.4pt 0cm 5.4pt'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:19.7pt'>
+    <td width=55 style='width:33.15pt;border:solid windowtext 1.0pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>Hour<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>00<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>01<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>02<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>03<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>04<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>05<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>06<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>07<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>08<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>09<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>10<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>11<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>12<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>13<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>14<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>15<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>16<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>17<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>18<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>19<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>20<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>21<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>22<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>23<o:p></o:p></span></p>
+    </td>
+   </tr>
+
+
+   <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:19.7pt'>
+    <td width=55 style='width:33.15pt;border:solid windowtext 1.0pt;border-top:
+    none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'>Total<o:p></o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t00" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t01" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t02" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t03" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t04" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t05" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t06" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t07" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t08" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.5pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t09" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t10" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t11" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t12" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t13" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t14" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t15" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t16" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t17" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t18" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t19" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t20" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t21" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t22" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=48 style='width:28.55pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="t23" lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+   </tr>
+  </table>
+
+		</div>
+
 	
 		
   <p><o:p>&nbsp;</o:p></p>

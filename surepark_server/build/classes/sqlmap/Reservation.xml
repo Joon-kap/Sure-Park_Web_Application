@@ -20,7 +20,8 @@
 		<result property="pEnterTime" column="P_ENTER_TIME"/>
 		<result property="pExitTime" column="P_EXIT_TIME"/>
 		<result property="pCreateDt" column="P_CREATE_DT"/>
-		<result property="pUpdateDt" column="P_UPDATE_DT"/>		
+		<result property="pUpdateDt" column="P_UPDATE_DT"/>
+		<result property="pStayTime" column="P_STAY_TIME"/>		
 	</resultMap>
 	
 	<select id="selectByIdentifier" parameterClass="RequestParameter" resultMap="revResult">
