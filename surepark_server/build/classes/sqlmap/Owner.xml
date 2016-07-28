@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.ajou.cmu.owner">
+	<typeAlias alias ="RequestParameter" type="com.ajou.cmu.common.RequestParameter"/>		
+	
+	<update id="updateInfo" parameterClass="RequestParameter">
+		UPDATE P_CONFIG_INFO
+   			SET p_spot_number  = #pSpotNumber#,   				
+   			    P_enter_time   = #cTime#
+         WHERE p_identifier = #pIdentifier#
+	</update>
+	
+	<select id="selectAll"  resultClass="java.util.HashMap">
+		SELECT * FROM P_CONFIG_INFO
+	</select>
+	
+
+</sqlMap>
