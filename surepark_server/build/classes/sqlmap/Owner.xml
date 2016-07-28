@@ -8,9 +8,50 @@
 	
 	<update id="updateInfo" parameterClass="RequestParameter">
 		UPDATE P_CONFIG_INFO
-   			SET p_spot_number  = #pSpotNumber#,   				
-   			    P_enter_time   = #cTime#
+   			SET p_entry_qty  = #p_entry_qty#,   				
+   			    p_exit_qty   = #p_exit_qty#,
+   			    p_slot_qty	= #p_slot_qty#
          WHERE p_identifier = #pIdentifier#
+	</update>
+	
+			
+	<update id="updateConf" parameterClass="RequestParameter">
+		UPDATE P_CONFIG_INFO
+   			SET P_GRACEPERI_MIN  = #P_GRACEPERI_MIN#,   				
+   			    P_F00 	= #P_F00#,
+				P_F01	= #P_F01#,
+				P_F02	= #P_F02#,
+				P_F03	= #P_F03#,
+				P_F04	= #P_F04#,
+				P_F05	= #P_F05#,
+				P_F06	= #P_F06#,
+				P_F07	= #P_F07#,
+				P_F08	= #P_F08#,
+				P_F09	= #P_F09#,
+				P_F10	= #P_F10#,
+				P_F11	= #P_F11#,
+				P_F12	= #P_F12#,
+				P_F13	= #P_F13#,
+				P_F14	= #P_F14#,
+				P_F15	= #P_F15#,
+				P_F16	= #P_F16#,
+				P_F17	= #P_F17#,
+				P_F18	= #P_F18#,
+				P_F19	= #P_F19#,
+				P_F20	= #P_F20#,
+				P_F21	= #P_F21#,
+				P_F22	= #P_F22#,
+				P_F23	= #P_F23#
+			
+         
+	</update>
+	
+		
+	<update id="updatefacil" parameterClass="RequestParameter">
+		UPDATE P_CONFIG_INFO
+   			SET P_ENTRY_QTY  = #P_ENTRY_QTY#,   				
+   			    P_EXIT_QTY   = #P_EXIT_QTY#,
+   			    P_SLOT_QTY	= #P_SLOT_QTY#
 	</update>
 	
 	<select id="selectAll"  resultClass="java.util.HashMap">

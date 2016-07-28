@@ -102,6 +102,14 @@ public class OwnerServiceImpl implements com.ajou.cmu.common.Service {
 	public void update(RequestParameter rp) throws SQLException {
 		// TODO Auto-generated method stub
 		dao.update(rp);
-		
+	}
+	
+	public void updatefacil(RequestParameter rp) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.updatefacil(rp);
+	}
+	public void updateConf(RequestParameter rp) throws SQLException {
+		// TODO Auto-generated method stub
+		dao.updateConf(rp);
 	}
 }

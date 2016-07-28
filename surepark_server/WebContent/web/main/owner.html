@@ -917,27 +917,214 @@ table.MsoTableGrid
   
   <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
   style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>Analysis<o:p></o:p></span></b></p>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>Radio
+<p></p>
+  <p>From : <input type="text" id="datepickerfrom">   To : <input type="text" id="datepickerto"> 
+	Select slot : 
+    <select id='selSlot'>
+    <option value=''>--Select Slot--</option>
+    <option value='1'>All</option>
+    <option value='2'>1</option>
+    <option value='3'>2</option>
+    <option value='4'>3</option>
+    <option value='5'>4</option>
+	</select>
+	<input type="button" value="ANALYZE" onclick="DoAnalyze()">
+    </p>
   
-  
-  <p>Date: <input type="text" id="datepicker"></p>
-  
-  <p>Week: <input type="text" id="weekpicker"></p>
-    <br /><br />
-    <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span>
-</body>
-</html>
-
-  Select <o:p></o:p></span></b></p>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>
+  Overview<o:p></o:p></span></b></p>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:26.7pt'>
+    <td width=267 style='width:160.1pt;border:solid windowtext 1.0pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:26.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Total Hours<o:p></o:p></span></p>
+    </td>
+    <td width=267 style='width:160.15pt;border:solid windowtext 1.0pt;
+    border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:26.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Revenue<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:26.7pt'>
+    <td width=267 style='width:160.1pt;border:solid windowtext 1.0pt;
+    border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:26.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=267 style='width:160.15pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:26.7pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+   </tr>
+  </table>
   <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
   style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
-  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
-  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b></p>
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>
+  Statistics<o:p></o:p></span></b></p>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=1093
+   style='width:655.75pt;border-collapse:collapse;border:none;mso-border-alt:
+   solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:35.75pt'>
+    <td width=354 style='width:212.55pt;border:solid windowtext 1.0pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=148 style='width:88.85pt;border:solid windowtext 1.0pt;
+    border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Slot1<o:p></o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Slot2<o:p></o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Slot3<o:p></o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border:solid windowtext 1.0pt;border-left:
+    none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt;
+    height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Slot4<o:p></o:p></span></p>
+    </td>
+    <td width=167 style='width:100.25pt;border:solid windowtext 1.0pt;
+    border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:35.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Total<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:1;height:29.3pt'>
+    <td width=354 style='width:212.55pt;border:solid windowtext 1.0pt;
+    border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Number of Vehicle
+    per slot (ea)<o:p></o:p></span></p>
+    </td>
+    <td width=148 style='width:88.85pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=167 style='width:100.25pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:29.3pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes;height:32.75pt'>
+    <td width=354 style='width:212.55pt;border:solid windowtext 1.0pt;
+    border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:
+    solid windowtext .5pt;background:white;mso-background-themecolor:background1;
+    padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'>Average Occupancy (%)<o:p></o:p></span></p>
+    </td>
+    <td width=148 style='width:88.85pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=141 style='width:84.7pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+    <td width=167 style='width:100.25pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:32.75pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    </td>
+   </tr>
+  </table>
+  <p></p>  <p></p>
+ <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+  style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>Peak
+  usage hours<o:p></o:p></span></b></p>
   <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=1160
    style='width:696.0pt;margin-left:.05pt;border-collapse:collapse;border:none;
    mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:
@@ -947,7 +1134,7 @@ table.MsoTableGrid
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
     <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>Hour</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border:solid windowtext 1.0pt;
     border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
@@ -1138,6 +1325,14 @@ table.MsoTableGrid
     solid windowtext .5pt;background:white;mso-background-themecolor:background1;
     padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
     <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>Total</o:p></span></p>
+    </td>
+    <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
+    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
+    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
+    <p class=MsoNormal align=center style='text-align:center'><span id="out00" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1145,7 +1340,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out01" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1153,7 +1348,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out02" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1161,7 +1356,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out03" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1169,7 +1364,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out04" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1177,7 +1372,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out05" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1185,7 +1380,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out06" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1193,7 +1388,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out07" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1201,7 +1396,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out08" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1209,7 +1404,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out09" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1217,7 +1412,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out10" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1225,7 +1420,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out11" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1233,7 +1428,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out12" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1241,7 +1436,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out13" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1249,7 +1444,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out14" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1257,7 +1452,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out15" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1265,7 +1460,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out16" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1273,7 +1468,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out17" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1281,7 +1476,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out18" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1289,7 +1484,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out19" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1297,7 +1492,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out20" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1305,7 +1500,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out21" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1313,7 +1508,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out22" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
@@ -1321,15 +1516,7 @@ table.MsoTableGrid
     mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
-    style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-    </td>
-    <td width=44 valign=top style='width:26.4pt;border-top:none;border-left:
-    none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-    mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-    mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
-    background1;padding:0cm 5.4pt 0cm 5.4pt;height:19.45pt'>
-    <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+    <p class=MsoNormal align=center style='text-align:center'><span id="out23" lang=EN-US
     style='font-size:9.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
     </td>
     <td width=30 valign=top style='width:18.0pt;border-top:none;border-left:
@@ -1355,9 +1542,11 @@ table.MsoTableGrid
   style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span></b></p>
   </td>
  </tr>
+   <p></p>  <p></p>
  <tr style='mso-yfti-irow:2;height:30.05pt'>
   <td width=720 valign=top style='width:432.15pt;padding:0cm 5.4pt 0cm 5.4pt;
   height:30.05pt'>
+  <p></p><hr></hr>
   <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
   style='font-size:18.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>Configuration<o:p></o:p></span></b></p>
   </td>
@@ -1378,7 +1567,7 @@ table.MsoTableGrid
     mso-border-alt:solid windowtext .5pt;background:white;mso-background-themecolor:
     background1;padding:0cm 5.4pt 0cm 5.4pt;height:24.8pt'>
     <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:
-    "Arial",sans-serif'>Grace Period(min) : <input type="number" id="confGracePeriod" min="0" max="100" required /><o:p></o:p></span></p>
+    "Arial",sans-serif'>Grace Period(min) : <input type="number" id="confGracePeriod" min="0" max="10000" required /><o:p></o:p></span></p>
     </td>
    </tr>
    <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:24.8pt'>
@@ -1437,7 +1626,7 @@ table.MsoTableGrid
   <p class=MsoNormal>
   <button type="ownerconfbtn2"><b style='mso-bidi-font-weight:normal'><span lang=EN-US
   style='font-size:16.0pt;mso-bidi-font-size:12.0pt;font-family:"Arial",sans-serif'>
-  APPLY
+    <input type="button" value="APPLY" onclick="conf2Apply()">
   <o:p></o:p></span></b></button>
   </p>
   </td>

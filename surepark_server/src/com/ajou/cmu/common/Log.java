@@ -9,6 +9,7 @@ public class Log {
 	public final static String PARKED = "005";
 	public final static String EXITED = "006";
 	public final static String REALLOCATION = "007";
+	public final static String NOSHOW = "008";
 	
 	
 	public final static String SPOT_REALLOCATION = "010";
