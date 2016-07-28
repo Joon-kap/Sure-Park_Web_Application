@@ -41,4 +41,41 @@ public class OwnerDaoImpl extends BaseDao implements Dao {
 		getSqlMapClientTemplate().update("com.ajou.cmu.owner.updatefacil", obj);
 	}
 
+	@Override
+	public void insert(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List getList(Object obj) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getCurrentStatusObject(Object obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object selectAvailable() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void updateParkingSpot(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updatePayment(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object selectAvailableSpot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

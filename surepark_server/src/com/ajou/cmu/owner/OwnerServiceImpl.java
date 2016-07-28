@@ -27,22 +27,14 @@ public class OwnerServiceImpl implements com.ajou.cmu.common.Service {
 //		return this.dao.selectIdentifier(obj);
 //	}
 	
-	//대한 - 2016.07.17 22:50 - identifier 를 DB에 검색해서 조회가 0이면 예약이 안된 것, 1이면 올바르므로 Gate Open, 2이상이면 문제가 있으므로 Dava 호출을 한다.
-	public Object countIdentifierObject(Object obj) throws SQLException {
-		// TODO Auto-generated method stub
-		return this.dao.countnumIdentifierObject(obj);
-	}
+	
 	
 	//대한 - 2016.07.18 13:26 - 현재 주차상태를 사용자한테 보내는 쿼리를 위한 Service 작성
 	public Object getCurrentStatusObject(Object obj) throws SQLException {
 		return this.dao.getCurrentStatusObject(obj);
 	}
 	
-	//대한 - 2016.07.18 23:54 - 
-	public Object getReservationTimeObject(Object obj) throws SQLException {
-		return this.dao.getReservationTimeObject(obj);
-	}
-
+	
 	@Override
 	public boolean edit(Object obj) throws SQLException {
 		return true;
